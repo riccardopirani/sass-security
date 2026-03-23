@@ -38,6 +38,7 @@
 │       ├── stripe-checkout/
 │       ├── create-checkout-session/
 │       ├── create-billing-portal/
+│       ├── report-security-alert/
 │       └── stripe-webhook/
 └── docs/
     ├── project_structure.md

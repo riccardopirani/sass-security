@@ -47,3 +47,18 @@ stripe trigger invoice.paid
 stripe trigger invoice.payment_failed
 stripe trigger customer.subscription.updated
 ```
+
+## 5. Report Security Alert (Virus/Hacking)
+
+```bash
+curl -X POST "<SUPABASE_URL>/functions/v1/report-security-alert" \
+  -H "Authorization: Bearer <USER_JWT>" \
+  -H "apikey: <SUPABASE_ANON_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "incidentType":"virus",
+    "severity":"high",
+    "title":"Ransomware behavior detected",
+    "details":"Un endpoint started encrypting shared files."
+  }'
+```

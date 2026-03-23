@@ -139,7 +139,7 @@ class _HomeShellState extends State<HomeShell> {
         page: EmployeesPage(profile: widget.profile),
       ),
       _ShellItem(
-        label: l10n.alerts,
+        label: 'Alerts',
         icon: Icons.notification_important_outlined,
         page: AlertsPage(profile: widget.profile),
       ),

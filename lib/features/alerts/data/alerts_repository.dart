@@ -20,4 +20,21 @@ class AlertsRepository {
   Future<void> markRead(String alertId) async {
     await _client.from('cg_alerts').update({'is_read': true}).eq('id', alertId);
   }
+
+  Future<void> reportSecurityIncident({
+    required String incidentType,
+    required String severity,
+    required String title,
+    required String details,
+  }) async {
+    await _client.functions.invoke(
+      'report-security-alert',
+      body: {
+        'incidentType': incidentType,
+        'severity': severity,
+        'title': title,
+        'details': details,
+      },
+    );
+  }
 }
