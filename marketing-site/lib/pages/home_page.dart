@@ -195,10 +195,11 @@ class HomePage extends StatelessWidget {
                                   ?.copyWith(color: AppColors.mutedText)),
                         ],
                       ),
-                    )
-                        .animate(delay: (index * 90).ms)
-                        .fadeIn(duration: 500.ms)
-                        .slideY(begin: 0.05, end: 0);
+                    ),
+                  )
+                      .animate(delay: (index * 90).ms)
+                      .fadeIn(duration: 500.ms)
+                      .slideY(begin: 0.05, end: 0);
                 }),
               ),
             ],
