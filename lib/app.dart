@@ -5,6 +5,7 @@ import 'package:sass_security/l10n/app_localizations.dart';
 import 'core/localization/locale_controller.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/auth_gate.dart';
+import 'features/marketing/presentation/marketing_landing_page.dart';
 
 class CyberGuardApp extends StatelessWidget {
   const CyberGuardApp({
@@ -36,10 +37,18 @@ class CyberGuardApp extends StatelessWidget {
           ],
           theme: AppTheme.darkTheme,
           themeMode: ThemeMode.dark,
-          home: AuthGate(
-            localeController: localeController,
-            backendReady: backendReady,
-            backendError: backendError,
+          home: MarketingLandingPage(
+            onLoginPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => AuthGate(
+                    localeController: localeController,
+                    backendReady: backendReady,
+                    backendError: backendError,
+                  ),
+                ),
+              );
+            },
           ),
         );
       },
