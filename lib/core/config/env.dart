@@ -3,8 +3,14 @@ class Env {
   static const _defaultSupabaseAnonKey =
       'sb_publishable_JNTjWqrSduUw_ZQtLF22Ug_tBl-QyMG';
 
-  static const supabaseUrl = _defaultSupabaseUrl;
-  static const supabaseAnonKey = _defaultSupabaseAnonKey;
+  static const supabaseUrl = String.fromEnvironment(
+    'SUPABASE_URL',
+    defaultValue: _defaultSupabaseUrl,
+  );
+  static const supabaseAnonKey = String.fromEnvironment(
+    'SUPABASE_ANON_KEY',
+    defaultValue: _defaultSupabaseAnonKey,
+  );
   static const stripePublishableKey = String.fromEnvironment(
     'STRIPE_PUBLISHABLE_KEY',
   );
