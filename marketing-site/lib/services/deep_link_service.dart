@@ -18,8 +18,16 @@ enum CtaDeepLink {
 class DeepLinkService {
   static final Uri _iosStoreUri = Uri.parse('https://apps.apple.com');
   static final Uri _androidStoreUri = Uri.parse('https://play.google.com/store');
+  static Future<void> Function(BuildContext context, CtaDeepLink target)?
+      ctaOverrideHandler;
 
   static Future<void> handleCta(BuildContext context, CtaDeepLink target) async {
+    final override = ctaOverrideHandler;
+    if (override != null) {
+      await override(context, target);
+      return;
+    }
+
     final isDesktop = MediaQuery.sizeOf(context).width >= 1000;
 
     if (isDesktop) {
