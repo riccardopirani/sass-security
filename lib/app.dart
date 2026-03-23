@@ -38,7 +38,7 @@ class CyberGuardApp extends StatelessWidget {
           theme: AppTheme.darkTheme,
           themeMode: ThemeMode.dark,
           home: MarketingLandingPage(
-            onLoginPressed: () {
+            onLoginPressed: (context) {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => AuthGate(

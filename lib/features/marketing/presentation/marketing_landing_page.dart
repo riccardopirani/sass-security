@@ -4,7 +4,7 @@ import 'package:sass_security/l10n/app_localizations.dart';
 class MarketingLandingPage extends StatelessWidget {
   const MarketingLandingPage({required this.onLoginPressed, super.key});
 
-  final VoidCallback onLoginPressed;
+  final void Function(BuildContext context) onLoginPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class MarketingLandingPage extends StatelessWidget {
                       ),
                       const Spacer(),
                       FilledButton(
-                        onPressed: onLoginPressed,
+                        onPressed: () => onLoginPressed(context),
                         child: Text(l10n.login),
                       ),
                     ],
@@ -72,11 +72,11 @@ class MarketingLandingPage extends StatelessWidget {
                               runSpacing: 12,
                               children: [
                                 FilledButton(
-                                  onPressed: onLoginPressed,
+                                  onPressed: () => onLoginPressed(context),
                                   child: Text(l10n.sign_in),
                                 ),
                                 OutlinedButton(
-                                  onPressed: onLoginPressed,
+                                  onPressed: () => onLoginPressed(context),
                                   child: Text(l10n.create_account),
                                 ),
                               ],
