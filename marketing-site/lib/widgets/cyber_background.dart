@@ -99,8 +99,10 @@ class _GridPainter extends CustomPainter {
     for (var i = 0; i < 18; i++) {
       final startX = random.nextDouble() * size.width;
       final startY = random.nextDouble() * size.height;
-      final midX = (startX + random.nextDouble() * 220).clamp(0, size.width);
-      final endY = (startY + random.nextDouble() * 160).clamp(0, size.height);
+      final midX =
+          (startX + random.nextDouble() * 220).clamp(0, size.width).toDouble();
+      final endY =
+          (startY + random.nextDouble() * 160).clamp(0, size.height).toDouble();
 
       final path = Path()
         ..moveTo(startX, startY)
