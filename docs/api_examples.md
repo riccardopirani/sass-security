@@ -62,3 +62,12 @@ curl -X POST "<SUPABASE_URL>/functions/v1/report-security-alert" \
     "details":"Un endpoint started encrypting shared files."
   }'
 ```
+
+## 6. Fetch Security News (Virus/Hacking/Tools)
+
+```bash
+curl -X POST "<SUPABASE_URL>/functions/v1/security-news" \
+  -H "Authorization: Bearer <USER_JWT>" \
+  -H "apikey: <SUPABASE_ANON_KEY>" \
+  -H "Content-Type: application/json"
+```

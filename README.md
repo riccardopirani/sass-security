@@ -22,6 +22,7 @@ Production-ready SaaS starter for SMB cybersecurity with Flutter (web/mobile), S
 - Phishing simulation trigger + opened/clicked tracking
 - Real-time alerts with severity (`low`, `medium`, `high`)
 - Incident reporting from `Alerts` (`virus`/`hacking`) with company-wide email notification
+- News section with free cyber feeds (Hacker News, Reddit, StackExchange, BleepingComputer)
 - Security score engine (phishing behavior + training completion)
 - Stripe plans: `starter`, `pro`, `business`
 - Language support:
@@ -80,6 +81,7 @@ supabase functions deploy create-billing-portal
 supabase functions deploy stripe-webhook
 supabase functions deploy send-phishing-test
 supabase functions deploy report-security-alert
+supabase functions deploy security-news
 ```
 
 ## Stripe Webhooks Handled

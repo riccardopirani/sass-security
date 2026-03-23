@@ -7,6 +7,7 @@ import '../../auth/data/auth_service.dart';
 import '../../auth/models/app_profile.dart';
 import '../../dashboard/presentation/dashboard_page.dart';
 import '../../employees/presentation/employees_page.dart';
+import '../../news/presentation/news_page.dart';
 import '../../phishing/presentation/phishing_page.dart';
 import '../../settings/presentation/settings_page.dart';
 import '../../subscription/presentation/pricing_page.dart';
@@ -142,6 +143,11 @@ class _HomeShellState extends State<HomeShell> {
         label: 'Alerts',
         icon: Icons.notification_important_outlined,
         page: AlertsPage(profile: widget.profile),
+      ),
+      _ShellItem(
+        label: 'News',
+        icon: Icons.newspaper_outlined,
+        page: NewsPage(profile: widget.profile),
       ),
       if (widget.profile.isAdmin)
         _ShellItem(

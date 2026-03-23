@@ -19,6 +19,7 @@
 │   │   ├── dashboard/
 │   │   ├── employees/
 │   │   ├── alerts/
+│   │   ├── news/
 │   │   ├── phishing/
 │   │   ├── subscription/
 │   │   ├── settings/
@@ -39,6 +40,7 @@
 │       ├── create-checkout-session/
 │       ├── create-billing-portal/
 │       ├── report-security-alert/
+│       ├── security-news/
 │       └── stripe-webhook/
 └── docs/
     ├── project_structure.md
