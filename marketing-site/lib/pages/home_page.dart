@@ -169,6 +169,64 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                l10n.homeMessagingTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 18),
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingHeadlinesTitle,
+                    l10n.homeMessagingHeadlinesItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingValueTitle,
+                    l10n.homeMessagingValueItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingProblemTitle,
+                    l10n.homeMessagingProblemItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingAiTitle,
+                    l10n.homeMessagingAiItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingRoiTitle,
+                    l10n.homeMessagingRoiItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingExecTitle,
+                    l10n.homeMessagingExecItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingUrgencyTitle,
+                    l10n.homeMessagingUrgencyItems,
+                  ),
+                  _messageGroup(
+                    context,
+                    l10n.homeMessagingMobileTitle,
+                    l10n.homeMessagingMobileItems,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SectionContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(l10n.homeFeatureSectionTitle,
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 18),
@@ -351,6 +409,35 @@ class HomePage extends StatelessWidget {
       label,
       style:
           Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
+    );
+  }
+
+  Widget _messageGroup(BuildContext context, String title, String items) {
+    final lines = items.split('||').where((item) => item.trim().isNotEmpty);
+
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width < 900 ? double.infinity : 520,
+      child: GlassCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 10),
+            ...lines.map(
+              (line) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  '- ${line.trim()}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: AppColors.mutedText),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

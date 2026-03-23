@@ -201,5 +201,22 @@
   "termsSection3Title": "Customer responsibilities",
   "termsSection3Body": "Customers are responsible for secure credential handling and lawful use of simulation campaigns.",
   "termsSection4Title": "Liability and support",
-  "termsSection4Body": "Support levels vary by plan. Liability limits and warranties are governed by the master agreement."
+  "termsSection4Body": "Support levels vary by plan. Liability limits and warranties are governed by the master agreement.",
+  "homeMessagingTitle": "Messaggi ad alto impatto",
+  "homeMessagingHeadlinesTitle": "Headline",
+  "homeMessagingHeadlinesItems": "Il 90% degli attacchi informatici parte da un errore umano. Noi lo preveniamo.||Trasforma i tuoi dipendenti nel tuo primo livello di difesa.||Scopri chi nella tua azienda rappresenta il rischio piu alto, prima che lo faccia un hacker.||La cybersecurity non e un problema tecnico. E un problema umano.||Riduci il rischio phishing fino al 70% senza cambiare infrastruttura.",
+  "homeMessagingValueTitle": "Value proposition",
+  "homeMessagingValueItems": "Identifichiamo, misuriamo e riduciamo il rischio umano nella tua azienda in tempo reale.||Un sistema AI che protegge la tua azienda dagli errori dei dipendenti.||Diamo un punteggio di rischio a ogni dipendente per prevenire attacchi prima che accadano.||La tua azienda e sicura finche un dipendente non clicca sull'email sbagliata.",
+  "homeMessagingProblemTitle": "Problem aware hooks",
+  "homeMessagingProblemItems": "Sai chi nella tua azienda cliccherebbe su un'email di phishing oggi?||Un solo click puo compromettere tutta la tua infrastruttura.||Non sono i firewall il problema. Sono le persone.||Ogni azienda e sicura fino al primo errore umano.||Il tuo sistema di sicurezza non vede il rischio piu grande: i tuoi dipendenti.",
+  "homeMessagingAiTitle": "AI + innovation",
+  "homeMessagingAiItems": "Un AI che analizza il comportamento umano e previene attacchi prima che accadano.||Dal monitoring alla prevenzione automatica del rischio umano.||Il primo sistema AI che misura il rischio cyber delle persone, non solo dei sistemi.||Security intelligence che lavora in tempo reale sul comportamento umano.",
+  "homeMessagingRoiTitle": "ROI / business",
+  "homeMessagingRoiItems": "Riduci i costi di incident response fino al 60%.||Previeni breach costosi prima che accadano.||Un singolo attacco phishing puo costare milioni. Noi lo blocchiamo prima del click.||ROI immediato: meno incidenti, meno danni, meno downtime.",
+  "homeMessagingExecTitle": "Focus CEO",
+  "homeMessagingExecItems": "Una dashboard semplice per capire il rischio reale della tua azienda.||Visualizza il tuo livello di rischio cyber in meno di 60 secondi.||Decidi con dati, non con supposizioni.||Il controllo completo del rischio umano in un'unica vista.",
+  "homeMessagingUrgencyTitle": "Urgenza",
+  "homeMessagingUrgencyItems": "Ogni giorno senza controllo sul rischio umano e un rischio attivo.||Gli attacchi non arrivano quando sei pronto. Arrivano quando un dipendente sbaglia.||Non sapere chi e vulnerabile e gia una vulnerabilita.||La prossima violazione potrebbe gia essere in corso, senza che tu lo sappia.",
+  "homeMessagingMobileTitle": "Mobile / modern",
+  "homeMessagingMobileItems": "Ricevi alert in tempo reale sul rischio dei tuoi dipendenti.||Gestisci la sicurezza aziendale direttamente dal tuo telefono.||La cybersecurity che ti segue ovunque, non solo in ufficio."
 }

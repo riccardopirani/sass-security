@@ -1317,6 +1317,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support levels vary by plan. Liability limits and warranties are governed by the master agreement.'**
   String get termsSection4Body;
+
+  /// No description provided for @homeMessagingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'High-impact messaging'**
+  String get homeMessagingTitle;
+
+  /// No description provided for @homeMessagingHeadlinesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Headlines'**
+  String get homeMessagingHeadlinesTitle;
+
+  /// No description provided for @homeMessagingHeadlinesItems.
+  ///
+  /// In en, this message translates to:
+  /// **'90% of cyberattacks start with human error. We prevent it.||Turn your employees into your first line of defense.||Discover who in your company is the highest risk, before a hacker does.||Cybersecurity is not only a technical problem. It is a human problem.||Reduce phishing risk by up to 70% without changing infrastructure.'**
+  String get homeMessagingHeadlinesItems;
+
+  /// No description provided for @homeMessagingValueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Value proposition'**
+  String get homeMessagingValueTitle;
+
+  /// No description provided for @homeMessagingValueItems.
+  ///
+  /// In en, this message translates to:
+  /// **'We identify, measure, and reduce human risk in your company in real time.||An AI system that protects your company from employee mistakes.||We assign a risk score to every employee to prevent attacks before they happen.||Your company is secure until one employee clicks the wrong email.'**
+  String get homeMessagingValueItems;
+
+  /// No description provided for @homeMessagingProblemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem-aware hooks'**
+  String get homeMessagingProblemTitle;
+
+  /// No description provided for @homeMessagingProblemItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you know who in your company would click a phishing email today?||A single click can compromise your entire infrastructure.||Firewalls are not the problem. People are.||Every company is secure until the first human error.||Your security stack cannot see the biggest risk: your employees.'**
+  String get homeMessagingProblemItems;
+
+  /// No description provided for @homeMessagingAiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI + innovation'**
+  String get homeMessagingAiTitle;
+
+  /// No description provided for @homeMessagingAiItems.
+  ///
+  /// In en, this message translates to:
+  /// **'An AI system that analyzes human behavior and prevents attacks before they happen.||From monitoring to automatic prevention of human risk.||The first AI system that measures cyber risk of people, not only systems.||Security intelligence working in real time on human behavior.'**
+  String get homeMessagingAiItems;
+
+  /// No description provided for @homeMessagingRoiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ROI / business'**
+  String get homeMessagingRoiTitle;
+
+  /// No description provided for @homeMessagingRoiItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce incident response costs by up to 60%.||Prevent costly breaches before they happen.||A single phishing attack can cost millions. We stop it before the click.||Immediate ROI: fewer incidents, less damage, less downtime.'**
+  String get homeMessagingRoiItems;
+
+  /// No description provided for @homeMessagingExecTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Executive focus'**
+  String get homeMessagingExecTitle;
+
+  /// No description provided for @homeMessagingExecItems.
+  ///
+  /// In en, this message translates to:
+  /// **'A simple dashboard to understand your company\'s real risk.||View your cyber risk level in under 60 seconds.||Make decisions with data, not assumptions.||Complete control of human risk in one view.'**
+  String get homeMessagingExecItems;
+
+  /// No description provided for @homeMessagingUrgencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgency'**
+  String get homeMessagingUrgencyTitle;
+
+  /// No description provided for @homeMessagingUrgencyItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day without control over human risk is active risk.||Attacks do not wait until you are ready. They strike when an employee makes a mistake.||Not knowing who is vulnerable is already a vulnerability.||Your next breach could already be underway, without you knowing it.'**
+  String get homeMessagingUrgencyItems;
+
+  /// No description provided for @homeMessagingMobileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile / modern'**
+  String get homeMessagingMobileTitle;
+
+  /// No description provided for @homeMessagingMobileItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive real-time alerts about employee risk.||Manage company security directly from your phone.||Cybersecurity that follows you everywhere, not only in the office.'**
+  String get homeMessagingMobileItems;
 }
 
 class _AppLocalizationsDelegate

@@ -658,4 +658,63 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get termsSection4Body =>
       'Support levels vary by plan. Liability limits and warranties are governed by the master agreement.';
+
+  @override
+  String get homeMessagingTitle => 'High-impact messaging';
+
+  @override
+  String get homeMessagingHeadlinesTitle => 'Headlines';
+
+  @override
+  String get homeMessagingHeadlinesItems =>
+      '90% of cyberattacks start with human error. We prevent it.||Turn your employees into your first line of defense.||Discover who in your company is the highest risk, before a hacker does.||Cybersecurity is not only a technical problem. It is a human problem.||Reduce phishing risk by up to 70% without changing infrastructure.';
+
+  @override
+  String get homeMessagingValueTitle => 'Value proposition';
+
+  @override
+  String get homeMessagingValueItems =>
+      'We identify, measure, and reduce human risk in your company in real time.||An AI system that protects your company from employee mistakes.||We assign a risk score to every employee to prevent attacks before they happen.||Your company is secure until one employee clicks the wrong email.';
+
+  @override
+  String get homeMessagingProblemTitle => 'Problem-aware hooks';
+
+  @override
+  String get homeMessagingProblemItems =>
+      'Do you know who in your company would click a phishing email today?||A single click can compromise your entire infrastructure.||Firewalls are not the problem. People are.||Every company is secure until the first human error.||Your security stack cannot see the biggest risk: your employees.';
+
+  @override
+  String get homeMessagingAiTitle => 'AI + innovation';
+
+  @override
+  String get homeMessagingAiItems =>
+      'An AI system that analyzes human behavior and prevents attacks before they happen.||From monitoring to automatic prevention of human risk.||The first AI system that measures cyber risk of people, not only systems.||Security intelligence working in real time on human behavior.';
+
+  @override
+  String get homeMessagingRoiTitle => 'ROI / business';
+
+  @override
+  String get homeMessagingRoiItems =>
+      'Reduce incident response costs by up to 60%.||Prevent costly breaches before they happen.||A single phishing attack can cost millions. We stop it before the click.||Immediate ROI: fewer incidents, less damage, less downtime.';
+
+  @override
+  String get homeMessagingExecTitle => 'Executive focus';
+
+  @override
+  String get homeMessagingExecItems =>
+      'A simple dashboard to understand your company\'s real risk.||View your cyber risk level in under 60 seconds.||Make decisions with data, not assumptions.||Complete control of human risk in one view.';
+
+  @override
+  String get homeMessagingUrgencyTitle => 'Urgency';
+
+  @override
+  String get homeMessagingUrgencyItems =>
+      'Every day without control over human risk is active risk.||Attacks do not wait until you are ready. They strike when an employee makes a mistake.||Not knowing who is vulnerable is already a vulnerability.||Your next breach could already be underway, without you knowing it.';
+
+  @override
+  String get homeMessagingMobileTitle => 'Mobile / modern';
+
+  @override
+  String get homeMessagingMobileItems =>
+      'Receive real-time alerts about employee risk.||Manage company security directly from your phone.||Cybersecurity that follows you everywhere, not only in the office.';
 }
