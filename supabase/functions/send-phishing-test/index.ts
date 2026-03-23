@@ -26,7 +26,7 @@ serve(async (req) => {
     }
 
     const profile = await adminClient
-      .from('profiles')
+      .from('cg_profiles')
       .select('company_id,role')
       .eq('id', user.id)
       .single();
@@ -40,7 +40,7 @@ serve(async (req) => {
     }
 
     let employeesQuery = adminClient
-      .from('employees')
+      .from('cg_employees')
       .select('id')
       .eq('company_id', profile.data.company_id);
 
@@ -59,7 +59,7 @@ serve(async (req) => {
     }
 
     const campaignResult = await adminClient
-      .from('phishing_campaigns')
+      .from('cg_phishing_campaigns')
       .insert({
         company_id: profile.data.company_id,
         created_by: user.id,
@@ -83,7 +83,7 @@ serve(async (req) => {
       event_type: 'sent',
     }));
 
-    await adminClient.from('phishing_events').insert(sentEvents);
+    await adminClient.from('cg_phishing_events').insert(sentEvents);
 
     const simulatedEvents: Array<{
       company_id: string;
@@ -118,10 +118,10 @@ serve(async (req) => {
     }
 
     if (simulatedEvents.length > 0) {
-      await adminClient.from('phishing_events').insert(simulatedEvents);
+      await adminClient.from('cg_phishing_events').insert(simulatedEvents);
     }
 
-    await adminClient.from('alerts').insert({
+    await adminClient.from('cg_alerts').insert({
       company_id: profile.data.company_id,
       severity: 'low',
       title: 'Phishing campaign launched',

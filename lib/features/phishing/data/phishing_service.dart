@@ -20,7 +20,7 @@ class PhishingService {
 
   Future<List<PhishingCampaign>> listCampaigns(String companyId) async {
     final rows = await _client
-        .from('phishing_campaigns')
+        .from('cg_phishing_campaigns')
         .select(
           'id,name,status,sent_count,opened_count,clicked_count,created_at',
         )

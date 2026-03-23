@@ -10,25 +10,25 @@ class DashboardRepository {
 
   Future<DashboardMetrics> fetchMetrics(String companyId) async {
     final companyRow = await _client
-        .from('companies')
+        .from('cg_companies')
         .select('risk_score')
         .eq('id', companyId)
         .maybeSingle();
 
     final campaigns = await _client
-        .from('phishing_campaigns')
+        .from('cg_phishing_campaigns')
         .select('id')
         .eq('company_id', companyId)
         .inFilter('status', ['scheduled', 'sent']);
 
     final alerts = await _client
-        .from('alerts')
+        .from('cg_alerts')
         .select('id')
         .eq('company_id', companyId)
         .eq('is_read', false);
 
     final rankingRows = await _client
-        .from('employees')
+        .from('cg_employees')
         .select('name,risk_score')
         .eq('company_id', companyId)
         .order('risk_score', ascending: false)

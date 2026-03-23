@@ -8,7 +8,7 @@ create type public.alert_severity as enum ('low', 'medium', 'high');
 create type public.subscription_plan as enum ('starter', 'pro', 'business');
 create type public.phishing_event_type as enum ('sent', 'opened', 'clicked');
 
-create table if not exists public.companies (
+create table if not exists public.cg_companies (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   code text not null unique default upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8)),
@@ -17,9 +17,9 @@ create table if not exists public.companies (
   updated_at timestamptz not null default now()
 );
 
-create table if not exists public.profiles (
+create table if not exists public.cg_profiles (
   id uuid primary key references auth.users(id) on delete cascade,
-  company_id uuid not null references public.companies(id) on delete restrict,
+  company_id uuid not null references public.cg_companies(id) on delete restrict,
   name text not null,
   email text not null,
   role public.app_role not null default 'employee',
@@ -30,10 +30,10 @@ create table if not exists public.profiles (
   unique (company_id, email)
 );
 
-create table if not exists public.employees (
+create table if not exists public.cg_employees (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references public.companies(id) on delete cascade,
-  auth_user_id uuid references public.profiles(id) on delete set null,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
+  auth_user_id uuid references public.cg_profiles(id) on delete set null,
   name text not null,
   email text not null,
   role public.app_role not null default 'employee',
@@ -44,10 +44,10 @@ create table if not exists public.employees (
   unique (company_id, email)
 );
 
-create table if not exists public.phishing_campaigns (
+create table if not exists public.cg_phishing_campaigns (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references public.companies(id) on delete cascade,
-  created_by uuid references public.profiles(id) on delete set null,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
+  created_by uuid references public.cg_profiles(id) on delete set null,
   name text not null,
   template text not null,
   status text not null default 'draft' check (status in ('draft', 'scheduled', 'sent', 'completed')),
@@ -58,20 +58,20 @@ create table if not exists public.phishing_campaigns (
   updated_at timestamptz not null default now()
 );
 
-create table if not exists public.phishing_events (
+create table if not exists public.cg_phishing_events (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references public.companies(id) on delete cascade,
-  campaign_id uuid not null references public.phishing_campaigns(id) on delete cascade,
-  employee_id uuid not null references public.employees(id) on delete cascade,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
+  campaign_id uuid not null references public.cg_phishing_campaigns(id) on delete cascade,
+  employee_id uuid not null references public.cg_employees(id) on delete cascade,
   event_type public.phishing_event_type not null,
   created_at timestamptz not null default now(),
   unique (campaign_id, employee_id, event_type)
 );
 
-create table if not exists public.alerts (
+create table if not exists public.cg_alerts (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references public.companies(id) on delete cascade,
-  employee_id uuid references public.employees(id) on delete set null,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
+  employee_id uuid references public.cg_employees(id) on delete set null,
   severity public.alert_severity not null default 'low',
   title text not null,
   message text not null,
@@ -79,10 +79,10 @@ create table if not exists public.alerts (
   created_at timestamptz not null default now()
 );
 
-create table if not exists public.training_records (
+create table if not exists public.cg_training_records (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references public.companies(id) on delete cascade,
-  employee_id uuid not null references public.employees(id) on delete cascade,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
+  employee_id uuid not null references public.cg_employees(id) on delete cascade,
   completion_percent int not null default 0 check (completion_percent between 0 and 100),
   completed_at timestamptz,
   created_at timestamptz not null default now(),
@@ -90,10 +90,10 @@ create table if not exists public.training_records (
   unique (employee_id)
 );
 
-create table if not exists public.subscriptions (
+create table if not exists public.cg_subscriptions (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references public.profiles(id) on delete cascade,
-  company_id uuid not null references public.companies(id) on delete cascade,
+  user_id uuid not null references public.cg_profiles(id) on delete cascade,
+  company_id uuid not null references public.cg_companies(id) on delete cascade,
   stripe_customer_id text,
   stripe_subscription_id text,
   plan public.subscription_plan not null default 'starter',
@@ -105,12 +105,12 @@ create table if not exists public.subscriptions (
   unique (stripe_subscription_id)
 );
 
-create index if not exists idx_profiles_company on public.profiles(company_id);
-create index if not exists idx_employees_company on public.employees(company_id);
-create index if not exists idx_alerts_company_read on public.alerts(company_id, is_read);
-create index if not exists idx_campaigns_company_status on public.phishing_campaigns(company_id, status);
-create index if not exists idx_phishing_events_company on public.phishing_events(company_id);
-create index if not exists idx_subscriptions_company on public.subscriptions(company_id);
+create index if not exists idx_cg_profiles_company on public.cg_profiles(company_id);
+create index if not exists idx_cg_employees_company on public.cg_employees(company_id);
+create index if not exists idx_cg_alerts_company_read on public.cg_alerts(company_id, is_read);
+create index if not exists idx_cg_campaigns_company_status on public.cg_phishing_campaigns(company_id, status);
+create index if not exists idx_cg_phishing_events_company on public.cg_phishing_events(company_id);
+create index if not exists idx_cg_subscriptions_company on public.cg_subscriptions(company_id);
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -129,7 +129,7 @@ stable
 security definer
 set search_path = public
 as $$
-  select company_id from public.profiles where id = auth.uid();
+  select company_id from public.cg_profiles where id = auth.uid();
 $$;
 
 create or replace function public.is_company_admin()
@@ -140,7 +140,7 @@ security definer
 set search_path = public
 as $$
   select exists (
-    select 1 from public.profiles
+    select 1 from public.cg_profiles
     where id = auth.uid() and role = 'admin'
   );
 $$;
@@ -169,10 +169,10 @@ begin
     0
   )
   into score
-  from public.employees e
+  from public.cg_employees e
   where e.company_id = target_company;
 
-  update public.companies
+  update public.cg_companies
   set risk_score = public.clamp_score(score),
       updated_at = now()
   where id = target_company;
@@ -188,7 +188,7 @@ security definer
 set search_path = public
 as $$
 begin
-  update public.employees
+  update public.cg_employees
   set training_completion = new.completion_percent,
       updated_at = now()
   where id = new.employee_id;
@@ -208,24 +208,24 @@ declare
   risk_delta int := 0;
 begin
   if new.event_type = 'sent' then
-    update public.phishing_campaigns
+    update public.cg_phishing_campaigns
     set sent_count = sent_count + 1,
         updated_at = now()
     where id = new.campaign_id;
   elsif new.event_type = 'opened' then
     risk_delta := 4;
-    update public.phishing_campaigns
+    update public.cg_phishing_campaigns
     set opened_count = opened_count + 1,
         updated_at = now()
     where id = new.campaign_id;
   elsif new.event_type = 'clicked' then
     risk_delta := 12;
-    update public.phishing_campaigns
+    update public.cg_phishing_campaigns
     set clicked_count = clicked_count + 1,
         updated_at = now()
     where id = new.campaign_id;
 
-    insert into public.alerts (company_id, employee_id, severity, title, message)
+    insert into public.cg_alerts (company_id, employee_id, severity, title, message)
     values (
       new.company_id,
       new.employee_id,
@@ -236,7 +236,7 @@ begin
   end if;
 
   if risk_delta > 0 then
-    update public.employees
+    update public.cg_employees
     set risk_score = public.clamp_score(risk_score + risk_delta),
         updated_at = now()
     where id = new.employee_id;
@@ -270,24 +270,24 @@ begin
   if requested_role = 'employee' and requested_company_code is not null then
     select id
     into resolved_company_id
-    from public.companies
+    from public.cg_companies
     where code = upper(requested_company_code)
     limit 1;
   end if;
 
   if resolved_company_id is null then
-    insert into public.companies (name)
+    insert into public.cg_companies (name)
     values (requested_company_name)
     returning id into resolved_company_id;
 
     requested_role := 'admin';
   end if;
 
-  insert into public.profiles (id, company_id, name, email, role)
+  insert into public.cg_profiles (id, company_id, name, email, role)
   values (new.id, resolved_company_id, resolved_name, new.email, requested_role)
   on conflict (id) do nothing;
 
-  insert into public.employees (company_id, auth_user_id, name, email, role)
+  insert into public.cg_employees (company_id, auth_user_id, name, email, role)
   values (resolved_company_id, new.id, resolved_name, new.email, requested_role)
   on conflict (company_id, email) do update
     set auth_user_id = excluded.auth_user_id,
@@ -298,51 +298,51 @@ begin
 end;
 $$;
 
-drop trigger if exists trg_companies_updated_at on public.companies;
+drop trigger if exists trg_companies_updated_at on public.cg_companies;
 create trigger trg_companies_updated_at
-before update on public.companies
+before update on public.cg_companies
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_profiles_updated_at on public.profiles;
+drop trigger if exists trg_profiles_updated_at on public.cg_profiles;
 create trigger trg_profiles_updated_at
-before update on public.profiles
+before update on public.cg_profiles
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_employees_updated_at on public.employees;
+drop trigger if exists trg_employees_updated_at on public.cg_employees;
 create trigger trg_employees_updated_at
-before update on public.employees
+before update on public.cg_employees
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_campaigns_updated_at on public.phishing_campaigns;
+drop trigger if exists trg_campaigns_updated_at on public.cg_phishing_campaigns;
 create trigger trg_campaigns_updated_at
-before update on public.phishing_campaigns
+before update on public.cg_phishing_campaigns
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_training_updated_at on public.training_records;
+drop trigger if exists trg_training_updated_at on public.cg_training_records;
 create trigger trg_training_updated_at
-before update on public.training_records
+before update on public.cg_training_records
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_subscriptions_updated_at on public.subscriptions;
+drop trigger if exists trg_subscriptions_updated_at on public.cg_subscriptions;
 create trigger trg_subscriptions_updated_at
-before update on public.subscriptions
+before update on public.cg_subscriptions
 for each row
 execute procedure public.set_updated_at();
 
-drop trigger if exists trg_training_sync on public.training_records;
+drop trigger if exists trg_training_sync on public.cg_training_records;
 create trigger trg_training_sync
-after insert or update on public.training_records
+after insert or update on public.cg_training_records
 for each row
 execute procedure public.sync_training_to_employee();
 
-drop trigger if exists trg_phishing_event_effects on public.phishing_events;
+drop trigger if exists trg_phishing_event_effects on public.cg_phishing_events;
 create trigger trg_phishing_event_effects
-after insert on public.phishing_events
+after insert on public.cg_phishing_events
 for each row
 execute procedure public.apply_phishing_event_effects();
 
@@ -352,37 +352,37 @@ after insert on auth.users
 for each row
 execute procedure public.handle_new_user();
 
-alter table public.companies enable row level security;
-alter table public.profiles enable row level security;
-alter table public.employees enable row level security;
-alter table public.phishing_campaigns enable row level security;
-alter table public.phishing_events enable row level security;
-alter table public.alerts enable row level security;
-alter table public.training_records enable row level security;
-alter table public.subscriptions enable row level security;
+alter table public.cg_companies enable row level security;
+alter table public.cg_profiles enable row level security;
+alter table public.cg_employees enable row level security;
+alter table public.cg_phishing_campaigns enable row level security;
+alter table public.cg_phishing_events enable row level security;
+alter table public.cg_alerts enable row level security;
+alter table public.cg_training_records enable row level security;
+alter table public.cg_subscriptions enable row level security;
 
-drop policy if exists companies_select_same_company on public.companies;
+drop policy if exists companies_select_same_company on public.cg_companies;
 create policy companies_select_same_company
-on public.companies
+on public.cg_companies
 for select
 using (id = public.current_company_id());
 
-drop policy if exists companies_update_admin on public.companies;
+drop policy if exists companies_update_admin on public.cg_companies;
 create policy companies_update_admin
-on public.companies
+on public.cg_companies
 for update
 using (id = public.current_company_id() and public.is_company_admin())
 with check (id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists profiles_select_company on public.profiles;
+drop policy if exists profiles_select_company on public.cg_profiles;
 create policy profiles_select_company
-on public.profiles
+on public.cg_profiles
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists profiles_update_self_or_admin on public.profiles;
+drop policy if exists profiles_update_self_or_admin on public.cg_profiles;
 create policy profiles_update_self_or_admin
-on public.profiles
+on public.cg_profiles
 for update
 using (
   id = auth.uid()
@@ -393,86 +393,86 @@ with check (
   or (company_id = public.current_company_id() and public.is_company_admin())
 );
 
-drop policy if exists employees_select_company on public.employees;
+drop policy if exists employees_select_company on public.cg_employees;
 create policy employees_select_company
-on public.employees
+on public.cg_employees
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists employees_write_admin on public.employees;
+drop policy if exists employees_write_admin on public.cg_employees;
 create policy employees_write_admin
-on public.employees
+on public.cg_employees
 for all
 using (company_id = public.current_company_id() and public.is_company_admin())
 with check (company_id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists campaigns_select_company on public.phishing_campaigns;
+drop policy if exists campaigns_select_company on public.cg_phishing_campaigns;
 create policy campaigns_select_company
-on public.phishing_campaigns
+on public.cg_phishing_campaigns
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists campaigns_write_admin on public.phishing_campaigns;
+drop policy if exists campaigns_write_admin on public.cg_phishing_campaigns;
 create policy campaigns_write_admin
-on public.phishing_campaigns
+on public.cg_phishing_campaigns
 for all
 using (company_id = public.current_company_id() and public.is_company_admin())
 with check (company_id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists events_select_company on public.phishing_events;
+drop policy if exists events_select_company on public.cg_phishing_events;
 create policy events_select_company
-on public.phishing_events
+on public.cg_phishing_events
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists events_write_admin on public.phishing_events;
+drop policy if exists events_write_admin on public.cg_phishing_events;
 create policy events_write_admin
-on public.phishing_events
+on public.cg_phishing_events
 for all
 using (company_id = public.current_company_id() and public.is_company_admin())
 with check (company_id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists alerts_select_company on public.alerts;
+drop policy if exists alerts_select_company on public.cg_alerts;
 create policy alerts_select_company
-on public.alerts
+on public.cg_alerts
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists alerts_update_company on public.alerts;
+drop policy if exists alerts_update_company on public.cg_alerts;
 create policy alerts_update_company
-on public.alerts
+on public.cg_alerts
 for update
 using (company_id = public.current_company_id())
 with check (company_id = public.current_company_id());
 
-drop policy if exists alerts_insert_admin on public.alerts;
+drop policy if exists alerts_insert_admin on public.cg_alerts;
 create policy alerts_insert_admin
-on public.alerts
+on public.cg_alerts
 for insert
 with check (company_id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists training_select_company on public.training_records;
+drop policy if exists training_select_company on public.cg_training_records;
 create policy training_select_company
-on public.training_records
+on public.cg_training_records
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists training_write_admin on public.training_records;
+drop policy if exists training_write_admin on public.cg_training_records;
 create policy training_write_admin
-on public.training_records
+on public.cg_training_records
 for all
 using (company_id = public.current_company_id() and public.is_company_admin())
 with check (company_id = public.current_company_id() and public.is_company_admin());
 
-drop policy if exists subscriptions_select_company on public.subscriptions;
+drop policy if exists subscriptions_select_company on public.cg_subscriptions;
 create policy subscriptions_select_company
-on public.subscriptions
+on public.cg_subscriptions
 for select
 using (company_id = public.current_company_id());
 
-drop policy if exists subscriptions_write_admin on public.subscriptions;
+drop policy if exists subscriptions_write_admin on public.cg_subscriptions;
 create policy subscriptions_write_admin
-on public.subscriptions
+on public.cg_subscriptions
 for all
 using (company_id = public.current_company_id() and public.is_company_admin())
 with check (company_id = public.current_company_id() and public.is_company_admin());
@@ -480,7 +480,7 @@ with check (company_id = public.current_company_id() and public.is_company_admin
 -- Realtime support for alerts stream.
 do $$
 begin
-  alter publication supabase_realtime add table public.alerts;
+  alter publication supabase_realtime add table public.cg_alerts;
 exception
   when duplicate_object then null;
 end $$;

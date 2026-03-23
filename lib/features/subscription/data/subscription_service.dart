@@ -11,7 +11,7 @@ class SubscriptionService {
 
   Future<SubscriptionRecord?> currentForCompany(String companyId) async {
     final row = await _client
-        .from('subscriptions')
+        .from('cg_subscriptions')
         .select('plan,status,current_period_end,created_at')
         .eq('company_id', companyId)
         .order('created_at', ascending: false)

@@ -11,7 +11,7 @@ class EmployeeRepository {
 
   Future<List<EmployeeRecord>> listByCompany(String companyId) async {
     final rows = await _client
-        .from('employees')
+        .from('cg_employees')
         .select('id,name,email,role,risk_score,training_completion')
         .eq('company_id', companyId)
         .order('risk_score', ascending: false);
@@ -29,7 +29,7 @@ class EmployeeRepository {
     int riskScore = 0,
     int trainingCompletion = 0,
   }) async {
-    await _client.from('employees').insert({
+    await _client.from('cg_employees').insert({
       'company_id': companyId,
       'name': name,
       'email': email,
@@ -48,7 +48,7 @@ class EmployeeRepository {
     required int trainingCompletion,
   }) async {
     await _client
-        .from('employees')
+        .from('cg_employees')
         .update({
           'name': name,
           'email': email,
@@ -60,6 +60,6 @@ class EmployeeRepository {
   }
 
   Future<void> delete(String employeeId) async {
-    await _client.from('employees').delete().eq('id', employeeId);
+    await _client.from('cg_employees').delete().eq('id', employeeId);
   }
 }
