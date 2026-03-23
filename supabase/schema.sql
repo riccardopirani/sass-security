@@ -3,10 +3,157 @@
 
 create extension if not exists pgcrypto;
 
-create type public.app_role as enum ('admin', 'employee');
-create type public.alert_severity as enum ('low', 'medium', 'high');
-create type public.subscription_plan as enum ('starter', 'pro', 'business');
-create type public.phishing_event_type as enum ('sent', 'opened', 'clicked');
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_type t
+    join pg_namespace n on n.oid = t.typnamespace
+    where t.typname = 'app_role' and n.nspname = 'public'
+  ) then
+    create type public.app_role as enum ('admin', 'employee');
+  end if;
+
+  if not exists (
+    select 1
+    from pg_type t
+    join pg_namespace n on n.oid = t.typnamespace
+    where t.typname = 'alert_severity' and n.nspname = 'public'
+  ) then
+    create type public.alert_severity as enum ('low', 'medium', 'high');
+  end if;
+
+  if not exists (
+    select 1
+    from pg_type t
+    join pg_namespace n on n.oid = t.typnamespace
+    where t.typname = 'subscription_plan' and n.nspname = 'public'
+  ) then
+    create type public.subscription_plan as enum ('starter', 'pro', 'business');
+  end if;
+
+  if not exists (
+    select 1
+    from pg_type t
+    join pg_namespace n on n.oid = t.typnamespace
+    where t.typname = 'phishing_event_type' and n.nspname = 'public'
+  ) then
+    create type public.phishing_event_type as enum ('sent', 'opened', 'clicked');
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'app_role' and e.enumlabel = 'admin'
+  ) then
+    alter type public.app_role add value 'admin';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'app_role' and e.enumlabel = 'employee'
+  ) then
+    alter type public.app_role add value 'employee';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'alert_severity' and e.enumlabel = 'low'
+  ) then
+    alter type public.alert_severity add value 'low';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'alert_severity' and e.enumlabel = 'medium'
+  ) then
+    alter type public.alert_severity add value 'medium';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'alert_severity' and e.enumlabel = 'high'
+  ) then
+    alter type public.alert_severity add value 'high';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'subscription_plan' and e.enumlabel = 'starter'
+  ) then
+    alter type public.subscription_plan add value 'starter';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'subscription_plan' and e.enumlabel = 'pro'
+  ) then
+    alter type public.subscription_plan add value 'pro';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'subscription_plan' and e.enumlabel = 'business'
+  ) then
+    alter type public.subscription_plan add value 'business';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'phishing_event_type' and e.enumlabel = 'sent'
+  ) then
+    alter type public.phishing_event_type add value 'sent';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'phishing_event_type' and e.enumlabel = 'opened'
+  ) then
+    alter type public.phishing_event_type add value 'opened';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_enum e
+    join pg_type t on t.oid = e.enumtypid
+    join pg_namespace n on n.oid = t.typnamespace
+    where n.nspname = 'public' and t.typname = 'phishing_event_type' and e.enumlabel = 'clicked'
+  ) then
+    alter type public.phishing_event_type add value 'clicked';
+  end if;
+end $$;
 
 create table if not exists public.cg_companies (
   id uuid primary key default gen_random_uuid(),
@@ -72,7 +219,7 @@ create table if not exists public.cg_alerts (
   id uuid primary key default gen_random_uuid(),
   company_id uuid not null references public.cg_companies(id) on delete cascade,
   employee_id uuid references public.cg_employees(id) on delete set null,
-  severity public.alert_severity not null default 'low',
+  severity text not null default 'low' check (severity in ('low', 'medium', 'high')),
   title text not null,
   message text not null,
   is_read boolean not null default false,
@@ -480,7 +627,10 @@ with check (company_id = public.current_company_id() and public.is_company_admin
 -- Realtime support for alerts stream.
 do $$
 begin
-  alter publication supabase_realtime add table public.cg_alerts;
+  if to_regclass('public.cg_alerts') is not null then
+    alter publication supabase_realtime add table public.cg_alerts;
+  end if;
 exception
   when duplicate_object then null;
+  when undefined_table then null;
 end $$;
