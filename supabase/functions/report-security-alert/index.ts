@@ -31,8 +31,12 @@ const sendAlertEmail = async (
   reporterName: string,
   companyId: string,
 ) => {
-  if (!resendApiKey || recipients.length === 0) {
-    return { emailedCount: 0, skipped: true };
+  if (!resendApiKey) {
+    throw new Error('RESEND_API_KEY is not configured.');
+  }
+
+  if (recipients.length === 0) {
+    throw new Error('No recipients found for this company.');
   }
 
   const subject = `[CyberGuard Alert] ${title}`;
@@ -72,7 +76,7 @@ const sendAlertEmail = async (
     throw new Error(`Unable to send alert email: ${body}`);
   }
 
-  return { emailedCount: recipients.length, skipped: false };
+  return { emailedCount: recipients.length };
 };
 
 serve(async (req) => {
@@ -198,7 +202,6 @@ serve(async (req) => {
       alert_id: alertInsert.data.id,
       emailed_count: emailResult.emailedCount,
       recipients_count: recipients.size,
-      email_skipped: emailResult.skipped,
     });
   } catch (error) {
     return json(
