@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/config/env.dart';
 import 'core/localization/locale_controller.dart';
 import 'features/auth/presentation/auth_gate.dart';
+import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,10 +33,14 @@ Future<void> main() async {
       if (!context.mounted) return;
       await Navigator.of(context).push(
         PageRouteBuilder<void>(
-          pageBuilder: (_, __, ___) => AuthGate(
-            localeController: localeController,
-            backendReady: backendReady,
-            backendError: backendError,
+          pageBuilder: (_, __, ___) => Localizations(
+            locale: localeController.locale,
+            delegates: AppLocalizations.localizationsDelegates,
+            child: AuthGate(
+              localeController: localeController,
+              backendReady: backendReady,
+              backendError: backendError,
+            ),
           ),
           transitionsBuilder: (_, animation, __, child) {
             final curved = CurvedAnimation(
