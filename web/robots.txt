@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Keep common private/auth paths out of indexing.
+Disallow: /auth
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /employees
+Disallow: /alerts
+Disallow: /billing
+
+Sitemap: https://cyberguard.io/sitemap.xml
