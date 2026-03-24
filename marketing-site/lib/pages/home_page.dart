@@ -78,73 +78,81 @@ class HomePage extends StatelessWidget {
                 runSpacing: 24,
                 children: [
                   SizedBox(
-                    width: compact ? constraints.maxWidth : constraints.maxWidth * 0.57,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.homeHeroTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(fontSize: compact ? 36 : 50),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          l10n.homeHeroSubtitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(color: AppColors.mutedText),
-                        ),
-                        const SizedBox(height: 22),
-                        Wrap(
-                          spacing: 12,
-                          runSpacing: 12,
-                          children: [
-                            CtaButton(
-                              label: l10n.commonStartFreeTrial,
-                              onPressed: () => DeepLinkService.handleCta(
-                                context,
-                                CtaDeepLink.signup,
-                              ),
-                            ),
-                            CtaButton(
-                              label: l10n.commonSeeDemo,
-                              filled: false,
-                              onPressed: () => _showDemoModal(context),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.sameAccountText,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: AppColors.mutedText),
-                        ),
-                      ],
-                    ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.1, end: 0),
+                    width: compact
+                        ? constraints.maxWidth
+                        : constraints.maxWidth * 0.57,
+                    child:
+                        Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  l10n.homeHeroTitle,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.copyWith(fontSize: compact ? 36 : 50),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  l10n.homeHeroSubtitle,
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(color: AppColors.mutedText),
+                                ),
+                                const SizedBox(height: 22),
+                                Wrap(
+                                  spacing: 12,
+                                  runSpacing: 12,
+                                  children: [
+                                    CtaButton(
+                                      label: l10n.commonStartFreeTrial,
+                                      onPressed: () =>
+                                          DeepLinkService.handleCta(
+                                            context,
+                                            CtaDeepLink.signup,
+                                          ),
+                                    ),
+                                    CtaButton(
+                                      label: l10n.commonSeeDemo,
+                                      filled: false,
+                                      onPressed: () => _showDemoModal(context),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  l10n.sameAccountText,
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(color: AppColors.mutedText),
+                                ),
+                              ],
+                            )
+                            .animate()
+                            .fadeIn(duration: 500.ms)
+                            .slideY(begin: 0.1, end: 0),
                   ),
                   SizedBox(
-                    width: compact ? constraints.maxWidth : constraints.maxWidth * 0.38,
-                    child: GlassCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.homeHeroPanelTitle,
-                            style: Theme.of(context).textTheme.titleLarge,
+                        width: compact
+                            ? constraints.maxWidth
+                            : constraints.maxWidth * 0.38,
+                        child: GlassCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.homeHeroPanelTitle,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 14),
+                              _miniMetric(l10n.homeHeroPanelMetric1, '99.9%'),
+                              _miniMetric(l10n.homeHeroPanelMetric2, '500+'),
+                              _miniMetric(l10n.homeHeroPanelMetric3, '<90s'),
+                            ],
                           ),
-                          const SizedBox(height: 14),
-                          _miniMetric(l10n.homeHeroPanelMetric1, '99.9%'),
-                          _miniMetric(l10n.homeHeroPanelMetric2, '500+'),
-                          _miniMetric(l10n.homeHeroPanelMetric3, '<90s'),
-                        ],
-                      ),
-                    ),
-                  ).animate().fadeIn(duration: 550.ms).slideY(begin: 0.08, end: 0),
+                        ),
+                      )
+                      .animate()
+                      .fadeIn(duration: 550.ms)
+                      .slideY(begin: 0.08, end: 0),
                 ],
               );
             },
@@ -227,8 +235,10 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.homeFeatureSectionTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.homeFeatureSectionTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 18),
               Wrap(
                 spacing: 16,
@@ -236,25 +246,29 @@ class HomePage extends StatelessWidget {
                 children: List.generate(featureCards.length, (index) {
                   final feature = featureCards[index];
                   return SizedBox(
-                    width: MediaQuery.sizeOf(context).width < 760 ? double.infinity : 270,
-                    child: GlassCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(feature.icon, color: AppColors.accent),
-                          const SizedBox(height: 12),
-                          Text(feature.title,
-                              style: Theme.of(context).textTheme.titleLarge),
-                          const SizedBox(height: 8),
-                          Text(feature.subtitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: AppColors.mutedText)),
-                        ],
-                      ),
-                    ),
-                  )
+                        width: MediaQuery.sizeOf(context).width < 760
+                            ? double.infinity
+                            : 270,
+                        child: GlassCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(feature.icon, color: AppColors.accent),
+                              const SizedBox(height: 12),
+                              Text(
+                                feature.title,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                feature.subtitle,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: AppColors.mutedText),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                       .animate(delay: (index * 90).ms)
                       .fadeIn(duration: 500.ms)
                       .slideY(begin: 0.05, end: 0);
@@ -267,8 +281,10 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.homeHowItWorksTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.homeHowItWorksTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 18),
               Wrap(
                 spacing: 14,
@@ -276,25 +292,29 @@ class HomePage extends StatelessWidget {
                 children: List.generate(steps.length, (index) {
                   final step = steps[index];
                   return SizedBox(
-                    width: MediaQuery.sizeOf(context).width < 900 ? double.infinity : 360,
+                    width: MediaQuery.sizeOf(context).width < 900
+                        ? double.infinity
+                        : 360,
                     child: GlassCard(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('0${index + 1}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium
-                                  ?.copyWith(color: AppColors.accent)),
+                          Text(
+                            '0${index + 1}',
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(color: AppColors.accent),
+                          ),
                           const SizedBox(height: 8),
-                          Text(step.title,
-                              style: Theme.of(context).textTheme.titleLarge),
+                          Text(
+                            step.title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                           const SizedBox(height: 6),
-                          Text(step.subtitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: AppColors.mutedText)),
+                          Text(
+                            step.subtitle,
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: AppColors.mutedText),
+                          ),
                         ],
                       ),
                     ),
@@ -308,8 +328,10 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.homeTestimonialsTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.homeTestimonialsTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 18),
               Wrap(
                 spacing: 16,
@@ -329,13 +351,15 @@ class HomePage extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               const SizedBox(height: 12),
-                              Text(item.name,
-                                  style: Theme.of(context).textTheme.titleLarge),
-                              Text(item.role,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: AppColors.mutedText)),
+                              Text(
+                                item.name,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                item.role,
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(color: AppColors.mutedText),
+                              ),
                             ],
                           ),
                         ),
@@ -352,14 +376,17 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.homeFinalCtaTitle,
-                    style: Theme.of(context).textTheme.headlineSmall),
+                Text(
+                  l10n.homeFinalCtaTitle,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
                 const SizedBox(height: 10),
-                Text(l10n.homeFinalCtaSubtitle,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: AppColors.mutedText)),
+                Text(
+                  l10n.homeFinalCtaSubtitle,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
+                ),
                 const SizedBox(height: 16),
                 Wrap(
                   spacing: 12,
@@ -367,8 +394,10 @@ class HomePage extends StatelessWidget {
                   children: [
                     CtaButton(
                       label: l10n.commonStartFreeTrial,
-                      onPressed: () =>
-                          DeepLinkService.handleCta(context, CtaDeepLink.signup),
+                      onPressed: () => DeepLinkService.handleCta(
+                        context,
+                        CtaDeepLink.signup,
+                      ),
                     ),
                     CtaButton(
                       label: l10n.commonSeeDemo,
@@ -407,8 +436,9 @@ class HomePage extends StatelessWidget {
   Widget _socialTile(BuildContext context, String label) {
     return Text(
       label,
-      style:
-          Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
+      style: Theme.of(
+        context,
+      ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
     );
   }
 
@@ -428,10 +458,9 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
                   '- ${line.trim()}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: AppColors.mutedText),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedText),
                 ),
               ),
             ),
@@ -456,15 +485,16 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.demoModalTitle,
-                      style: Theme.of(context).textTheme.headlineSmall),
+                  Text(
+                    l10n.demoModalTitle,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     l10n.demoModalSubtitle,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.mutedText),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.mutedText,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   AspectRatio(
@@ -478,9 +508,7 @@ class HomePage extends StatelessWidget {
                       child: Center(
                         child: Text(
                           l10n.demoModalPlaceholder,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
+                          style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(color: AppColors.mutedText),
                         ),
                       ),
@@ -493,8 +521,10 @@ class HomePage extends StatelessWidget {
                     children: [
                       CtaButton(
                         label: l10n.commonOpenInApp,
-                        onPressed: () =>
-                            DeepLinkService.handleCta(context, CtaDeepLink.demo),
+                        onPressed: () => DeepLinkService.handleCta(
+                          context,
+                          CtaDeepLink.demo,
+                        ),
                       ),
                       CtaButton(
                         label: l10n.commonClose,

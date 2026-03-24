@@ -32,7 +32,9 @@ class ContactPage extends StatelessWidget {
             runSpacing: 16,
             children: [
               SizedBox(
-                width: MediaQuery.sizeOf(context).width < 960 ? double.infinity : 760,
+                width: MediaQuery.sizeOf(context).width < 960
+                    ? double.infinity
+                    : 760,
                 child: GlassCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,10 +49,9 @@ class ContactPage extends StatelessWidget {
                       const SizedBox(height: 14),
                       Text(
                         l10n.contactFormDisclaimer,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.mutedText),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.mutedText,
+                        ),
                       ),
                       const SizedBox(height: 14),
                       FilledButton(
@@ -70,13 +71,17 @@ class ContactPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.sizeOf(context).width < 960 ? double.infinity : 380,
+                width: MediaQuery.sizeOf(context).width < 960
+                    ? double.infinity
+                    : 380,
                 child: GlassCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.contactSidebarTitle,
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        l10n.contactSidebarTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                       const SizedBox(height: 16),
                       _infoTile(
                         context,
@@ -129,11 +134,12 @@ class ContactPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.mutedText)),
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedText),
+          ),
           const SizedBox(height: 4),
           Text(value, style: Theme.of(context).textTheme.titleLarge),
         ],

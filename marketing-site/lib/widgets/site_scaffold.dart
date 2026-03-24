@@ -95,9 +95,9 @@ class _TopNav extends StatelessWidget {
               child: Text(
                 'CyberGuard',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: AppColors.accent,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             if (isCompact)
@@ -107,15 +107,19 @@ class _TopNav extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ...navItems.map((item) => _NavLink(item: item, l10n: l10n)),
+                      ...navItems.map(
+                        (item) => _NavLink(item: item, l10n: l10n),
+                      ),
                       const SizedBox(width: 10),
                       _LocalePicker(localeCode: localeCode),
                       const SizedBox(width: 10),
                       CtaButton(
                         label: l10n.navLogin,
                         filled: false,
-                        onPressed: () =>
-                            DeepLinkService.handleCta(context, CtaDeepLink.login),
+                        onPressed: () => DeepLinkService.handleCta(
+                          context,
+                          CtaDeepLink.login,
+                        ),
                       ),
                     ],
                   ),
@@ -169,8 +173,8 @@ class _NavLink extends StatelessWidget {
           child: Text(
             item.label,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: active ? AppColors.accent : AppColors.text,
-                ),
+              color: active ? AppColors.accent : AppColors.text,
+            ),
           ),
         ),
       ),
@@ -200,14 +204,19 @@ class _LocalePicker extends StatelessWidget {
           onChanged: (nextCode) {
             if (nextCode == null) return;
             final currentPath = GoRouterState.of(context).uri.toString();
-            final nextPath = LocaleUtils.switchLocaleInPath(currentPath, nextCode);
+            final nextPath = LocaleUtils.switchLocaleInPath(
+              currentPath,
+              nextCode,
+            );
             context.go(nextPath);
           },
           items: LocaleUtils.supportedLocaleCodes
               .map(
                 (code) => DropdownMenuItem<String>(
                   value: code,
-                  child: Text(LocaleUtils.localeLabels[code] ?? code.toUpperCase()),
+                  child: Text(
+                    LocaleUtils.localeLabels[code] ?? code.toUpperCase(),
+                  ),
                 ),
               )
               .toList(),
@@ -237,10 +246,9 @@ class _Footer extends StatelessWidget {
           children: [
             Text(
               l10n.footerTagline,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.mutedText),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedText),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -260,8 +268,9 @@ class _Footer extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           l10n.footerCopyright,
-          style:
-              Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedText),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: AppColors.mutedText),
         ),
       ],
     );

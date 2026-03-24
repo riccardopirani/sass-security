@@ -54,40 +54,46 @@ class AboutPage extends StatelessWidget {
             runSpacing: 16,
             children: [
               SizedBox(
-                width: MediaQuery.sizeOf(context).width < 980 ? double.infinity : 570,
+                width: MediaQuery.sizeOf(context).width < 980
+                    ? double.infinity
+                    : 570,
                 child: GlassCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.aboutMissionTitle,
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        l10n.aboutMissionTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         l10n.aboutMissionBody,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: AppColors.mutedText),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.mutedText,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
               SizedBox(
-                width: MediaQuery.sizeOf(context).width < 980 ? double.infinity : 570,
+                width: MediaQuery.sizeOf(context).width < 980
+                    ? double.infinity
+                    : 570,
                 child: GlassCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l10n.aboutWhyTitle,
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        l10n.aboutWhyTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         l10n.aboutWhyBody,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: AppColors.mutedText),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.mutedText,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       Container(
@@ -101,9 +107,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         child: Text(
                           l10n.aboutCrossPlatformNote,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: AppColors.accent),
                         ),
                       ),
@@ -118,8 +122,10 @@ class AboutPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.aboutValuesTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.aboutValuesTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 16,
@@ -127,27 +133,34 @@ class AboutPage extends StatelessWidget {
                 children: List.generate(values.length, (index) {
                   final value = values[index];
                   return SizedBox(
-                    width: MediaQuery.sizeOf(context).width < 900 ? double.infinity : 270,
-                    child: GlassCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(value.title,
-                              style: Theme.of(context).textTheme.titleLarge),
-                          const SizedBox(height: 8),
-                          Text(
-                            value.desc,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.mutedText),
-                          ),
-                        ],
-                      ),
-                    )
-                        .animate(delay: (index * 80).ms)
-                        .fadeIn(duration: 450.ms)
-                        .slideY(begin: 0.04, end: 0),
+                    width: MediaQuery.sizeOf(context).width < 900
+                        ? double.infinity
+                        : 270,
+                    child:
+                        GlassCard(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    value.title,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleLarge,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    value.desc,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: AppColors.mutedText),
+                                  ),
+                                ],
+                              ),
+                            )
+                            .animate(delay: (index * 80).ms)
+                            .fadeIn(duration: 450.ms)
+                            .slideY(begin: 0.04, end: 0),
                   );
                 }),
               ),
@@ -158,8 +171,10 @@ class AboutPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.aboutTeamTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.aboutTeamTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 16,
@@ -176,19 +191,22 @@ class AboutPage extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 24,
-                                backgroundColor:
-                                    AppColors.accent.withValues(alpha: 0.18),
-                                child: const Icon(Icons.person,
-                                    color: AppColors.accent),
+                                backgroundColor: AppColors.accent.withValues(
+                                  alpha: 0.18,
+                                ),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: AppColors.accent,
+                                ),
                               ),
                               const SizedBox(height: 12),
-                              Text(member.name,
-                                  style: Theme.of(context).textTheme.titleLarge),
+                              Text(
+                                member.name,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                               Text(
                                 member.role,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
+                                style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(color: AppColors.mutedText),
                               ),
                             ],
@@ -207,8 +225,10 @@ class AboutPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.aboutTimelineTitle,
-                    style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  l10n.aboutTimelineTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 14),
                 ...timeline.map(
                   (step) => Padding(
@@ -218,15 +238,17 @@ class AboutPage extends StatelessWidget {
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(top: 6),
-                          child: Icon(Icons.bolt, size: 14, color: AppColors.accent),
+                          child: Icon(
+                            Icons.bolt,
+                            size: 14,
+                            color: AppColors.accent,
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             step,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(color: AppColors.mutedText),
                           ),
                         ),

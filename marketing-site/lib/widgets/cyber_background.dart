@@ -15,7 +15,11 @@ class CyberBackground extends StatelessWidget {
           child: DecoratedBox(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF070B14), AppColors.background, Color(0xFF0B1424)],
+                colors: [
+                  Color(0xFF070B14),
+                  AppColors.background,
+                  Color(0xFF0B1424),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -23,11 +27,7 @@ class CyberBackground extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-          child: IgnorePointer(
-            child: CustomPaint(
-              painter: _GridPainter(),
-            ),
-          ),
+          child: IgnorePointer(child: CustomPaint(painter: _GridPainter())),
         ),
         Positioned(
           top: -180,
@@ -99,10 +99,12 @@ class _GridPainter extends CustomPainter {
     for (var i = 0; i < 18; i++) {
       final startX = random.nextDouble() * size.width;
       final startY = random.nextDouble() * size.height;
-      final midX =
-          (startX + random.nextDouble() * 220).clamp(0, size.width).toDouble();
-      final endY =
-          (startY + random.nextDouble() * 160).clamp(0, size.height).toDouble();
+      final midX = (startX + random.nextDouble() * 220)
+          .clamp(0, size.width)
+          .toDouble();
+      final endY = (startY + random.nextDouble() * 160)
+          .clamp(0, size.height)
+          .toDouble();
 
       final path = Path()
         ..moveTo(startX, startY)

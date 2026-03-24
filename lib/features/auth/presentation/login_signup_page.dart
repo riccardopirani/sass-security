@@ -58,7 +58,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           companyName: _role == AppUserRole.admin
               ? _companyNameCtrl.text.trim()
               : null,
-          companyCode: _role == AppUserRole.employee
+          companyCode: _role != AppUserRole.admin
               ? _companyCodeCtrl.text.trim()
               : null,
         );
@@ -159,9 +159,17 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                   value: AppUserRole.admin,
                                   child: Text(l10n.admin),
                                 ),
+                                const DropdownMenuItem(
+                                  value: AppUserRole.securityManager,
+                                  child: Text('Security Manager'),
+                                ),
                                 DropdownMenuItem(
                                   value: AppUserRole.employee,
                                   child: Text(l10n.employee),
+                                ),
+                                const DropdownMenuItem(
+                                  value: AppUserRole.auditor,
+                                  child: Text('Auditor'),
                                 ),
                               ],
                               onChanged: (value) {
@@ -186,14 +194,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                   return null;
                                 },
                               ),
-                            if (_role == AppUserRole.employee)
+                            if (_role != AppUserRole.admin)
                               TextFormField(
                                 controller: _companyCodeCtrl,
                                 decoration: InputDecoration(
                                   labelText: l10n.company_code,
                                 ),
                                 validator: (v) {
-                                  if (_role == AppUserRole.employee &&
+                                  if (_role != AppUserRole.admin &&
                                       (v == null || v.trim().isEmpty)) {
                                     return l10n.error_generic;
                                   }

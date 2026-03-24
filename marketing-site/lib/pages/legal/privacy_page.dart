@@ -27,22 +27,23 @@ class PrivacyPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.privacyTitle, style: Theme.of(context).textTheme.headlineMedium),
+            Text(
+              l10n.privacyTitle,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             const SizedBox(height: 8),
             Text(
               l10n.privacyUpdated,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(color: AppColors.mutedText),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.mutedText),
             ),
             const SizedBox(height: 14),
             Text(
               l10n.privacyIntro,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.mutedText),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedText),
             ),
             const SizedBox(height: 20),
             ...sections.map(
@@ -51,15 +52,16 @@ class PrivacyPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(section.title,
-                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      section.title,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 6),
                     Text(
                       section.body,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.mutedText),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.mutedText,
+                      ),
                     ),
                   ],
                 ),

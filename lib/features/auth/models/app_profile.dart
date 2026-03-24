@@ -1,9 +1,13 @@
-enum AppUserRole { admin, employee }
+enum AppUserRole { admin, securityManager, employee, auditor }
 
 AppUserRole roleFromString(String value) {
   switch (value) {
     case 'admin':
       return AppUserRole.admin;
+    case 'security_manager':
+      return AppUserRole.securityManager;
+    case 'auditor':
+      return AppUserRole.auditor;
     case 'employee':
     default:
       return AppUserRole.employee;
@@ -14,8 +18,12 @@ String roleToString(AppUserRole role) {
   switch (role) {
     case AppUserRole.admin:
       return 'admin';
+    case AppUserRole.securityManager:
+      return 'security_manager';
     case AppUserRole.employee:
       return 'employee';
+    case AppUserRole.auditor:
+      return 'auditor';
   }
 }
 
@@ -41,6 +49,9 @@ class AppProfile {
   final String? companyCode;
 
   bool get isAdmin => role == AppUserRole.admin;
+  bool get isManager =>
+      role == AppUserRole.admin || role == AppUserRole.securityManager;
+  bool get isAuditor => role == AppUserRole.auditor;
 
   factory AppProfile.fromMap(Map<String, dynamic> map) {
     final companyMap = map['companies'] as Map<String, dynamic>?;

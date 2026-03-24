@@ -85,15 +85,19 @@ class PricingPage extends ConsumerWidget {
               final plan = plans[index];
 
               return SizedBox(
-                width: MediaQuery.sizeOf(context).width < 960 ? double.infinity : 370,
+                width: MediaQuery.sizeOf(context).width < 960
+                    ? double.infinity
+                    : 370,
                 child: GlassCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Text(plan.name,
-                              style: Theme.of(context).textTheme.headlineSmall),
+                          Text(
+                            plan.name,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
                           if (plan.highlighted) ...[
                             const SizedBox(width: 10),
                             Container(
@@ -107,9 +111,7 @@ class PricingPage extends ConsumerWidget {
                               ),
                               child: Text(
                                 l10n.pricingPopular,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
+                                style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(color: AppColors.accent),
                               ),
                             ),
@@ -119,9 +121,7 @@ class PricingPage extends ConsumerWidget {
                       const SizedBox(height: 10),
                       Text(
                         '${plan.price} ${l10n.pricingPerMonth}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
+                        style: Theme.of(context).textTheme.headlineMedium
                             ?.copyWith(color: AppColors.accent),
                       ),
                       const SizedBox(height: 16),
@@ -130,8 +130,11 @@ class PricingPage extends ConsumerWidget {
                           padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: [
-                              const Icon(Icons.check_circle_outline,
-                                  size: 18, color: AppColors.accent),
+                              const Icon(
+                                Icons.check_circle_outline,
+                                size: 18,
+                                color: AppColors.accent,
+                              ),
                               const SizedBox(width: 8),
                               Expanded(child: Text(feature)),
                             ],
@@ -141,8 +144,10 @@ class PricingPage extends ConsumerWidget {
                       const SizedBox(height: 8),
                       CtaButton(
                         label: l10n.commonStartFreeTrial,
-                        onPressed: () =>
-                            DeepLinkService.handleCta(context, CtaDeepLink.signup),
+                        onPressed: () => DeepLinkService.handleCta(
+                          context,
+                          CtaDeepLink.signup,
+                        ),
                       ),
                     ],
                   ),
@@ -156,8 +161,10 @@ class PricingPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.pricingFaqTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.pricingFaqTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 16),
               ...List.generate(faq.length, (index) {
                 final item = faq[index];
@@ -176,8 +183,10 @@ class PricingPage extends ConsumerWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Text(item.q,
-                                    style: Theme.of(context).textTheme.titleLarge),
+                                child: Text(
+                                  item.q,
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
                               ),
                               Icon(
                                 expanded
@@ -196,9 +205,7 @@ class PricingPage extends ConsumerWidget {
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
                               item.a,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
+                              style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(color: AppColors.mutedText),
                             ),
                           ),
@@ -217,17 +224,18 @@ class PricingPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.pricingComparisonTitle,
-                  style: Theme.of(context).textTheme.headlineMedium),
+              Text(
+                l10n.pricingComparisonTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: GlassCard(
                   child: DataTable(
-                    headingTextStyle: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: AppColors.text),
+                    headingTextStyle: Theme.of(
+                      context,
+                    ).textTheme.titleLarge?.copyWith(color: AppColors.text),
                     dataTextStyle: Theme.of(context).textTheme.bodyMedium,
                     columns: [
                       DataColumn(label: Text(l10n.pricingComparisonFeature)),
@@ -236,13 +244,36 @@ class PricingPage extends ConsumerWidget {
                       DataColumn(label: Text(l10n.pricingBusiness)),
                     ],
                     rows: [
-                      _comparisonRow(l10n.pricingComparisonPhishing, [true, true, true]),
-                      _comparisonRow(l10n.pricingComparisonAlerts, [true, true, true]),
-                      _comparisonRow(l10n.pricingComparisonTraining, [false, true, true]),
-                      _comparisonRow(
-                          l10n.pricingComparisonSupabase, [false, false, true]),
-                      _comparisonRow(l10n.pricingComparisonSso, [false, true, true]),
-                      _comparisonRow(l10n.pricingComparisonSupport, [false, false, true]),
+                      _comparisonRow(l10n.pricingComparisonPhishing, [
+                        true,
+                        true,
+                        true,
+                      ]),
+                      _comparisonRow(l10n.pricingComparisonAlerts, [
+                        true,
+                        true,
+                        true,
+                      ]),
+                      _comparisonRow(l10n.pricingComparisonTraining, [
+                        false,
+                        true,
+                        true,
+                      ]),
+                      _comparisonRow(l10n.pricingComparisonSupabase, [
+                        false,
+                        false,
+                        true,
+                      ]),
+                      _comparisonRow(l10n.pricingComparisonSso, [
+                        false,
+                        true,
+                        true,
+                      ]),
+                      _comparisonRow(l10n.pricingComparisonSupport, [
+                        false,
+                        false,
+                        true,
+                      ]),
                     ],
                   ),
                 ),

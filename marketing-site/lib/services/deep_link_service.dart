@@ -17,11 +17,16 @@ enum CtaDeepLink {
 
 class DeepLinkService {
   static final Uri _iosStoreUri = Uri.parse('https://apps.apple.com');
-  static final Uri _androidStoreUri = Uri.parse('https://play.google.com/store');
+  static final Uri _androidStoreUri = Uri.parse(
+    'https://play.google.com/store',
+  );
   static Future<void> Function(BuildContext context, CtaDeepLink target)?
-      ctaOverrideHandler;
+  ctaOverrideHandler;
 
-  static Future<void> handleCta(BuildContext context, CtaDeepLink target) async {
+  static Future<void> handleCta(
+    BuildContext context,
+    CtaDeepLink target,
+  ) async {
     final override = ctaOverrideHandler;
     if (override != null) {
       await override(context, target);
@@ -81,10 +86,9 @@ class DeepLinkService {
                     const SizedBox(height: 8),
                     Text(
                       l10n.deepLinkDesktopSubtitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.mutedText),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.mutedText,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Container(
@@ -99,10 +103,9 @@ class DeepLinkService {
                       child: Text(
                         'QR\n$deepLink',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontFamily: 'monospace'),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontFamily: 'monospace',
+                        ),
                       ),
                     ),
                     const SizedBox(height: 12),

@@ -38,56 +38,66 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       ShellRoute(
         builder: (context, state, child) {
-          final localeCode = LocaleUtils.normalizeCode(state.pathParameters['locale']);
+          final localeCode = LocaleUtils.normalizeCode(
+            state.pathParameters['locale'],
+          );
           return SiteScaffold(localeCode: localeCode, child: child);
         },
         routes: [
           GoRoute(
             path: '/:locale',
             builder: (context, state) => HomePage(
-              localeCode: LocaleUtils.normalizeCode(state.pathParameters['locale']),
+              localeCode: LocaleUtils.normalizeCode(
+                state.pathParameters['locale'],
+              ),
             ),
             routes: [
               GoRoute(
                 path: 'features',
                 builder: (context, state) => FeaturesPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
               GoRoute(
                 path: 'pricing',
                 builder: (context, state) => PricingPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
               GoRoute(
                 path: 'about',
                 builder: (context, state) => AboutPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
               GoRoute(
                 path: 'contact',
                 builder: (context, state) => ContactPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
               GoRoute(
                 path: 'legal/privacy',
                 builder: (context, state) => PrivacyPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
               GoRoute(
                 path: 'legal/terms',
                 builder: (context, state) => TermsPage(
-                  localeCode:
-                      LocaleUtils.normalizeCode(state.pathParameters['locale']),
+                  localeCode: LocaleUtils.normalizeCode(
+                    state.pathParameters['locale'],
+                  ),
                 ),
               ),
             ],
@@ -100,9 +110,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         body: Center(
           child: Text(
             '404 - ${state.error ?? 'Page not found'}',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: AppColors.text,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: AppColors.text),
           ),
         ),
       );

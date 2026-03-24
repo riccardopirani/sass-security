@@ -62,9 +62,8 @@ class MarketingLandingPage extends StatelessWidget {
                             const SizedBox(height: 14),
                             Text(
                               'CyberGuard helps small and medium businesses prevent phishing, monitor alerts in real time, and improve employee security posture.',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.white70),
                             ),
                             const SizedBox(height: 22),
                             Wrap(
@@ -84,9 +83,8 @@ class MarketingLandingPage extends StatelessWidget {
                             const SizedBox(height: 24),
                             Text(
                               'Same account works across Web and Mobile App.',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodyMedium?.copyWith(color: Colors.white60),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.white60),
                             ),
                           ],
                         ),

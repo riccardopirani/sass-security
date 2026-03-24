@@ -5,9 +5,11 @@ import '../../../core/localization/locale_controller.dart';
 import '../../alerts/presentation/alerts_page.dart';
 import '../../auth/data/auth_service.dart';
 import '../../auth/models/app_profile.dart';
+import '../../companion/presentation/companion_page.dart';
 import '../../dashboard/presentation/dashboard_page.dart';
 import '../../employees/presentation/employees_page.dart';
 import '../../news/presentation/news_page.dart';
+import '../../operations/presentation/operations_page.dart';
 import '../../phishing/presentation/phishing_page.dart';
 import '../../settings/presentation/settings_page.dart';
 import '../../subscription/presentation/pricing_page.dart';
@@ -149,11 +151,22 @@ class _HomeShellState extends State<HomeShell> {
         icon: Icons.newspaper_outlined,
         page: NewsPage(profile: widget.profile),
       ),
-      if (widget.profile.isAdmin)
+      _ShellItem(
+        label: 'Companion',
+        icon: Icons.phone_android_outlined,
+        page: CompanionPage(profile: widget.profile),
+      ),
+      if (widget.profile.isManager)
         _ShellItem(
           label: l10n.phishing,
           icon: Icons.email_outlined,
           page: PhishingPage(profile: widget.profile),
+        ),
+      if (widget.profile.isManager || widget.profile.isAuditor)
+        _ShellItem(
+          label: 'Security Ops',
+          icon: Icons.psychology_alt_outlined,
+          page: OperationsPage(profile: widget.profile),
         ),
       _ShellItem(
         label: l10n.subscription,

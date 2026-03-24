@@ -27,18 +27,14 @@ class SectionHeading extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 subtitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: AppColors.mutedText),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
               ),
             ],
           ),
         ),
-        if (trailing != null) ...[
-          const SizedBox(width: 16),
-          trailing!,
-        ],
+        if (trailing != null) ...[const SizedBox(width: 16), trailing!],
       ],
     );
   }

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class LocaleUtils {
-  static const supportedLocaleCodes = <String>['en', 'it', 'de', 'fr', 'zh', 'ru'];
+  static const supportedLocaleCodes = <String>[
+    'en',
+    'it',
+    'de',
+    'fr',
+    'zh',
+    'ru',
+  ];
 
   static const supportedLocales = <Locale>[
     Locale('en'),

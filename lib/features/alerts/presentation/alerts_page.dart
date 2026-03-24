@@ -113,6 +113,10 @@ class _AlertsPageState extends State<AlertsPage> {
                     initialValue: _severity,
                     decoration: InputDecoration(labelText: l10n.severity),
                     items: [
+                      const DropdownMenuItem(
+                        value: 'critical',
+                        child: Text('Critical'),
+                      ),
                       DropdownMenuItem(value: 'high', child: Text(l10n.high)),
                       DropdownMenuItem(
                         value: 'medium',
@@ -206,6 +210,8 @@ class _AlertsPageState extends State<AlertsPage> {
 
   Color _severityColor(String severity) {
     switch (severity) {
+      case 'critical':
+        return const Color(0xFF7F1D1D);
       case 'high':
         return const Color(0xFFDC2626);
       case 'medium':
@@ -227,7 +233,9 @@ class _SeverityChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: severity == 'high'
+        color: severity == 'critical'
+            ? const Color(0x667F1D1D)
+            : severity == 'high'
             ? const Color(0x33DC2626)
             : severity == 'medium'
             ? const Color(0x33F59E0B)

@@ -110,6 +110,34 @@ class _DashboardPageState extends State<DashboardPage> {
                             : constraints.maxWidth,
                       ),
                       _MetricCard(
+                        title: 'Open incidents',
+                        value: '${data.openIncidents}',
+                        width: wide
+                            ? (constraints.maxWidth - 12) / 2
+                            : constraints.maxWidth,
+                      ),
+                      _MetricCard(
+                        title: 'Critical incidents',
+                        value: '${data.criticalIncidents}',
+                        width: wide
+                            ? (constraints.maxWidth - 12) / 2
+                            : constraints.maxWidth,
+                      ),
+                      _MetricCard(
+                        title: 'High risk employees',
+                        value: '${data.highRiskEmployees}',
+                        width: wide
+                            ? (constraints.maxWidth - 12) / 2
+                            : constraints.maxWidth,
+                      ),
+                      _MetricCard(
+                        title: 'Benchmark',
+                        value: 'Safer than ${data.benchmarkPercentile}%',
+                        width: wide
+                            ? (constraints.maxWidth - 12) / 2
+                            : constraints.maxWidth,
+                      ),
+                      _MetricCard(
                         title: l10n.security_posture,
                         value: data.companyRiskScore >= 70
                             ? 'High Risk'
@@ -121,6 +149,81 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   );
                 },
+              ),
+              const SizedBox(height: 16),
+              GlassCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Top 10 risky users this week',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    ...data.topRiskyWeek.asMap().entries.map(
+                      (entry) => ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: CircleAvatar(
+                          backgroundColor: const Color(0xFF7C3AED),
+                          child: Text('${entry.key + 1}'),
+                        ),
+                        title: Text(entry.value.name),
+                        trailing: Text('${entry.value.riskScore}/100'),
+                      ),
+                    ),
+                    if (data.topRiskyWeek.isEmpty)
+                      Text(
+                        'No risky users this week.',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              GlassCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Monthly risk trend',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    if (data.riskTrend.isEmpty)
+                      Text(
+                        'No trend data yet.',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                      )
+                    else
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: data.riskTrend
+                            .map(
+                              (point) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0x3322C55E),
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: Text(
+                                  '${point.date.day.toString().padLeft(2, '0')}/${point.date.month.toString().padLeft(2, '0')}: ${point.riskScore}',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               GlassCard(

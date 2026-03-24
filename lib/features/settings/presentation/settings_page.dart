@@ -37,9 +37,7 @@ class SettingsPage extends StatelessWidget {
               const SizedBox(height: 12),
               Text('${l10n.name}: ${profile.name}'),
               Text('${l10n.email}: ${profile.email}'),
-              Text(
-                '${l10n.role}: ${profile.isAdmin ? l10n.admin : l10n.employee}',
-              ),
+              Text('${l10n.role}: ${_roleLabel(profile.role, l10n)}'),
               Text(
                 '${l10n.company_name}: ${profile.companyName ?? l10n.unknown}',
               ),
@@ -101,6 +99,19 @@ class SettingsPage extends StatelessWidget {
       case 'en':
       default:
         return 'English';
+    }
+  }
+
+  String _roleLabel(AppUserRole role, AppLocalizations l10n) {
+    switch (role) {
+      case AppUserRole.admin:
+        return l10n.admin;
+      case AppUserRole.securityManager:
+        return 'Security Manager';
+      case AppUserRole.auditor:
+        return 'Auditor';
+      case AppUserRole.employee:
+        return l10n.employee;
     }
   }
 }

@@ -42,7 +42,21 @@ class _EmployeesPageState extends State<EmployeesPage> {
     final trainingCtrl = TextEditingController(
       text: '${existing?.trainingCompletion ?? 0}',
     );
+    final passwordCtrl = TextEditingController(
+      text: '${existing?.passwordBehaviorScore ?? 30}',
+    );
+    final incidentCtrl = TextEditingController(
+      text: '${existing?.incidentHistoryScore ?? 0}',
+    );
+    final deviceCtrl = TextEditingController(
+      text: '${existing?.deviceComplianceScore ?? 25}',
+    );
+    final behaviorCtrl = TextEditingController(
+      text: '${existing?.behaviorRiskScore ?? 15}',
+    );
     var role = existing?.role ?? AppUserRole.employee;
+    var mfaEnabled = existing?.mfaEnabled ?? false;
+    var forceMfa = existing?.forceMfa ?? false;
 
     final result = await showDialog<bool>(
       context: context,
@@ -73,9 +87,17 @@ class _EmployeesPageState extends State<EmployeesPage> {
                       value: AppUserRole.admin,
                       child: Text(l10n.admin),
                     ),
+                    const DropdownMenuItem(
+                      value: AppUserRole.securityManager,
+                      child: Text('Security Manager'),
+                    ),
                     DropdownMenuItem(
                       value: AppUserRole.employee,
                       child: Text(l10n.employee),
+                    ),
+                    const DropdownMenuItem(
+                      value: AppUserRole.auditor,
+                      child: Text('Auditor'),
                     ),
                   ],
                   onChanged: (value) {
@@ -98,6 +120,55 @@ class _EmployeesPageState extends State<EmployeesPage> {
                   decoration: InputDecoration(
                     labelText: l10n.training_completion,
                   ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: passwordCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Password behavior risk (0-100)',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: incidentCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Incident history risk (0-100)',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: deviceCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Device compliance risk (0-100)',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: behaviorCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Behavior risk (0-100)',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SwitchListTile(
+                  value: mfaEnabled,
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('MFA enabled'),
+                  onChanged: (value) {
+                    mfaEnabled = value;
+                  },
+                ),
+                SwitchListTile(
+                  value: forceMfa,
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Force MFA on next login'),
+                  onChanged: (value) {
+                    forceMfa = value;
+                  },
                 ),
               ],
             ),
@@ -123,6 +194,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
     try {
       final parsedRisk = int.tryParse(riskCtrl.text.trim()) ?? 0;
       final parsedTraining = int.tryParse(trainingCtrl.text.trim()) ?? 0;
+      final parsedPassword = int.tryParse(passwordCtrl.text.trim()) ?? 30;
+      final parsedIncident = int.tryParse(incidentCtrl.text.trim()) ?? 0;
+      final parsedDevice = int.tryParse(deviceCtrl.text.trim()) ?? 25;
+      final parsedBehavior = int.tryParse(behaviorCtrl.text.trim()) ?? 15;
 
       if (existing == null) {
         await _repo.create(
@@ -132,6 +207,12 @@ class _EmployeesPageState extends State<EmployeesPage> {
           role: role,
           riskScore: parsedRisk,
           trainingCompletion: parsedTraining,
+          passwordBehaviorScore: parsedPassword,
+          incidentHistoryScore: parsedIncident,
+          deviceComplianceScore: parsedDevice,
+          behaviorRiskScore: parsedBehavior,
+          mfaEnabled: mfaEnabled,
+          forceMfa: forceMfa,
         );
       } else {
         await _repo.update(
@@ -141,6 +222,12 @@ class _EmployeesPageState extends State<EmployeesPage> {
           role: role,
           riskScore: parsedRisk,
           trainingCompletion: parsedTraining,
+          passwordBehaviorScore: parsedPassword,
+          incidentHistoryScore: parsedIncident,
+          deviceComplianceScore: parsedDevice,
+          behaviorRiskScore: parsedBehavior,
+          mfaEnabled: mfaEnabled,
+          forceMfa: forceMfa,
         );
       }
 
@@ -206,7 +293,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
           return EmptyState(
             title: l10n.no_employees,
             icon: Icons.groups_2_outlined,
-            action: widget.profile.isAdmin
+            action: widget.profile.isManager
                 ? ElevatedButton(
                     onPressed: () => _createOrEdit(),
                     child: Text(l10n.add_employee),
@@ -219,10 +306,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
           onRefresh: _reload,
           child: ListView.separated(
             padding: const EdgeInsets.all(20),
-            itemCount: employees.length + (widget.profile.isAdmin ? 1 : 0),
+            itemCount: employees.length + (widget.profile.isManager ? 1 : 0),
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
-              if (widget.profile.isAdmin && index == 0) {
+              if (widget.profile.isManager && index == 0) {
                 return Align(
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton.icon(
@@ -233,7 +320,9 @@ class _EmployeesPageState extends State<EmployeesPage> {
                 );
               }
 
-              final employeeIndex = widget.profile.isAdmin ? index - 1 : index;
+              final employeeIndex = widget.profile.isManager
+                  ? index - 1
+                  : index;
               final employee = employees[employeeIndex];
               return GlassCard(
                 child: Row(
@@ -260,13 +349,13 @@ class _EmployeesPageState extends State<EmployeesPage> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${l10n.risk_score}: ${employee.riskScore} | ${l10n.training_completion}: ${employee.trainingCompletion}%',
+                            '${l10n.risk_score}: ${employee.riskScore} | ${l10n.training_completion}: ${employee.trainingCompletion}% | MFA: ${employee.mfaEnabled ? 'ON' : 'OFF'}',
                             style: const TextStyle(color: Colors.white60),
                           ),
                         ],
                       ),
                     ),
-                    if (widget.profile.isAdmin)
+                    if (widget.profile.isManager)
                       PopupMenuButton<String>(
                         onSelected: (value) {
                           if (value == 'edit') {

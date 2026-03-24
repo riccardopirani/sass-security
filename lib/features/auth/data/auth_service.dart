@@ -24,10 +24,10 @@ class AuthService {
         (companyName == null || companyName.trim().isEmpty)) {
       throw const AuthException('Company name is required for admin sign-up.');
     }
-    if (role == AppUserRole.employee &&
+    if (role != AppUserRole.admin &&
         (companyCode == null || companyCode.trim().isEmpty)) {
       throw const AuthException(
-        'Company code is required for employee sign-up.',
+        'Company code is required for non-admin sign-up.',
       );
     }
 
