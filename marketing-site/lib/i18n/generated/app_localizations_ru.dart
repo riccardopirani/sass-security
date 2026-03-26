@@ -101,6 +101,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeHeroPanelMetric3 => 'Avg. critical alert response';
 
   @override
+  String get homeGlobeTitle => 'Киберактивность в реальном времени';
+
+  @override
+  String get homeGlobeSubtitle =>
+      'Иллюстративные коридоры угроз между регионами (демо).';
+
+  @override
   String get socialSmbs => 'Trusted by 500+ SMBs';
 
   @override

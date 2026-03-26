@@ -29,6 +29,8 @@
   "homeHeroPanelMetric1": "Platform uptime",
   "homeHeroPanelMetric2": "Protected SMBs",
   "homeHeroPanelMetric3": "Avg. critical alert response",
+  "homeGlobeTitle": "Attività cyber in tempo reale",
+  "homeGlobeSubtitle": "Corridoi di minaccia illustrativi tra regioni (visualizzazione dimostrativa).",
   "socialSmbs": "Trusted by 500+ SMBs",
   "socialUptime": "99.9% uptime",
   "socialIncidents": "24/7 monitored threat pipeline",

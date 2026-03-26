@@ -1,3 +1,5 @@
+import 'dart:math' show min;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -5,6 +7,7 @@ import '../i18n/generated/app_localizations.dart';
 import '../services/deep_link_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/cta_button.dart';
+import '../widgets/cyber_threat_globe.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/section_container.dart';
 
@@ -139,10 +142,35 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                l10n.homeHeroPanelTitle,
+                                l10n.homeGlobeTitle,
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
+                              const SizedBox(height: 6),
+                              Text(
+                                l10n.homeGlobeSubtitle,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: AppColors.mutedText),
+                              ),
                               const SizedBox(height: 14),
+                              Center(
+                                child: LayoutBuilder(
+                                  builder: (context, c) {
+                                    final side = min(320.0, c.maxWidth).clamp(
+                                      200.0,
+                                      320.0,
+                                    );
+                                    return CyberThreatGlobe(size: side);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 18),
+                              Text(
+                                l10n.homeHeroPanelTitle,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 10),
                               _miniMetric(l10n.homeHeroPanelMetric1, '99.9%'),
                               _miniMetric(l10n.homeHeroPanelMetric2, '500+'),
                               _miniMetric(l10n.homeHeroPanelMetric3, '<90s'),

@@ -96,6 +96,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeHeroPanelMetric3 => 'Avg. critical alert response';
 
   @override
+  String get homeGlobeTitle => '实时网络活动';
+
+  @override
+  String get homeGlobeSubtitle => '地区之间的示意性威胁通道（演示可视化）。';
+
+  @override
   String get socialSmbs => 'Trusted by 500+ SMBs';
 
   @override

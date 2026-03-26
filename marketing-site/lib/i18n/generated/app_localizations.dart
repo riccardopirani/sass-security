@@ -280,6 +280,18 @@ abstract class AppLocalizations {
   /// **'Avg. critical alert response'**
   String get homeHeroPanelMetric3;
 
+  /// No description provided for @homeGlobeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live cyber activity'**
+  String get homeGlobeTitle;
+
+  /// No description provided for @homeGlobeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Illustrative threat corridors between regions (demo visualization).'**
+  String get homeGlobeSubtitle;
+
   /// No description provided for @socialSmbs.
   ///
   /// In en, this message translates to:

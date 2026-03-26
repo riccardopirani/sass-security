@@ -100,6 +100,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeHeroPanelMetric3 => 'Avg. critical alert response';
 
   @override
+  String get homeGlobeTitle => 'Live cyber activity';
+
+  @override
+  String get homeGlobeSubtitle =>
+      'Illustrative threat corridors between regions (demo visualization).';
+
+  @override
   String get socialSmbs => 'Trusted by 500+ SMBs';
 
   @override

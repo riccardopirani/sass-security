@@ -102,6 +102,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeHeroPanelMetric3 => 'Avg. critical alert response';
 
   @override
+  String get homeGlobeTitle => 'Attività cyber in tempo reale';
+
+  @override
+  String get homeGlobeSubtitle =>
+      'Corridoi di minaccia illustrativi tra regioni (visualizzazione dimostrativa).';
+
+  @override
   String get socialSmbs => 'Trusted by 500+ SMBs';
 
   @override
