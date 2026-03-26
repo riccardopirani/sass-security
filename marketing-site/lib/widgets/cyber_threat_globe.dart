@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
@@ -107,7 +108,8 @@ void _paintContinentLandmasses(
   double rotation,
   double visibleZ,
 ) {
-  const step = 3.4;
+  // Slightly coarser grid on web: fewer drawCircle calls per frame.
+  final step = kIsWeb ? 4.2 : 3.4;
   final fillAccent = Paint()..color = AppColors.accent.withValues(alpha: 0.042);
   final fillSoft = Paint()..color = Colors.white.withValues(alpha: 0.058);
 
@@ -122,11 +124,13 @@ void _paintContinentLandmasses(
   }
 
   final outlineGlow = Paint()
-    ..color = AppColors.accent.withValues(alpha: 0.11)
+    ..color = AppColors.accent.withValues(alpha: kIsWeb ? 0.16 : 0.11)
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 2.5
-    ..strokeJoin = StrokeJoin.round
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.2);
+    ..strokeWidth = kIsWeb ? 3.2 : 2.5
+    ..strokeJoin = StrokeJoin.round;
+  if (!kIsWeb) {
+    outlineGlow.maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.2);
+  }
   final outline = Paint()
     ..color = AppColors.accent.withValues(alpha: 0.24)
     ..style = PaintingStyle.stroke
@@ -141,6 +145,8 @@ void _paintContinentLandmasses(
       radius,
       visibleZ,
     );
+    final bb = path.getBounds();
+    if (bb.width <= 0 && bb.height <= 0) continue;
     canvas.drawPath(path, outlineGlow);
     canvas.drawPath(path, outline);
   }
@@ -283,7 +289,10 @@ class _GlobePainter extends CustomPainter {
           path.lineTo(pt.dx, pt.dy);
         }
       }
-      canvas.drawPath(path, meridianPaint);
+      final mb = path.getBounds();
+      if (mb.width > 0 || mb.height > 0) {
+        canvas.drawPath(path, meridianPaint);
+      }
     }
 
     // Threat arcs (draw before nodes so lines sit “on” globe)
@@ -309,14 +318,14 @@ class _GlobePainter extends CustomPainter {
         ..moveTo(a.offset.dx, a.offset.dy)
         ..quadraticBezierTo(control.dx, control.dy, b.offset.dx, b.offset.dy);
 
-      canvas.drawPath(
-        arcPath,
-        Paint()
-          ..color = AppColors.accent.withValues(alpha: alpha * 0.45)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2.2
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
-      );
+      final arcGlow = Paint()
+        ..color = AppColors.accent.withValues(alpha: alpha * (kIsWeb ? 0.28 : 0.45))
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = kIsWeb ? 3.4 : 2.2;
+      if (!kIsWeb) {
+        arcGlow.maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+      }
+      canvas.drawPath(arcPath, arcGlow);
       canvas.drawPath(
         arcPath,
         Paint()
@@ -339,12 +348,15 @@ class _GlobePainter extends CustomPainter {
       final nPhase = pulsePhase * 1.8 + city.latDeg * 0.01 + city.lonDeg * 0.01;
       final glow = 0.55 + 0.45 * (0.5 + 0.5 * sin(nPhase));
 
+      final nodeHalo = Paint()
+        ..color = AppColors.accent.withValues(alpha: (kIsWeb ? 0.18 : 0.12) * glow);
+      if (!kIsWeb) {
+        nodeHalo.maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+      }
       canvas.drawCircle(
         p.offset,
-        7,
-        Paint()
-          ..color = AppColors.accent.withValues(alpha: 0.12 * glow)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
+        kIsWeb ? 9.0 : 7.0,
+        nodeHalo,
       );
       canvas.drawCircle(
         p.offset,
