@@ -39,7 +39,7 @@ class SiteScaffold extends StatelessWidget {
             body: Stack(
               children: [
                 Positioned.fill(
-                  child: CyberBackground(animated: animateBackground),
+                  child: CyberBackground(),
                 ),
                 SingleChildScrollView(
                   child: Column(

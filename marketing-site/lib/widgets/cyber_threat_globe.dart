@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 
+part 'cyber_threat_globe_continents.dart';
+
 /// City on Earth (WGS84 degrees).
 class _GeoPoint {
   const _GeoPoint(this.latDeg, this.lonDeg);
@@ -63,6 +65,85 @@ _Projected _project(
     Offset(center.dx + r * x, center.dy - r * y),
     z,
   );
+}
+
+Path _continentsRingPath(
+  List<_GeoPoint> ring,
+  double rotation,
+  Offset center,
+  double radius,
+  double visibleZ, {
+  int subdivisionsPerEdge = 16,
+}) {
+  final path = Path();
+  var penUp = true;
+  for (var i = 0; i < ring.length; i++) {
+    final a = ring[i];
+    final b = ring[(i + 1) % ring.length];
+    for (var s = 0; s <= subdivisionsPerEdge; s++) {
+      final t = s / subdivisionsPerEdge;
+      final lat = a.latDeg + (b.latDeg - a.latDeg) * t;
+      final lon = a.lonDeg + (b.lonDeg - a.lonDeg) * t;
+      final p = _project(_GeoPoint(lat, lon), rotation, center, radius);
+      if (p.z >= visibleZ) {
+        if (penUp) {
+          path.moveTo(p.offset.dx, p.offset.dy);
+          penUp = false;
+        } else {
+          path.lineTo(p.offset.dx, p.offset.dy);
+        }
+      } else {
+        penUp = true;
+      }
+    }
+  }
+  return path;
+}
+
+void _paintContinentLandmasses(
+  Canvas canvas,
+  Offset center,
+  double radius,
+  double rotation,
+  double visibleZ,
+) {
+  const step = 3.4;
+  final fillAccent = Paint()..color = AppColors.accent.withValues(alpha: 0.042);
+  final fillSoft = Paint()..color = Colors.white.withValues(alpha: 0.058);
+
+  for (var lat = -56.0; lat <= 76.0; lat += step) {
+    for (var lon = -178.0; lon <= 178.0; lon += step) {
+      if (!_isLandCell(lat, lon)) continue;
+      final p = _project(_GeoPoint(lat, lon), rotation, center, radius);
+      if (p.z < visibleZ) continue;
+      canvas.drawCircle(p.offset, 1.5, fillSoft);
+      canvas.drawCircle(p.offset, 0.95, fillAccent);
+    }
+  }
+
+  final outlineGlow = Paint()
+    ..color = AppColors.accent.withValues(alpha: 0.11)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 2.5
+    ..strokeJoin = StrokeJoin.round
+    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.2);
+  final outline = Paint()
+    ..color = AppColors.accent.withValues(alpha: 0.24)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.05
+    ..strokeJoin = StrokeJoin.round;
+
+  for (final ring in _kContinentRings) {
+    final path = _continentsRingPath(
+      ring,
+      rotation,
+      center,
+      radius,
+      visibleZ,
+    );
+    canvas.drawPath(path, outlineGlow);
+    canvas.drawPath(path, outline);
+  }
 }
 
 /// Orthographic globe with accent “threat” arcs between cities; matches [AppColors] cyber look.
@@ -153,6 +234,9 @@ class _GlobePainter extends CustomPainter {
         radius: 1.05,
       ).createShader(Rect.fromCircle(center: center, radius: radius));
     canvas.drawCircle(center, radius, spherePaint);
+
+    // Continents: dotted landmass + accent coast outlines (same rotation as globe)
+    _paintContinentLandmasses(canvas, center, radius, rotation, _visibleZ);
 
     // Subtle latitude rings
     final gridPaint = Paint()
