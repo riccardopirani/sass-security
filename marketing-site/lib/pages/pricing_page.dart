@@ -66,7 +66,7 @@ class PricingPage extends ConsumerWidget {
       (q: l10n.pricingFaq8Q, a: l10n.pricingFaq8A),
     ];
 
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionContainer(
@@ -282,6 +282,15 @@ class PricingPage extends ConsumerWidget {
           ),
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.hasBoundedHeight) {
+          return SingleChildScrollView(child: content);
+        }
+        return content;
+      },
     );
   }
 

@@ -73,7 +73,7 @@ class FeaturesPage extends StatelessWidget {
           ),
         ];
 
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionContainer(
@@ -153,6 +153,15 @@ class FeaturesPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.hasBoundedHeight) {
+          return SingleChildScrollView(child: content);
+        }
+        return content;
+      },
     );
   }
 }

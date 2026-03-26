@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     final compact = MediaQuery.sizeOf(context).width < 900;
 
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // ── HERO ──────────────────────────────────────────────
@@ -199,9 +199,13 @@ class HomePage extends StatelessWidget {
         SectionContainer(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final half = compact
-                  ? constraints.maxWidth
-                  : (constraints.maxWidth - 16) / 2;
+              final availableWidth = constraints.maxWidth.clamp(
+                0.0,
+                double.infinity,
+              );
+              final singleColumn = compact || availableWidth < 760;
+              final half =
+                  singleColumn ? availableWidth : (availableWidth - 16) / 2;
               return Wrap(
                 spacing: 16,
                 runSpacing: 16,
@@ -355,6 +359,17 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.hasBoundedHeight) {
+          return SingleChildScrollView(
+            child: content,
+          );
+        }
+        return content;
+      },
     );
   }
 

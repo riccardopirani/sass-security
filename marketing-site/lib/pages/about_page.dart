@@ -37,7 +37,7 @@ class AboutPage extends StatelessWidget {
       l10n.aboutTimeline4,
     ];
 
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionContainer(
@@ -261,6 +261,15 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.hasBoundedHeight) {
+          return SingleChildScrollView(child: content);
+        }
+        return content;
+      },
     );
   }
 }
