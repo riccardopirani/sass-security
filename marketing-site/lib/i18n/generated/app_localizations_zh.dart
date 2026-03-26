@@ -566,10 +566,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get contactSidebarTitle => '联系信息';
 
   @override
-  String get contactSidebarEmail => '支持邮箱';
+  String get contactSidebarEmail => '销售邮箱';
 
   @override
-  String get contactSidebarEmailValue => 'support@cyberguard.io';
+  String get contactSidebarEmailValue => 'sales@marconisoftware.com';
 
   @override
   String get contactSidebarResponse => '响应时间';

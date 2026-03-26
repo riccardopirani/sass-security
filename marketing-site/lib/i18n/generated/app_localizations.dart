@@ -1153,13 +1153,13 @@ abstract class AppLocalizations {
   /// No description provided for @contactSidebarEmail.
   ///
   /// In en, this message translates to:
-  /// **'Support email'**
+  /// **'Sales email'**
   String get contactSidebarEmail;
 
   /// No description provided for @contactSidebarEmailValue.
   ///
   /// In en, this message translates to:
-  /// **'support@cyberguard.io'**
+  /// **'sales@marconisoftware.com'**
   String get contactSidebarEmailValue;
 
   /// No description provided for @contactSidebarResponse.

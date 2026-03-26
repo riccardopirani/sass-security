@@ -576,10 +576,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get contactSidebarTitle => 'Контактная информация';
 
   @override
-  String get contactSidebarEmail => 'Email поддержки';
+  String get contactSidebarEmail => 'Коммерческий email';
 
   @override
-  String get contactSidebarEmailValue => 'support@cyberguard.io';
+  String get contactSidebarEmailValue => 'sales@marconisoftware.com';
 
   @override
   String get contactSidebarResponse => 'Время ответа';

@@ -574,10 +574,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactSidebarTitle => 'Contact info';
 
   @override
-  String get contactSidebarEmail => 'Support email';
+  String get contactSidebarEmail => 'Sales email';
 
   @override
-  String get contactSidebarEmailValue => 'support@cyberguard.io';
+  String get contactSidebarEmailValue => 'sales@marconisoftware.com';
 
   @override
   String get contactSidebarResponse => 'Response time';
