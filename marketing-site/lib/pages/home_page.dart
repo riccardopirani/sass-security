@@ -19,37 +19,472 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final compact = MediaQuery.sizeOf(context).width < 900;
 
-    final featureCards = <({IconData icon, String title, String subtitle})>[
-      (
-        icon: Icons.email_outlined,
-        title: l10n.homeFeaturePhishingTitle,
-        subtitle: l10n.homeFeaturePhishingDesc,
-      ),
-      (
-        icon: Icons.notifications_active_outlined,
-        title: l10n.homeFeatureAlertsTitle,
-        subtitle: l10n.homeFeatureAlertsDesc,
-      ),
-      (
-        icon: Icons.query_stats_outlined,
-        title: l10n.homeFeatureRiskTitle,
-        subtitle: l10n.homeFeatureRiskDesc,
-      ),
-      (
-        icon: Icons.school_outlined,
-        title: l10n.homeFeatureTrainingTitle,
-        subtitle: l10n.homeFeatureTrainingDesc,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ── HERO ──────────────────────────────────────────────
+        SectionContainer(
+          padding: const EdgeInsets.fromLTRB(24, 40, 24, 30),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final narrow = constraints.maxWidth < 920;
+              return Wrap(
+                spacing: 24,
+                runSpacing: 24,
+                children: [
+                  SizedBox(
+                    width: narrow
+                        ? constraints.maxWidth
+                        : constraints.maxWidth * 0.57,
+                    child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l10n.homeHeroTitle,
+                              style: theme.textTheme.displaySmall
+                                  ?.copyWith(fontSize: narrow ? 36 : 50),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              l10n.homeHeroSubtitle,
+                              style: theme.textTheme.bodyLarge
+                                  ?.copyWith(color: AppColors.mutedText),
+                            ),
+                            const SizedBox(height: 22),
+                            Wrap(
+                              spacing: 12,
+                              runSpacing: 12,
+                              children: [
+                                CtaButton(
+                                  label: l10n.homeHeroCtaTrial,
+                                  onPressed: () =>
+                                      DeepLinkService.handleCta(
+                                        context,
+                                        CtaDeepLink.signup,
+                                      ),
+                                ),
+                                CtaButton(
+                                  label: l10n.homeHeroCtaDemo,
+                                  filled: false,
+                                  onPressed: () => _showDemoModal(context),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            _proofBadges(context, l10n),
+                          ],
+                        )
+                        .animate()
+                        .fadeIn(duration: 500.ms)
+                        .slideY(begin: 0.1, end: 0),
+                  ),
+                  SizedBox(
+                        width: narrow
+                            ? constraints.maxWidth
+                            : constraints.maxWidth * 0.38,
+                        child: GlassCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(l10n.homeGlobeTitle,
+                                  style: theme.textTheme.titleLarge),
+                              const SizedBox(height: 6),
+                              Text(
+                                l10n.homeGlobeSubtitle,
+                                style: theme.textTheme.bodySmall
+                                    ?.copyWith(color: AppColors.mutedText),
+                              ),
+                              const SizedBox(height: 14),
+                              Center(
+                                child: LayoutBuilder(
+                                  builder: (context, c) {
+                                    final side = min(320.0, c.maxWidth)
+                                        .clamp(200.0, 320.0);
+                                    return CyberThreatGlobe(size: side);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .animate()
+                      .fadeIn(duration: 550.ms)
+                      .slideY(begin: 0.08, end: 0),
+                ],
+              );
+            },
+          ),
+        ),
+
+        // ── PROBLEMA ──────────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.warning_amber_rounded,
+          iconColor: Colors.orangeAccent,
+          title: l10n.homeProblemTitle,
+          body: l10n.homeProblemBody,
+          bullets: l10n.homeProblemBullets,
+          tagline: l10n.homeProblemTagline,
+        ),
+
+        // ── SOLUZIONE ─────────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.shield_outlined,
+          iconColor: AppColors.accent,
+          title: l10n.homeSolutionTitle,
+          body: l10n.homeSolutionBody,
+          bullets: l10n.homeSolutionBullets,
+          tagline: l10n.homeSolutionTagline,
+        ),
+
+        // ── DASHBOARD ─────────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.dashboard_outlined,
+          iconColor: AppColors.accent,
+          title: l10n.homeDashboardSectionTitle,
+          body: l10n.homeDashboardSectionBody,
+          bullets: l10n.homeDashboardSectionBullets,
+          tagline: l10n.homeDashboardSectionTagline,
+        ),
+
+        // ── BENEFICI ──────────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.trending_up_rounded,
+          iconColor: Colors.greenAccent,
+          title: l10n.homeBenefitsTitle,
+          bullets: l10n.homeBenefitsBullets,
+        ),
+
+        // ── PHISHING SIMULATION ───────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.phishing_outlined,
+          iconColor: AppColors.accent,
+          title: l10n.homePhishingSectionTitle,
+          body: l10n.homePhishingSectionBody,
+          bullets: l10n.homePhishingSectionBullets,
+          tagline: l10n.homePhishingSectionTagline,
+        ),
+
+        // ── ALERT E INCIDENTI ─────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.notifications_active_outlined,
+          iconColor: Colors.redAccent,
+          title: l10n.homeAlertSectionTitle,
+          body: l10n.homeAlertSectionBody,
+          bullets: l10n.homeAlertSectionBullets,
+          tagline: l10n.homeAlertSectionTagline,
+        ),
+
+        // ── GESTIONE TEAM ─────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.people_outline_rounded,
+          iconColor: AppColors.accent,
+          title: l10n.homeTeamSectionTitle,
+          body: l10n.homeTeamSectionBody,
+          bullets: l10n.homeTeamSectionBullets,
+          tagline: l10n.homeTeamSectionTagline,
+        ),
+
+        // ── PRIMA / DOPO ──────────────────────────────────────
+        SectionContainer(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final half = compact
+                  ? constraints.maxWidth
+                  : (constraints.maxWidth - 16) / 2;
+              return Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  SizedBox(
+                    width: half,
+                    child: GlassCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            const Icon(Icons.close, color: Colors.redAccent,
+                                size: 20),
+                            const SizedBox(width: 8),
+                            Text(l10n.homeBeforeTitle,
+                                style: theme.textTheme.titleLarge),
+                          ]),
+                          const SizedBox(height: 10),
+                          _bulletList(context, l10n.homeBeforeBullets),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: half,
+                    child: GlassCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            const Icon(Icons.check_circle_outline,
+                                color: Colors.greenAccent, size: 20),
+                            const SizedBox(width: 8),
+                            Text(l10n.homeAfterTitle,
+                                style: theme.textTheme.titleLarge),
+                          ]),
+                          const SizedBox(height: 10),
+                          _bulletList(context, l10n.homeAfterBullets),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+
+        // ── MULTILINGUA ───────────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.language_rounded,
+          iconColor: AppColors.accent,
+          title: l10n.homeMultiLangTitle,
+          body: l10n.homeMultiLangBody,
+          tagline: l10n.homeMultiLangTagline,
+        ),
+
+        // ── PREZZI (sommario) ─────────────────────────────────
+        SectionContainer(
+          child: GlassCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  const Icon(Icons.payments_outlined,
+                      color: AppColors.accent),
+                  const SizedBox(width: 10),
+                  Text(l10n.homePricingSectionTitle,
+                      style: theme.textTheme.headlineSmall),
+                ]),
+                const SizedBox(height: 10),
+                Text(l10n.homePricingSectionBody,
+                    style: theme.textTheme.bodyLarge
+                        ?.copyWith(color: AppColors.mutedText)),
+                const SizedBox(height: 10),
+                _bulletList(context, l10n.homePricingSectionBullets),
+                const SizedBox(height: 8),
+                _tagline(context, l10n.homePricingSectionTagline),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    CtaButton(
+                      label: l10n.homePricingSectionCtaFree,
+                      onPressed: () => DeepLinkService.handleCta(
+                          context, CtaDeepLink.signup),
+                    ),
+                    CtaButton(
+                      label: l10n.homePricingSectionCtaPlans,
+                      filled: false,
+                      onPressed: () => DeepLinkService.handleCta(
+                          context, CtaDeepLink.signup),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // ── TRUST / SICUREZZA ─────────────────────────────────
+        _contentSection(
+          context,
+          icon: Icons.lock_outline_rounded,
+          iconColor: AppColors.accent,
+          title: l10n.homeTrustTitle,
+          bullets: l10n.homeTrustBullets,
+          tagline: l10n.homeTrustTagline,
+        ),
+
+        // ── TESTIMONIALS ──────────────────────────────────────
+        _testimonialsSection(context, l10n),
+
+        // ── CTA FINALE ────────────────────────────────────────
+        SectionContainer(
+          padding: const EdgeInsets.fromLTRB(24, 30, 24, 30),
+          child: GlassCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.homeFinalCtaTitle,
+                    style: theme.textTheme.headlineSmall),
+                const SizedBox(height: 10),
+                Text(
+                  l10n.homeFinalCtaSubtitle,
+                  style: theme.textTheme.bodyLarge
+                      ?.copyWith(color: AppColors.mutedText),
+                ),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    CtaButton(
+                      label: l10n.homeHeroCtaTrial,
+                      onPressed: () => DeepLinkService.handleCta(
+                          context, CtaDeepLink.signup),
+                    ),
+                    CtaButton(
+                      label: l10n.homeHeroCtaDemo,
+                      filled: false,
+                      onPressed: () => DeepLinkService.handleCta(
+                          context, CtaDeepLink.demo),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────
+
+  Widget _proofBadges(BuildContext context, AppLocalizations l10n) {
+    final items = [
+      l10n.homeHeroProof1,
+      l10n.homeHeroProof2,
+      l10n.homeHeroProof3,
     ];
+    return Wrap(
+      spacing: 16,
+      runSpacing: 8,
+      children: items
+          .map((text) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.check_circle,
+                      color: AppColors.accent, size: 16),
+                  const SizedBox(width: 6),
+                  Text(text,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: AppColors.mutedText)),
+                ],
+              ))
+          .toList(),
+    );
+  }
 
-    final steps = <({String title, String subtitle})>[
-      (title: l10n.homeStep1Title, subtitle: l10n.homeStep1Desc),
-      (title: l10n.homeStep2Title, subtitle: l10n.homeStep2Desc),
-      (title: l10n.homeStep3Title, subtitle: l10n.homeStep3Desc),
-    ];
+  Widget _contentSection(
+    BuildContext context, {
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    String? body,
+    String? bullets,
+    String? tagline,
+  }) {
+    final theme = Theme.of(context);
+    return SectionContainer(
+      child: GlassCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [
+              Icon(icon, color: iconColor),
+              const SizedBox(width: 10),
+              Expanded(
+                child:
+                    Text(title, style: theme.textTheme.headlineSmall),
+              ),
+            ]),
+            if (body != null) ...[
+              const SizedBox(height: 10),
+              Text(body,
+                  style: theme.textTheme.bodyLarge
+                      ?.copyWith(color: AppColors.mutedText)),
+            ],
+            if (bullets != null) ...[
+              const SizedBox(height: 10),
+              _bulletList(context, bullets),
+            ],
+            if (tagline != null) ...[
+              const SizedBox(height: 12),
+              _tagline(context, tagline),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
 
-    final testimonials = <({String quote, String name, String role})>[
+  Widget _bulletList(BuildContext context, String raw) {
+    final lines =
+        raw.split('||').where((s) => s.trim().isNotEmpty).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: lines
+          .map((line) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6),
+                      child: Icon(Icons.circle,
+                          size: 6, color: AppColors.accent),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(line.trim(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: AppColors.mutedText)),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+    );
+  }
+
+  Widget _tagline(BuildContext context, String text) {
+    return Row(
+      children: [
+        const Icon(Icons.arrow_forward_rounded,
+            size: 16, color: AppColors.accent),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _testimonialsSection(
+      BuildContext context, AppLocalizations l10n) {
+    final theme = Theme.of(context);
+    final compact = MediaQuery.sizeOf(context).width < 900;
+    final items = <({String quote, String name, String role})>[
       (
         quote: l10n.homeTestimonial1Quote,
         name: l10n.homeTestimonial1Name,
@@ -67,433 +502,39 @@ class HomePage extends StatelessWidget {
       ),
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionContainer(
-          padding: const EdgeInsets.fromLTRB(24, 40, 24, 30),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final compact = constraints.maxWidth < 920;
-
-              return Wrap(
-                spacing: 24,
-                runSpacing: 24,
-                children: [
-                  SizedBox(
-                    width: compact
-                        ? constraints.maxWidth
-                        : constraints.maxWidth * 0.57,
-                    child:
-                        Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  l10n.homeHeroTitle,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(fontSize: compact ? 36 : 50),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  l10n.homeHeroSubtitle,
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(color: AppColors.mutedText),
-                                ),
-                                const SizedBox(height: 22),
-                                Wrap(
-                                  spacing: 12,
-                                  runSpacing: 12,
-                                  children: [
-                                    CtaButton(
-                                      label: l10n.commonStartFreeTrial,
-                                      onPressed: () =>
-                                          DeepLinkService.handleCta(
-                                            context,
-                                            CtaDeepLink.signup,
-                                          ),
-                                    ),
-                                    CtaButton(
-                                      label: l10n.commonSeeDemo,
-                                      filled: false,
-                                      onPressed: () => _showDemoModal(context),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  l10n.sameAccountText,
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                      ?.copyWith(color: AppColors.mutedText),
-                                ),
-                              ],
-                            )
-                            .animate()
-                            .fadeIn(duration: 500.ms)
-                            .slideY(begin: 0.1, end: 0),
-                  ),
-                  SizedBox(
-                        width: compact
-                            ? constraints.maxWidth
-                            : constraints.maxWidth * 0.38,
-                        child: GlassCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.homeGlobeTitle,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                l10n.homeGlobeSubtitle,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.mutedText),
-                              ),
-                              const SizedBox(height: 14),
-                              Center(
-                                child: LayoutBuilder(
-                                  builder: (context, c) {
-                                    final side = min(320.0, c.maxWidth).clamp(
-                                      200.0,
-                                      320.0,
-                                    );
-                                    return CyberThreatGlobe(size: side);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(height: 18),
-                              Text(
-                                l10n.homeHeroPanelTitle,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 10),
-                              _miniMetric(l10n.homeHeroPanelMetric1, '99.9%'),
-                              _miniMetric(l10n.homeHeroPanelMetric2, '500+'),
-                              _miniMetric(l10n.homeHeroPanelMetric3, '<90s'),
-                            ],
-                          ),
-                        ),
-                      )
-                      .animate()
-                      .fadeIn(duration: 550.ms)
-                      .slideY(begin: 0.08, end: 0),
-                ],
-              );
-            },
-          ),
-        ),
-        SectionContainer(
-          padding: const EdgeInsets.fromLTRB(24, 10, 24, 20),
-          child: GlassCard(
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              runSpacing: 10,
-              spacing: 18,
-              children: [
-                _socialTile(context, l10n.socialSmbs),
-                _socialTile(context, l10n.socialUptime),
-                _socialTile(context, l10n.socialIncidents),
-              ],
-            ),
-          ),
-        ),
-        SectionContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.homeMessagingTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 18),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: [
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingHeadlinesTitle,
-                    l10n.homeMessagingHeadlinesItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingValueTitle,
-                    l10n.homeMessagingValueItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingProblemTitle,
-                    l10n.homeMessagingProblemItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingAiTitle,
-                    l10n.homeMessagingAiItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingRoiTitle,
-                    l10n.homeMessagingRoiItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingExecTitle,
-                    l10n.homeMessagingExecItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingUrgencyTitle,
-                    l10n.homeMessagingUrgencyItems,
-                  ),
-                  _messageGroup(
-                    context,
-                    l10n.homeMessagingMobileTitle,
-                    l10n.homeMessagingMobileItems,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        SectionContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.homeFeatureSectionTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 18),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: List.generate(featureCards.length, (index) {
-                  final feature = featureCards[index];
-                  return SizedBox(
-                        width: MediaQuery.sizeOf(context).width < 760
-                            ? double.infinity
-                            : 270,
-                        child: GlassCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(feature.icon, color: AppColors.accent),
-                              const SizedBox(height: 12),
-                              Text(
-                                feature.title,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                feature.subtitle,
-                                style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: AppColors.mutedText),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                      .animate(delay: (index * 90).ms)
-                      .fadeIn(duration: 500.ms)
-                      .slideY(begin: 0.05, end: 0);
-                }),
-              ),
-            ],
-          ),
-        ),
-        SectionContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.homeHowItWorksTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 18),
-              Wrap(
-                spacing: 14,
-                runSpacing: 14,
-                children: List.generate(steps.length, (index) {
-                  final step = steps[index];
-                  return SizedBox(
-                    width: MediaQuery.sizeOf(context).width < 900
-                        ? double.infinity
-                        : 360,
-                    child: GlassCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '0${index + 1}',
-                            style: Theme.of(context).textTheme.headlineMedium
-                                ?.copyWith(color: AppColors.accent),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            step.title,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            step.subtitle,
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: AppColors.mutedText),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ],
-          ),
-        ),
-        SectionContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.homeTestimonialsTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 18),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: testimonials
-                    .map(
-                      (item) => SizedBox(
-                        width: MediaQuery.sizeOf(context).width < 900
-                            ? double.infinity
-                            : 360,
-                        child: GlassCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '"${item.quote}"',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                item.name,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(
-                                item.role,
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(color: AppColors.mutedText),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ],
-          ),
-        ),
-        SectionContainer(
-          padding: const EdgeInsets.fromLTRB(24, 30, 24, 30),
-          child: GlassCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.homeFinalCtaTitle,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  l10n.homeFinalCtaSubtitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
-                ),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: [
-                    CtaButton(
-                      label: l10n.commonStartFreeTrial,
-                      onPressed: () => DeepLinkService.handleCta(
-                        context,
-                        CtaDeepLink.signup,
-                      ),
-                    ),
-                    CtaButton(
-                      label: l10n.commonSeeDemo,
-                      filled: false,
-                      onPressed: () =>
-                          DeepLinkService.handleCta(context, CtaDeepLink.demo),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _miniMetric(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
+    return SectionContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Text(label)),
-          Text(
-            value,
-            style: const TextStyle(
-              color: AppColors.accent,
-              fontWeight: FontWeight.w700,
-            ),
+          Text(l10n.homeTestimonialsTitle,
+              style: theme.textTheme.headlineMedium),
+          const SizedBox(height: 18),
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            children: items
+                .map((item) => SizedBox(
+                      width: compact ? double.infinity : 360,
+                      child: GlassCard(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('"${item.quote}"',
+                                style: theme.textTheme.bodyLarge),
+                            const SizedBox(height: 12),
+                            Text(item.name,
+                                style: theme.textTheme.titleLarge),
+                            Text(item.role,
+                                style: theme.textTheme.bodySmall
+                                    ?.copyWith(
+                                        color: AppColors.mutedText)),
+                          ],
+                        ),
+                      ),
+                    ))
+                .toList(),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _socialTile(BuildContext context, String label) {
-    return Text(
-      label,
-      style: Theme.of(
-        context,
-      ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedText),
-    );
-  }
-
-  Widget _messageGroup(BuildContext context, String title, String items) {
-    final lines = items.split('||').where((item) => item.trim().isNotEmpty);
-
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width < 900 ? double.infinity : 520,
-      child: GlassCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            ...lines.map(
-              (line) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  '- ${line.trim()}',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: AppColors.mutedText),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -513,16 +554,15 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    l10n.demoModalTitle,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                  Text(l10n.demoModalTitle,
+                      style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: 8),
                   Text(
                     l10n.demoModalSubtitle,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.mutedText,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.mutedText),
                   ),
                   const SizedBox(height: 16),
                   AspectRatio(
@@ -536,7 +576,9 @@ class HomePage extends StatelessWidget {
                       child: Center(
                         child: Text(
                           l10n.demoModalPlaceholder,
-                          style: Theme.of(context).textTheme.bodyLarge
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
                               ?.copyWith(color: AppColors.mutedText),
                         ),
                       ),
@@ -550,9 +592,7 @@ class HomePage extends StatelessWidget {
                       CtaButton(
                         label: l10n.commonOpenInApp,
                         onPressed: () => DeepLinkService.handleCta(
-                          context,
-                          CtaDeepLink.demo,
-                        ),
+                            context, CtaDeepLink.demo),
                       ),
                       CtaButton(
                         label: l10n.commonClose,

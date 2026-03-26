@@ -247,13 +247,13 @@ abstract class AppLocalizations {
   /// No description provided for @homeHeroTitle.
   ///
   /// In en, this message translates to:
-  /// **'Cyber resilience made practical for SMB teams.'**
+  /// **'Protect your company from cyberattacks before it\'s too late'**
   String get homeHeroTitle;
 
   /// No description provided for @homeHeroSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'CyberGuard combines phishing simulation, real-time alerts, and employee training so teams can detect, respond, and improve without enterprise overhead.'**
+  /// **'The SaaS platform that monitors risks, trains employees, and prevents phishing and attacks automatically.'**
   String get homeHeroSubtitle;
 
   /// No description provided for @homeHeroPanelTitle.
@@ -469,13 +469,13 @@ abstract class AppLocalizations {
   /// No description provided for @homeFinalCtaTitle.
   ///
   /// In en, this message translates to:
-  /// **'Ready to harden your business?'**
+  /// **'Start protecting your company today'**
   String get homeFinalCtaTitle;
 
   /// No description provided for @homeFinalCtaSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Start your free trial and secure your entire team from day one.'**
+  /// **'Activate CyberGuard in minutes and reduce cyber risks immediately.'**
   String get homeFinalCtaSubtitle;
 
   /// No description provided for @featuresTitle.
@@ -1431,6 +1431,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Receive real-time alerts about employee risk.||Manage company security directly from your phone.||Cybersecurity that follows you everywhere, not only in the office.'**
   String get homeMessagingMobileItems;
+
+  /// No description provided for @homeHeroCtaTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Free trial — 14 days'**
+  String get homeHeroCtaTrial;
+
+  /// No description provided for @homeHeroCtaDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a demo'**
+  String get homeHeroCtaDemo;
+
+  /// No description provided for @homeHeroProof1.
+  ///
+  /// In en, this message translates to:
+  /// **'No installation required'**
+  String get homeHeroProof1;
+
+  /// No description provided for @homeHeroProof2.
+  ///
+  /// In en, this message translates to:
+  /// **'Active in under 10 minutes'**
+  String get homeHeroProof2;
+
+  /// No description provided for @homeHeroProof3.
+  ///
+  /// In en, this message translates to:
+  /// **'Built for SMBs and distributed teams'**
+  String get homeHeroProof3;
+
+  /// No description provided for @homeProblemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your company is more vulnerable than you think'**
+  String get homeProblemTitle;
+
+  /// No description provided for @homeProblemBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day companies suffer cyberattacks without realizing it. Phishing emails, human error, and lack of training are among the top causes of breaches.'**
+  String get homeProblemBody;
+
+  /// No description provided for @homeProblemBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Employees clicking dangerous links||No visibility into real risks||Incidents discovered too late||Fragmented security management'**
+  String get homeProblemBullets;
+
+  /// No description provided for @homeProblemTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'The problem is not technology. It is people and processes.'**
+  String get homeProblemTagline;
+
+  /// No description provided for @homeSolutionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything you need for security, in one platform'**
+  String get homeSolutionTitle;
+
+  /// No description provided for @homeSolutionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'With CyberGuard you monitor, analyze, and improve your company\'s security in real time.'**
+  String get homeSolutionBody;
+
+  /// No description provided for @homeSolutionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous business risk monitoring||Automated phishing simulations||Real-time alerts||Employee management and training||Clear and immediate reports'**
+  String get homeSolutionBullets;
+
+  /// No description provided for @homeSolutionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'No advanced technical skills required'**
+  String get homeSolutionTagline;
+
+  /// No description provided for @homeDashboardSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Always know how secure your company is'**
+  String get homeDashboardSectionTitle;
+
+  /// No description provided for @homeDashboardSectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'See everything in one dashboard:'**
+  String get homeDashboardSectionBody;
+
+  /// No description provided for @homeDashboardSectionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk score (0–100)||Most exposed employees||Active alerts||Phishing campaigns in progress'**
+  String get homeDashboardSectionBullets;
+
+  /// No description provided for @homeDashboardSectionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Make fast decisions based on real data'**
+  String get homeDashboardSectionTagline;
+
+  /// No description provided for @homeBenefitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce risks. Increase awareness.'**
+  String get homeBenefitsTitle;
+
+  /// No description provided for @homeBenefitsBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce human error by up to 70%||Identify vulnerabilities before attacks happen||Train employees automatically||Centralize all security in one tool||Save time compared to manual solutions'**
+  String get homeBenefitsBullets;
+
+  /// No description provided for @homePhishingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Test your employees (without real risks)'**
+  String get homePhishingSectionTitle;
+
+  /// No description provided for @homePhishingSectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulate realistic phishing attacks and discover who is vulnerable.'**
+  String get homePhishingSectionBody;
+
+  /// No description provided for @homePhishingSectionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Open and click tracking||Detailed reports||Continuous improvement'**
+  String get homePhishingSectionBullets;
+
+  /// No description provided for @homePhishingSectionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn a risk into a training opportunity'**
+  String get homePhishingSectionTagline;
+
+  /// No description provided for @homeAlertSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive real-time alerts'**
+  String get homeAlertSectionTitle;
+
+  /// No description provided for @homeAlertSectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When something happens, you know immediately.'**
+  String get homeAlertSectionBody;
+
+  /// No description provided for @homeAlertSectionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediate notifications||Severity classification||Incident reporting (virus, hacking)'**
+  String get homeAlertSectionBullets;
+
+  /// No description provided for @homeAlertSectionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'React before the problem becomes critical'**
+  String get homeAlertSectionTagline;
+
+  /// No description provided for @homeTeamSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete control over users and access'**
+  String get homeTeamSectionTitle;
+
+  /// No description provided for @homeTeamSectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Easily manage:'**
+  String get homeTeamSectionBody;
+
+  /// No description provided for @homeTeamSectionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Employees||Roles (admin, employee)||Risk level||Training status'**
+  String get homeTeamSectionBullets;
+
+  /// No description provided for @homeTeamSectionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything organized and always up to date'**
+  String get homeTeamSectionTagline;
+
+  /// No description provided for @homeMultiLangTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Built for international companies'**
+  String get homeMultiLangTitle;
+
+  /// No description provided for @homeMultiLangBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrated multi-language support: Italian, English, German, French, Chinese, Russian'**
+  String get homeMultiLangBody;
+
+  /// No description provided for @homeMultiLangTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect for global teams'**
+  String get homeMultiLangTagline;
+
+  /// No description provided for @homePricingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple plans, no surprises'**
+  String get homePricingSectionTitle;
+
+  /// No description provided for @homePricingSectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the plan that fits your company:'**
+  String get homePricingSectionBody;
+
+  /// No description provided for @homePricingSectionBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter — for small businesses||Pro — for growing companies||Business — for structured organizations'**
+  String get homePricingSectionBullets;
+
+  /// No description provided for @homePricingSectionTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'You only pay for what you use'**
+  String get homePricingSectionTagline;
+
+  /// No description provided for @homePricingSectionCtaFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Start free'**
+  String get homePricingSectionCtaFree;
+
+  /// No description provided for @homePricingSectionCtaPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'See plans'**
+  String get homePricingSectionCtaPlans;
+
+  /// No description provided for @homeTrustTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is safe'**
+  String get homeTrustTitle;
+
+  /// No description provided for @homeTrustBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure and scalable infrastructure||Advanced data protection||Controlled access||GDPR compliance'**
+  String get homeTrustBullets;
+
+  /// No description provided for @homeTrustTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Security is our top priority'**
+  String get homeTrustTagline;
+
+  /// No description provided for @homeBeforeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before'**
+  String get homeBeforeTitle;
+
+  /// No description provided for @homeBeforeBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual management||No control'**
+  String get homeBeforeBullets;
+
+  /// No description provided for @homeAfterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get homeAfterTitle;
+
+  /// No description provided for @homeAfterBullets.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete visibility||Automated security'**
+  String get homeAfterBullets;
 }
 
 class _AppLocalizationsDelegate

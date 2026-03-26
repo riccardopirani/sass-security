@@ -78,10 +78,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get demoModalPlaceholder => '视频占位区域';
 
   @override
-  String get homeHeroTitle => '为 SMB 团队打造的实用网络韧性平台。';
+  String get homeHeroTitle => '在为时已晚之前，保护您的企业免受网络攻击';
 
   @override
-  String get homeHeroSubtitle => 'CyberGuard 将钓鱼演练、实时告警和员工培训整合在一起。';
+  String get homeHeroSubtitle => '这款SaaS平台可监控风险、培训员工，并自动预防网络钓鱼和攻击。';
 
   @override
   String get homeHeroPanelTitle => 'Security pulse';
@@ -199,10 +199,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeTestimonial3Role => 'CFO, BrightForge';
 
   @override
-  String get homeFinalCtaTitle => '准备好强化你的业务了吗？';
+  String get homeFinalCtaTitle => '今天就开始保护您的企业';
 
   @override
-  String get homeFinalCtaSubtitle => '立即开始免费试用，第一天就保护整个团队。';
+  String get homeFinalCtaSubtitle => '几分钟内启用CyberGuard，立即降低网络风险。';
 
   @override
   String get featuresTitle => '平台功能';
@@ -723,4 +723,150 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get homeMessagingMobileItems =>
       'Receive real-time alerts about employee risk.||Manage company security directly from your phone.||Cybersecurity that follows you everywhere, not only in the office.';
+
+  @override
+  String get homeHeroCtaTrial => '免费试用14天';
+
+  @override
+  String get homeHeroCtaDemo => '申请演示';
+
+  @override
+  String get homeHeroProof1 => '无需安装';
+
+  @override
+  String get homeHeroProof2 => '10分钟内即可启用';
+
+  @override
+  String get homeHeroProof3 => '适合中小企业和分布式团队';
+
+  @override
+  String get homeProblemTitle => '您的企业比您想象的更脆弱';
+
+  @override
+  String get homeProblemBody =>
+      '每天都有企业在不知不觉中遭受网络攻击。钓鱼邮件、人为错误和缺乏培训是导致安全漏洞的主要原因。';
+
+  @override
+  String get homeProblemBullets => '员工点击危险链接||无法看到真正的风险||事件发现太迟||安全管理碎片化';
+
+  @override
+  String get homeProblemTagline => '问题不在于技术，而在于人和流程。';
+
+  @override
+  String get homeSolutionTitle => '安全所需的一切，尽在一个平台';
+
+  @override
+  String get homeSolutionBody => '使用CyberGuard，实时监控、分析和改善企业安全。';
+
+  @override
+  String get homeSolutionBullets =>
+      '持续的企业风险监控||自动化钓鱼模拟||实时警报||员工管理与培训||清晰即时的报告';
+
+  @override
+  String get homeSolutionTagline => '无需高级技术技能';
+
+  @override
+  String get homeDashboardSectionTitle => '随时了解企业的安全状况';
+
+  @override
+  String get homeDashboardSectionBody => '在一个仪表板中查看：';
+
+  @override
+  String get homeDashboardSectionBullets =>
+      '风险评分（0–100）||最易受攻击的员工||活跃警报||正在进行的钓鱼活动';
+
+  @override
+  String get homeDashboardSectionTagline => '基于真实数据快速做出决策';
+
+  @override
+  String get homeBenefitsTitle => '降低风险，提升安全意识。';
+
+  @override
+  String get homeBenefitsBullets =>
+      '将人为错误减少高达70%||在攻击前发现漏洞||自动培训员工||将所有安全集中在一个工具中||比手动方案节省时间';
+
+  @override
+  String get homePhishingSectionTitle => '测试您的员工（无真实风险）';
+
+  @override
+  String get homePhishingSectionBody => '模拟逼真的钓鱼攻击，发现谁容易受骗。';
+
+  @override
+  String get homePhishingSectionBullets => '打开和点击追踪||详细报告||持续改进';
+
+  @override
+  String get homePhishingSectionTagline => '将风险转化为培训机会';
+
+  @override
+  String get homeAlertSectionTitle => '接收实时警报';
+
+  @override
+  String get homeAlertSectionBody => '当事情发生时，您立即知道。';
+
+  @override
+  String get homeAlertSectionBullets => '即时通知||按严重程度分类||事件报告（病毒、黑客攻击）';
+
+  @override
+  String get homeAlertSectionTagline => '在问题变得严重之前做出反应';
+
+  @override
+  String get homeTeamSectionTitle => '完全掌控用户和访问权限';
+
+  @override
+  String get homeTeamSectionBody => '轻松管理：';
+
+  @override
+  String get homeTeamSectionBullets => '员工||角色（管理员、员工）||风险等级||培训状态';
+
+  @override
+  String get homeTeamSectionTagline => '一切井然有序，始终保持最新';
+
+  @override
+  String get homeMultiLangTitle => '为国际企业打造';
+
+  @override
+  String get homeMultiLangBody => '内置多语言支持：意大利语、英语、德语、法语、中文、俄语';
+
+  @override
+  String get homeMultiLangTagline => '完美适合全球团队';
+
+  @override
+  String get homePricingSectionTitle => '简单套餐，没有意外';
+
+  @override
+  String get homePricingSectionBody => '选择最适合您企业的套餐：';
+
+  @override
+  String get homePricingSectionBullets =>
+      'Starter — 适合小型企业||Pro — 适合成长型企业||Business — 适合结构化组织';
+
+  @override
+  String get homePricingSectionTagline => '按使用付费';
+
+  @override
+  String get homePricingSectionCtaFree => '免费开始';
+
+  @override
+  String get homePricingSectionCtaPlans => '查看套餐';
+
+  @override
+  String get homeTrustTitle => '您的数据安全无忧';
+
+  @override
+  String get homeTrustBullets => '安全且可扩展的基础设施||高级数据保护||受控访问||符合GDPR';
+
+  @override
+  String get homeTrustTagline => '安全是我们的首要任务';
+
+  @override
+  String get homeBeforeTitle => '之前';
+
+  @override
+  String get homeBeforeBullets => '手动管理||没有控制';
+
+  @override
+  String get homeAfterTitle => '之后';
+
+  @override
+  String get homeAfterBullets => '完全可见性||自动化安全';
 }

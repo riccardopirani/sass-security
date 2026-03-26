@@ -82,11 +82,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get demoModalPlaceholder => 'Video placeholder';
 
   @override
-  String get homeHeroTitle => 'Практичная киберустойчивость для SMB-команд.';
+  String get homeHeroTitle =>
+      'Защитите свою компанию от кибератак, пока не стало слишком поздно';
 
   @override
   String get homeHeroSubtitle =>
-      'CyberGuard объединяет фишинг-симуляции, оповещения в реальном времени и обучение сотрудников.';
+      'SaaS-платформа, которая мониторит риски, обучает сотрудников и автоматически предотвращает фишинг и атаки.';
 
   @override
   String get homeHeroPanelTitle => 'Security pulse';
@@ -205,11 +206,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeTestimonial3Role => 'CFO, BrightForge';
 
   @override
-  String get homeFinalCtaTitle => 'Готовы усилить защиту бизнеса?';
+  String get homeFinalCtaTitle => 'Начните защищать свою компанию сегодня';
 
   @override
   String get homeFinalCtaSubtitle =>
-      'Запустите бесплатный период и защитите всю команду.';
+      'Активируйте CyberGuard за несколько минут и немедленно снизьте киберриски.';
 
   @override
   String get featuresTitle => 'Возможности платформы';
@@ -734,4 +735,170 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get homeMessagingMobileItems =>
       'Receive real-time alerts about employee risk.||Manage company security directly from your phone.||Cybersecurity that follows you everywhere, not only in the office.';
+
+  @override
+  String get homeHeroCtaTrial => 'Бесплатная пробная версия 14 дней';
+
+  @override
+  String get homeHeroCtaDemo => 'Запросить демо';
+
+  @override
+  String get homeHeroProof1 => 'Без установки';
+
+  @override
+  String get homeHeroProof2 => 'Активен менее чем за 10 минут';
+
+  @override
+  String get homeHeroProof3 => 'Подходит для МСБ и распределённых команд';
+
+  @override
+  String get homeProblemTitle => 'Ваша компания уязвимее, чем вы думаете';
+
+  @override
+  String get homeProblemBody =>
+      'Каждый день компании подвергаются кибератакам, даже не подозревая об этом. Фишинговые письма, человеческие ошибки и нехватка обучения — основные причины нарушений безопасности.';
+
+  @override
+  String get homeProblemBullets =>
+      'Сотрудники кликают по опасным ссылкам||Нет видимости реальных рисков||Инциденты обнаруживаются слишком поздно||Фрагментированное управление безопасностью';
+
+  @override
+  String get homeProblemTagline =>
+      'Проблема не в технологиях. Проблема в людях и процессах.';
+
+  @override
+  String get homeSolutionTitle =>
+      'Всё, что нужно для безопасности, на одной платформе';
+
+  @override
+  String get homeSolutionBody =>
+      'С CyberGuard вы контролируете, анализируете и улучшаете безопасность компании в реальном времени.';
+
+  @override
+  String get homeSolutionBullets =>
+      'Непрерывный мониторинг бизнес-рисков||Автоматические фишинг-симуляции||Оповещения в реальном времени||Управление сотрудниками и обучение||Чёткие и мгновенные отчёты';
+
+  @override
+  String get homeSolutionTagline => 'Без продвинутых технических навыков';
+
+  @override
+  String get homeDashboardSectionTitle =>
+      'Всегда знайте, насколько безопасна ваша компания';
+
+  @override
+  String get homeDashboardSectionBody => 'Просматривайте всё в одной панели:';
+
+  @override
+  String get homeDashboardSectionBullets =>
+      'Оценка риска (0–100)||Наиболее уязвимые сотрудники||Активные оповещения||Текущие фишинг-кампании';
+
+  @override
+  String get homeDashboardSectionTagline =>
+      'Принимайте быстрые решения на основе реальных данных';
+
+  @override
+  String get homeBenefitsTitle => 'Снижайте риски. Повышайте осведомлённость.';
+
+  @override
+  String get homeBenefitsBullets =>
+      'Сократите человеческие ошибки до 70%||Выявляйте уязвимости до атак||Автоматически обучайте сотрудников||Централизуйте безопасность в одном инструменте||Экономьте время по сравнению с ручными решениями';
+
+  @override
+  String get homePhishingSectionTitle =>
+      'Проверьте своих сотрудников (без реальных рисков)';
+
+  @override
+  String get homePhishingSectionBody =>
+      'Имитируйте реалистичные фишинг-атаки и узнайте, кто уязвим.';
+
+  @override
+  String get homePhishingSectionBullets =>
+      'Отслеживание открытий и кликов||Подробные отчёты||Непрерывное улучшение';
+
+  @override
+  String get homePhishingSectionTagline =>
+      'Превратите риск в возможность для обучения';
+
+  @override
+  String get homeAlertSectionTitle => 'Получайте оповещения в реальном времени';
+
+  @override
+  String get homeAlertSectionBody =>
+      'Когда что-то происходит, вы узнаёте немедленно.';
+
+  @override
+  String get homeAlertSectionBullets =>
+      'Мгновенные уведомления||Классификация по серьёзности||Сообщение об инцидентах (вирусы, хакинг)';
+
+  @override
+  String get homeAlertSectionTagline =>
+      'Реагируйте до того, как проблема станет критической';
+
+  @override
+  String get homeTeamSectionTitle =>
+      'Полный контроль над пользователями и доступом';
+
+  @override
+  String get homeTeamSectionBody => 'Управляйте легко:';
+
+  @override
+  String get homeTeamSectionBullets =>
+      'Сотрудники||Роли (админ, сотрудник)||Уровень риска||Статус обучения';
+
+  @override
+  String get homeTeamSectionTagline => 'Всё организовано и всегда актуально';
+
+  @override
+  String get homeMultiLangTitle => 'Создано для международных компаний';
+
+  @override
+  String get homeMultiLangBody =>
+      'Встроенная многоязычная поддержка: Итальянский, Английский, Немецкий, Французский, Китайский, Русский';
+
+  @override
+  String get homeMultiLangTagline => 'Идеально для глобальных команд';
+
+  @override
+  String get homePricingSectionTitle => 'Простые тарифы без сюрпризов';
+
+  @override
+  String get homePricingSectionBody =>
+      'Выберите подходящий план для вашей компании:';
+
+  @override
+  String get homePricingSectionBullets =>
+      'Starter — для малого бизнеса||Pro — для растущих компаний||Business — для структурированных организаций';
+
+  @override
+  String get homePricingSectionTagline =>
+      'Платите только за то, что используете';
+
+  @override
+  String get homePricingSectionCtaFree => 'Начать бесплатно';
+
+  @override
+  String get homePricingSectionCtaPlans => 'Смотреть планы';
+
+  @override
+  String get homeTrustTitle => 'Ваши данные в безопасности';
+
+  @override
+  String get homeTrustBullets =>
+      'Безопасная и масштабируемая инфраструктура||Расширенная защита данных||Контролируемый доступ||Соответствие GDPR';
+
+  @override
+  String get homeTrustTagline => 'Безопасность — наш главный приоритет';
+
+  @override
+  String get homeBeforeTitle => 'До';
+
+  @override
+  String get homeBeforeBullets => 'Ручное управление||Нет контроля';
+
+  @override
+  String get homeAfterTitle => 'После';
+
+  @override
+  String get homeAfterBullets =>
+      'Полная видимость||Автоматизированная безопасность';
 }

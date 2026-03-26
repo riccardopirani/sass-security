@@ -83,11 +83,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoModalPlaceholder => 'Placeholder video';
 
   @override
-  String get homeHeroTitle => 'Resilienza cyber pratica per team SMB.';
+  String get homeHeroTitle =>
+      'Proteggi la tua azienda dagli attacchi informatici prima che sia troppo tardi';
 
   @override
   String get homeHeroSubtitle =>
-      'CyberGuard unisce simulazione phishing, alert in tempo reale e formazione dipendenti.';
+      'La piattaforma SaaS che monitora i rischi, forma i dipendenti e previene phishing e attacchi in modo automatico.';
 
   @override
   String get homeHeroPanelTitle => 'Stato sicurezza';
@@ -206,11 +207,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeTestimonial3Role => 'CFO, BrightForge';
 
   @override
-  String get homeFinalCtaTitle => 'Pronto a rafforzare la tua azienda?';
+  String get homeFinalCtaTitle => 'Inizia oggi a proteggere la tua azienda';
 
   @override
   String get homeFinalCtaSubtitle =>
-      'Avvia la prova gratuita e proteggi tutto il team.';
+      'Attiva CyberGuard in pochi minuti e riduci subito i rischi informatici.';
 
   @override
   String get featuresTitle => 'Funzionalita piattaforma';
@@ -734,4 +735,167 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get homeMessagingMobileItems =>
       'Ricevi alert in tempo reale sul rischio dei tuoi dipendenti.||Gestisci la sicurezza aziendale direttamente dal tuo telefono.||La cybersecurity che ti segue ovunque, non solo in ufficio.';
+
+  @override
+  String get homeHeroCtaTrial => 'Prova gratuita 14 giorni';
+
+  @override
+  String get homeHeroCtaDemo => 'Richiedi una demo';
+
+  @override
+  String get homeHeroProof1 => 'Nessuna installazione';
+
+  @override
+  String get homeHeroProof2 => 'Attivo in meno di 10 minuti';
+
+  @override
+  String get homeHeroProof3 => 'Adatto a PMI e team distribuiti';
+
+  @override
+  String get homeProblemTitle =>
+      'La tua azienda è più vulnerabile di quanto pensi';
+
+  @override
+  String get homeProblemBody =>
+      'Ogni giorno le aziende subiscono attacchi informatici senza accorgersene. Email di phishing, errori umani e mancanza di formazione sono tra le principali cause di violazioni.';
+
+  @override
+  String get homeProblemBullets =>
+      'Dipendenti che cliccano link pericolosi||Nessuna visibilità sui rischi reali||Incidenti scoperti troppo tardi||Gestione sicurezza frammentata';
+
+  @override
+  String get homeProblemTagline =>
+      'Il problema non è la tecnologia. Sono le persone e i processi.';
+
+  @override
+  String get homeSolutionTitle =>
+      'Tutto quello che ti serve per la sicurezza, in un\'unica piattaforma';
+
+  @override
+  String get homeSolutionBody =>
+      'Con CyberGuard controlli, analizzi e migliori la sicurezza della tua azienda in tempo reale.';
+
+  @override
+  String get homeSolutionBullets =>
+      'Monitoraggio continuo del rischio aziendale||Simulazioni di phishing automatiche||Alert in tempo reale||Gestione dipendenti e formazione||Report chiari e immediati';
+
+  @override
+  String get homeSolutionTagline => 'Senza competenze tecniche avanzate';
+
+  @override
+  String get homeDashboardSectionTitle =>
+      'Sai sempre quanto è sicura la tua azienda';
+
+  @override
+  String get homeDashboardSectionBody => 'Visualizza in un\'unica dashboard:';
+
+  @override
+  String get homeDashboardSectionBullets =>
+      'Punteggio di rischio (0–100)||Dipendenti più esposti||Alert attivi||Campagne phishing in corso';
+
+  @override
+  String get homeDashboardSectionTagline =>
+      'Prendi decisioni rapide basate su dati reali';
+
+  @override
+  String get homeBenefitsTitle => 'Riduci i rischi. Aumenta la consapevolezza.';
+
+  @override
+  String get homeBenefitsBullets =>
+      'Riduci gli errori umani fino al 70%||Individua vulnerabilità prima degli attacchi||Forma automaticamente i dipendenti||Centralizza tutta la sicurezza in un unico strumento||Risparmia tempo rispetto a soluzioni manuali';
+
+  @override
+  String get homePhishingSectionTitle =>
+      'Metti alla prova i tuoi dipendenti (senza rischi reali)';
+
+  @override
+  String get homePhishingSectionBody =>
+      'Simula attacchi phishing realistici e scopri chi è vulnerabile.';
+
+  @override
+  String get homePhishingSectionBullets =>
+      'Tracciamento aperture e click||Report dettagliati||Miglioramento continuo';
+
+  @override
+  String get homePhishingSectionTagline =>
+      'Trasforma un rischio in un\'opportunità di formazione';
+
+  @override
+  String get homeAlertSectionTitle => 'Ricevi alert in tempo reale';
+
+  @override
+  String get homeAlertSectionBody => 'Quando succede qualcosa, lo sai subito.';
+
+  @override
+  String get homeAlertSectionBullets =>
+      'Notifiche immediate||Classificazione per gravità||Segnalazione incidenti (virus, hacking)';
+
+  @override
+  String get homeAlertSectionTagline =>
+      'Reagisci prima che il problema diventi critico';
+
+  @override
+  String get homeTeamSectionTitle => 'Controllo completo su utenti e accessi';
+
+  @override
+  String get homeTeamSectionBody => 'Gestisci facilmente:';
+
+  @override
+  String get homeTeamSectionBullets =>
+      'Dipendenti||Ruoli (admin, employee)||Livello di rischio||Stato formazione';
+
+  @override
+  String get homeTeamSectionTagline => 'Tutto organizzato e sempre aggiornato';
+
+  @override
+  String get homeMultiLangTitle => 'Pensato per aziende internazionali';
+
+  @override
+  String get homeMultiLangBody =>
+      'Supporto multi-lingua integrato: Italiano, Inglese, Tedesco, Francese, Cinese, Russo';
+
+  @override
+  String get homeMultiLangTagline => 'Perfetto per team globali';
+
+  @override
+  String get homePricingSectionTitle => 'Piani semplici, senza sorprese';
+
+  @override
+  String get homePricingSectionBody =>
+      'Scegli il piano più adatto alla tua azienda:';
+
+  @override
+  String get homePricingSectionBullets =>
+      'Starter — per piccole realtà||Pro — per aziende in crescita||Business — per organizzazioni strutturate';
+
+  @override
+  String get homePricingSectionTagline => 'Paghi solo ciò che usi';
+
+  @override
+  String get homePricingSectionCtaFree => 'Inizia gratis';
+
+  @override
+  String get homePricingSectionCtaPlans => 'Vedi piani';
+
+  @override
+  String get homeTrustTitle => 'I tuoi dati sono al sicuro';
+
+  @override
+  String get homeTrustBullets =>
+      'Infrastruttura sicura e scalabile||Protezione dati avanzata||Accessi controllati||Compliance GDPR';
+
+  @override
+  String get homeTrustTagline => 'La sicurezza è la nostra priorità';
+
+  @override
+  String get homeBeforeTitle => 'Prima';
+
+  @override
+  String get homeBeforeBullets => 'Gestione manuale||Nessun controllo';
+
+  @override
+  String get homeAfterTitle => 'Dopo';
+
+  @override
+  String get homeAfterBullets => 'Visibilità completa||Sicurezza automatizzata';
 }
