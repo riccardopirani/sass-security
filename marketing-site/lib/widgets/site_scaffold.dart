@@ -15,10 +15,14 @@ class SiteScaffold extends StatelessWidget {
     super.key,
     required this.localeCode,
     required this.child,
+    this.animateBackground = false,
   });
 
   final String localeCode;
   final Widget child;
+
+  /// When true, [CyberBackground] animates (intended for home only).
+  final bool animateBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,9 @@ class SiteScaffold extends StatelessWidget {
           return Scaffold(
             body: Stack(
               children: [
-                const Positioned.fill(child: CyberBackground()),
+                Positioned.fill(
+                  child: CyberBackground(animated: animateBackground),
+                ),
                 SingleChildScrollView(
                   child: Column(
                     children: [

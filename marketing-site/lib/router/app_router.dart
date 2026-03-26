@@ -41,7 +41,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final localeCode = LocaleUtils.normalizeCode(
             state.pathParameters['locale'],
           );
-          return SiteScaffold(localeCode: localeCode, child: child);
+          final segments =
+              state.uri.pathSegments.where((s) => s.isNotEmpty).toList();
+          final isHome = segments.length == 1 &&
+              LocaleUtils.isSupportedCode(segments.first);
+          return SiteScaffold(
+            localeCode: localeCode,
+            animateBackground: isHome,
+            child: child,
+          );
         },
         routes: [
           GoRoute(

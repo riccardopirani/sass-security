@@ -7,16 +7,45 @@ import '../theme/app_theme.dart';
 
 const double _kGridSpacing = 42.0;
 
-/// Full-viewport cyber aesthetic: gradient, drifting grid, circuit traces, glow orbs.
-/// Uses elapsed time (not a looping 0–1 controller) so motion stays slow and continuous.
-class CyberBackground extends StatefulWidget {
-  const CyberBackground({super.key});
+/// Full-viewport cyber aesthetic. Set [animated] only where motion is desired (e.g. home).
+class CyberBackground extends StatelessWidget {
+  const CyberBackground({super.key, this.animated = false});
+
+  /// When true, runs a continuous slow animation. When false, no ticker (static backdrop).
+  final bool animated;
 
   @override
-  State<CyberBackground> createState() => _CyberBackgroundState();
+  Widget build(BuildContext context) {
+    if (animated) {
+      return const _AnimatedCyberBackground();
+    }
+    return const _CyberBackgroundLayers(
+      gx: 0,
+      gy: 0,
+      gridOffsetX: 0,
+      gridOffsetY: 0,
+      circuitShiftX: 0,
+      circuitShiftY: 0,
+      circuitPulse: 0.88,
+      orbTopExtraY: 0,
+      orbTopExtraX: 0,
+      orbBottomExtraY: 0,
+      orbBottomExtraX: 0,
+      orbTopOpacity: 0.92,
+      orbBottomOpacity: 0.90,
+    );
+  }
 }
 
-class _CyberBackgroundState extends State<CyberBackground>
+/// Slow, time-based motion (no loop jump).
+class _AnimatedCyberBackground extends StatefulWidget {
+  const _AnimatedCyberBackground();
+
+  @override
+  State<_AnimatedCyberBackground> createState() => _AnimatedCyberBackgroundState();
+}
+
+class _AnimatedCyberBackgroundState extends State<_AnimatedCyberBackground>
     with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   final ValueNotifier<Duration> _elapsed = ValueNotifier(Duration.zero);
@@ -43,91 +72,139 @@ class _CyberBackgroundState extends State<CyberBackground>
       builder: (context, child) {
         final sec = _elapsed.value.inMicroseconds / 1e6;
 
-        // Slow constant drift (pixels / second) — modulo spacing = seamless forever
-        const vx = 1.15;
-        const vy = 0.72;
+        // Slower drift (px/s) — ~2.5–3× slower than before
+        const vx = 0.42;
+        const vy = 0.26;
         final gridOffsetX = (sec * vx) % _kGridSpacing;
         final gridOffsetY = (sec * vy) % _kGridSpacing;
 
-        // Gradient axis rotates very slowly (constant angular speed)
-        const gradientRadPerSec = 0.045;
+        const gradientRadPerSec = 0.016;
         final angle = sec * gradientRadPerSec;
         const gradAmp = 0.1;
         final gx = gradAmp * cos(angle);
         final gy = gradAmp * sin(angle);
 
-        // Circuit layer: slow drift + gentle brightness wave
-        const circuitVx = 0.55;
-        const circuitVy = 0.38;
+        const circuitVx = 0.2;
+        const circuitVy = 0.14;
         final circuitShiftX = (sec * circuitVx) % _kGridSpacing;
         final circuitShiftY = (sec * circuitVy) % _kGridSpacing;
-        final circuitPulse = 0.78 + 0.22 * sin(sec * 0.38);
+        final circuitPulse = 0.78 + 0.22 * sin(sec * 0.14);
 
-        // Orbs: slow Lissajous-style drift (never stops)
-        const orbRad = 0.11;
+        const orbRad = 0.042;
         final orbDriftX = 28 * sin(sec * orbRad * 0.85);
         final orbDriftY = 22 * cos(sec * orbRad * 0.65);
-        final orbBreath = 0.88 + 0.12 * sin(sec * 0.22);
+        final orbBreath = 0.88 + 0.12 * sin(sec * 0.08);
 
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: const [
-                      Color(0xFF070B14),
-                      AppColors.background,
-                      Color(0xFF0B1424),
-                    ],
-                    begin: Alignment(-1 + gx, -1 + gy),
-                    end: Alignment(1 - gx, 1 - gy),
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: _GridPainter(
-                    gridOffsetX: gridOffsetX,
-                    gridOffsetY: gridOffsetY,
-                    circuitShiftX: circuitShiftX,
-                    circuitShiftY: circuitShiftY,
-                    circuitPulse: circuitPulse,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: -180 + orbDriftY * 0.4,
-              right: -140 + orbDriftX * 0.3,
-              child: IgnorePointer(
-                child: Opacity(
-                  opacity: orbBreath.clamp(0.0, 1.0),
-                  child: _GlowOrb(
-                    size: 420,
-                    color: AppColors.accent.withValues(alpha: 0.12),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -120 - orbDriftY * 0.35,
-              left: -140 - orbDriftX * 0.25,
-              child: IgnorePointer(
-                child: Opacity(
-                  opacity: (0.93 - orbBreath * 0.12).clamp(0.0, 1.0),
-                  child: _GlowOrb(
-                    size: 360,
-                    color: const Color(0xFF0EA5E9).withValues(alpha: 0.08),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return _CyberBackgroundLayers(
+          gx: gx,
+          gy: gy,
+          gridOffsetX: gridOffsetX,
+          gridOffsetY: gridOffsetY,
+          circuitShiftX: circuitShiftX,
+          circuitShiftY: circuitShiftY,
+          circuitPulse: circuitPulse,
+          orbTopExtraY: orbDriftY * 0.4,
+          orbTopExtraX: orbDriftX * 0.3,
+          orbBottomExtraY: -orbDriftY * 0.35,
+          orbBottomExtraX: -orbDriftX * 0.25,
+          orbTopOpacity: orbBreath.clamp(0.0, 1.0),
+          orbBottomOpacity: (0.93 - orbBreath * 0.12).clamp(0.0, 1.0),
         );
       },
+    );
+  }
+}
+
+class _CyberBackgroundLayers extends StatelessWidget {
+  const _CyberBackgroundLayers({
+    required this.gx,
+    required this.gy,
+    required this.gridOffsetX,
+    required this.gridOffsetY,
+    required this.circuitShiftX,
+    required this.circuitShiftY,
+    required this.circuitPulse,
+    required this.orbTopExtraY,
+    required this.orbTopExtraX,
+    required this.orbBottomExtraY,
+    required this.orbBottomExtraX,
+    required this.orbTopOpacity,
+    required this.orbBottomOpacity,
+  });
+
+  final double gx;
+  final double gy;
+  final double gridOffsetX;
+  final double gridOffsetY;
+  final double circuitShiftX;
+  final double circuitShiftY;
+  final double circuitPulse;
+  final double orbTopExtraY;
+  final double orbTopExtraX;
+  final double orbBottomExtraY;
+  final double orbBottomExtraX;
+  final double orbTopOpacity;
+  final double orbBottomOpacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: const [
+                  Color(0xFF070B14),
+                  AppColors.background,
+                  Color(0xFF0B1424),
+                ],
+                begin: Alignment(-1 + gx, -1 + gy),
+                end: Alignment(1 - gx, 1 - gy),
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: IgnorePointer(
+            child: CustomPaint(
+              painter: _GridPainter(
+                gridOffsetX: gridOffsetX,
+                gridOffsetY: gridOffsetY,
+                circuitShiftX: circuitShiftX,
+                circuitShiftY: circuitShiftY,
+                circuitPulse: circuitPulse,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: -180 + orbTopExtraY,
+          right: -140 + orbTopExtraX,
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: orbTopOpacity,
+              child: _GlowOrb(
+                size: 420,
+                color: AppColors.accent.withValues(alpha: 0.12),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: -120 + orbBottomExtraY,
+          left: -140 + orbBottomExtraX,
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: orbBottomOpacity,
+              child: _GlowOrb(
+                size: 360,
+                color: const Color(0xFF0EA5E9).withValues(alpha: 0.08),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
