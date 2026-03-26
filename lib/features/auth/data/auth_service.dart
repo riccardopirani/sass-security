@@ -17,6 +17,8 @@ class AuthService {
     required String password,
     required String name,
     required AppUserRole role,
+    String onboardingMode = 'trial',
+    String selectedPlan = 'starter',
     String? companyName,
     String? companyCode,
   }) async {
@@ -37,6 +39,8 @@ class AuthService {
       data: {
         'name': name,
         'role': roleToString(role),
+        'onboarding_mode': onboardingMode,
+        'selected_plan': selectedPlan,
         if (companyName != null) 'company_name': companyName,
         if (companyCode != null) 'company_code': companyCode,
       },

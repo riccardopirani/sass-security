@@ -12,6 +12,7 @@ import '../../news/presentation/news_page.dart';
 import '../../operations/presentation/operations_page.dart';
 import '../../phishing/presentation/phishing_page.dart';
 import '../../settings/presentation/settings_page.dart';
+import '../../subscription/data/subscription_service.dart';
 import '../../subscription/presentation/pricing_page.dart';
 
 class HomeShell extends StatefulWidget {
@@ -32,6 +33,77 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   var _selected = 0;
+  final _subscriptionService = SubscriptionService();
+  var _subscriptionGateChecked = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_subscriptionGateChecked) return;
+    _subscriptionGateChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _enforceSubscriptionGate();
+    });
+  }
+
+  Future<void> _enforceSubscriptionGate() async {
+    if (!mounted || !widget.profile.isAdmin) return;
+    try {
+      final l10n = AppLocalizations.of(context);
+      final subscription = await _subscriptionService.currentForCompany(
+        widget.profile.companyId,
+      );
+      if (!mounted) return;
+
+      final now = DateTime.now();
+      final status = subscription?.status.toLowerCase() ?? 'inactive';
+      final trialValid =
+          status == 'trialing' &&
+          subscription?.currentPeriodEnd != null &&
+          subscription!.currentPeriodEnd!.isAfter(now);
+      final hasAccess = status == 'active' || trialValid;
+      if (hasAccess) return;
+
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Abbonamento richiesto'),
+            content: const Text(
+              'Il periodo gratuito e terminato oppure non e attivo alcun piano. '
+              'Completa il pagamento su Stripe per continuare a usare la piattaforma.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  if (!mounted) return;
+                  final items = _items(l10n);
+                  final pricingIndex = items.indexWhere(
+                    (item) => item.label == l10n.subscription,
+                  );
+                  if (pricingIndex >= 0) {
+                    setState(() => _selected = pricingIndex);
+                  }
+                },
+                child: const Text('Vai ai piani'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await widget.authService.signOut();
+                },
+                child: const Text('Esci'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (_) {
+      // If subscription check fails, do not block navigation.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
