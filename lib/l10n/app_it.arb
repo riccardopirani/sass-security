@@ -267,6 +267,7 @@
   "subscription_continue_checkout": "Vai al pagamento",
   "subscription_seats_invalid": "Inserisci un numero valido di utenti (almeno 1).",
   "subscription_purchase_history": "Storico acquisti",
+  "subscription_section_invoices": "Fatture",
   "subscription_no_invoices": "Nessuna fattura. I pagamenti completati compariranno qui.",
   "subscription_history_admin_only": "Solo gli admin azienda possono vedere lo storico e annullare l’abbonamento.",
   "subscription_invoice_on": "Data",
@@ -282,5 +283,42 @@
   "subscription_invoice_status_open": "Aperta",
   "subscription_invoice_status_draft": "Bozza",
   "subscription_invoice_status_void": "Annullata",
-  "subscription_invoice_status_uncollectible": "Insoluta"
+  "subscription_invoice_status_uncollectible": "Insoluta",
+  "subscription_billing_monthly": "Mensile",
+  "subscription_billing_yearly": "Annuale",
+  "subscription_billing_checkout_cadence": "Periodo di fatturazione (checkout)",
+  "subscription_billing_current": "Fatturazione attuale: {interval}",
+  "@subscription_billing_current": {
+    "placeholders": {
+      "interval": {"type": "String"}
+    }
+  },
+  "subscription_estimated_yearly": "Stima: {amount}/anno",
+  "@subscription_estimated_yearly": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "subscription_switch_to_monthly": "Passa al mensile al rinnovo",
+  "subscription_switch_to_monthly_confirm_title": "Passare alla fatturazione mensile?",
+  "subscription_switch_to_monthly_confirm_body": "Il periodo annuale resta valido fino alla sua scadenza. Dopodiché Stripe addebiterà la tariffa mensile per le tue licenze. Non è previsto rimborso automatico del tempo non usato sull’anno.",
+  "subscription_switch_to_monthly_confirm_action": "Programma mensile",
+  "subscription_switch_to_monthly_scheduled": "Fatturazione mensile programmata dal prossimo rinnovo.",
+  "subscription_billing_activity": "Attività di fatturazione",
+  "subscription_event_switch_monthly": "Fatturazione mensile programmata dal {date}",
+  "@subscription_event_switch_monthly": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "subscription_no_billing_events": "Nessuna modifica di fatturazione.",
+  "subscription_already_monthly": "L’abbonamento è già in fatturazione mensile.",
+  "subscription_pay_with_store": "Abbonati con App Store / Play",
+  "subscription_pay_with_card_browser": "Paga con carta (browser)",
+  "subscription_store_disclaimer": "Gli abbonamenti da store usano SKU fissi (vedi plafond postazioni in App Store / Play). Il prezzo per postazione della calcolatrice vale solo con pagamento a carte.",
+  "subscription_store_unavailable": "Prodotti store non trovati. Crea gli abbonamenti in App Store Connect e Play Console con gli stessi ID del codice (o IAP_PRODUCT_MONTHLY / IAP_PRODUCT_YEARLY).",
+  "subscription_store_success": "Abbonamento attivato.",
+  "subscription_billing_provider_appstore": "App Store",
+  "subscription_billing_provider_play": "Google Play",
+  "subscription_manage_in_store": "Gestisci l’abbonamento in Impostazioni iPhone → Apple ID → Abbonamenti (o Play Store → Pagamenti e abbonamenti)."
 }

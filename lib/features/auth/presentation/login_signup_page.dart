@@ -83,6 +83,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             await SubscriptionService().openCheckout(
               users: users,
               stripeLocale: stripeLocale,
+              billingInterval: 'month',
             );
           } catch (checkoutError) {
             if (mounted) {

@@ -5,6 +5,7 @@ import { adminClient, requireUser } from '../_shared/supabase.ts';
 import {
   computeMonthlyUsd,
   monthlyUsdToUnitCents,
+  yearlyUsdToUnitCents,
 } from '../_shared/pricing.ts';
 import { stripeUiLocale } from '../_shared/stripe_locale.ts';
 import { stripe } from '../_shared/stripe.ts';
@@ -50,7 +51,14 @@ serve(async (req) => {
 
     const riskScore = Number(company.data?.risk_score ?? 0);
     const monthlyUsd = computeMonthlyUsd(users, riskScore);
-    const unitCents = monthlyUsdToUnitCents(monthlyUsd);
+    const intervalRaw = String(payload?.billing_interval ?? payload?.billingInterval ?? 'month')
+      .trim()
+      .toLowerCase();
+    const billingInterval = intervalRaw === 'year' ? 'year' : 'month';
+    const unitCents =
+      billingInterval === 'year'
+        ? yearlyUsdToUnitCents(monthlyUsd)
+        : monthlyUsdToUnitCents(monthlyUsd);
 
     const existing = await adminClient
       .from('security_cg_subscriptions')
@@ -82,6 +90,7 @@ serve(async (req) => {
       licensed_users: String(users),
       risk_score: String(Math.round(riskScore)),
       monthly_amount_usd: monthlyUsd.toFixed(2),
+      billing_interval: billingInterval,
     };
 
     const session = await stripe.checkout.sessions.create({
@@ -94,10 +103,10 @@ serve(async (req) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `CyberGuard (${users} seats)`,
+              name: `CyberGuard (${users} seats, ${billingInterval === 'year' ? 'annual' : 'monthly'})`,
               metadata: meta,
             },
-            recurring: { interval: 'month' },
+            recurring: { interval: billingInterval },
             unit_amount: unitCents,
           },
           quantity: 1,
@@ -119,6 +128,7 @@ serve(async (req) => {
         plan: 'flex',
         licensed_seats: users,
         status: 'incomplete',
+        billing_interval: billingInterval,
       },
       { onConflict: 'company_id' },
     );
@@ -129,6 +139,7 @@ serve(async (req) => {
         url: session.url,
         monthly_usd: monthlyUsd,
         unit_cents: unitCents,
+        billing_interval: billingInterval,
         users,
         risk_score: Math.round(riskScore),
       }),

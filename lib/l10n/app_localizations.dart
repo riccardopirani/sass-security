@@ -1444,6 +1444,12 @@ abstract class AppLocalizations {
   /// **'Purchase history'**
   String get subscription_purchase_history;
 
+  /// No description provided for @subscription_section_invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get subscription_section_invoices;
+
   /// No description provided for @subscription_no_invoices.
   ///
   /// In en, this message translates to:
@@ -1539,6 +1545,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uncollectible'**
   String get subscription_invoice_status_uncollectible;
+
+  /// No description provided for @subscription_billing_monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get subscription_billing_monthly;
+
+  /// No description provided for @subscription_billing_yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get subscription_billing_yearly;
+
+  /// No description provided for @subscription_billing_checkout_cadence.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing cadence for checkout'**
+  String get subscription_billing_checkout_cadence;
+
+  /// No description provided for @subscription_billing_current.
+  ///
+  /// In en, this message translates to:
+  /// **'Current billing: {interval}'**
+  String subscription_billing_current(String interval);
+
+  /// No description provided for @subscription_estimated_yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated: {amount}/year'**
+  String subscription_estimated_yearly(String amount);
+
+  /// No description provided for @subscription_switch_to_monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to monthly at renewal'**
+  String get subscription_switch_to_monthly;
+
+  /// No description provided for @subscription_switch_to_monthly_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to monthly billing?'**
+  String get subscription_switch_to_monthly_confirm_title;
+
+  /// No description provided for @subscription_switch_to_monthly_confirm_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your annual period continues until its end date. After that, Stripe will charge the monthly rate for your seats. There is no automatic refund for unused time on the annual term.'**
+  String get subscription_switch_to_monthly_confirm_body;
+
+  /// No description provided for @subscription_switch_to_monthly_confirm_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule monthly'**
+  String get subscription_switch_to_monthly_confirm_action;
+
+  /// No description provided for @subscription_switch_to_monthly_scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly billing is scheduled starting at your next renewal.'**
+  String get subscription_switch_to_monthly_scheduled;
+
+  /// No description provided for @subscription_billing_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing activity'**
+  String get subscription_billing_activity;
+
+  /// No description provided for @subscription_event_switch_monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly billing scheduled from {date}'**
+  String subscription_event_switch_monthly(String date);
+
+  /// No description provided for @subscription_no_billing_events.
+  ///
+  /// In en, this message translates to:
+  /// **'No billing changes yet.'**
+  String get subscription_no_billing_events;
+
+  /// No description provided for @subscription_already_monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription is already billed monthly.'**
+  String get subscription_already_monthly;
+
+  /// No description provided for @subscription_pay_with_store.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe with App Store / Play'**
+  String get subscription_pay_with_store;
+
+  /// No description provided for @subscription_pay_with_card_browser.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay with card (browser)'**
+  String get subscription_pay_with_card_browser;
+
+  /// No description provided for @subscription_store_disclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Store subscriptions use fixed SKUs (see seat cap in App Store / Play Console). Per-seat pricing from the calculator applies to card checkout only.'**
+  String get subscription_store_disclaimer;
+
+  /// No description provided for @subscription_store_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Store products not found. Create matching subscriptions in App Store Connect and Google Play with the same product IDs as the app (or set IAP_PRODUCT_MONTHLY / IAP_PRODUCT_YEARLY).'**
+  String get subscription_store_unavailable;
+
+  /// No description provided for @subscription_store_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription activated. Welcome!'**
+  String get subscription_store_success;
+
+  /// No description provided for @subscription_billing_provider_appstore.
+  ///
+  /// In en, this message translates to:
+  /// **'App Store'**
+  String get subscription_billing_provider_appstore;
+
+  /// No description provided for @subscription_billing_provider_play.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play'**
+  String get subscription_billing_provider_play;
+
+  /// No description provided for @subscription_manage_in_store.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage this subscription in iPhone Settings → Apple ID → Subscriptions (or Play Store → Payments & subscriptions).'**
+  String get subscription_manage_in_store;
 }
 
 class _AppLocalizationsDelegate

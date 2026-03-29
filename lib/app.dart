@@ -28,6 +28,17 @@ class CyberGuardApp extends StatelessWidget {
           onGenerateTitle: (context) =>
               AppLocalizations.of(context).app_title,
           debugShowCheckedModeBanner: false,
+          builder: (context, child) {
+            final mq = MediaQuery.of(context);
+            final scaled = mq.textScaler.clamp(
+              minScaleFactor: 0.88,
+              maxScaleFactor: 1.2,
+            );
+            return MediaQuery(
+              data: mq.copyWith(textScaler: scaled),
+              child: child ?? const SizedBox.shrink(),
+            );
+          },
           locale: localeController.locale,
           supportedLocales: LocaleController.supportedLocales,
           localizationsDelegates: const [

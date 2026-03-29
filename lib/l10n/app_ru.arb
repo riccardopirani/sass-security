@@ -267,6 +267,7 @@
   "subscription_continue_checkout": "Continue to checkout",
   "subscription_seats_invalid": "Enter a valid number of users (1 or more).",
   "subscription_purchase_history": "Purchase history",
+  "subscription_section_invoices": "Счета",
   "subscription_no_invoices": "No invoices yet. Completed payments will appear here.",
   "subscription_history_admin_only": "Only company admins can view billing history and cancel subscriptions.",
   "subscription_invoice_on": "Date",
@@ -282,5 +283,42 @@
   "subscription_invoice_status_open": "Open",
   "subscription_invoice_status_draft": "Draft",
   "subscription_invoice_status_void": "Void",
-  "subscription_invoice_status_uncollectible": "Uncollectible"
+  "subscription_invoice_status_uncollectible": "Uncollectible",
+  "subscription_billing_monthly": "Ежемесячно",
+  "subscription_billing_yearly": "Ежегодно",
+  "subscription_billing_checkout_cadence": "Период оплаты (оформление)",
+  "subscription_billing_current": "Текущая оплата: {interval}",
+  "@subscription_billing_current": {
+    "placeholders": {
+      "interval": {"type": "String"}
+    }
+  },
+  "subscription_estimated_yearly": "Ориентир: {amount}/год",
+  "@subscription_estimated_yearly": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "subscription_switch_to_monthly": "Перейти на месячное при продлении",
+  "subscription_switch_to_monthly_confirm_title": "Перейти на месячную оплату?",
+  "subscription_switch_to_monthly_confirm_body": "Годовой период действует до его окончания. После этого Stripe будет списывать месячную ставку за места. Автовозврат за неиспользованное время по годовому тарифу не предусмотрен.",
+  "subscription_switch_to_monthly_confirm_action": "Запланировать месячное",
+  "subscription_switch_to_monthly_scheduled": "Месячная оплата запланирована с следующего продления.",
+  "subscription_billing_activity": "События по оплате",
+  "subscription_event_switch_monthly": "Месячная оплата запланирована с {date}",
+  "@subscription_event_switch_monthly": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "subscription_no_billing_events": "Пока нет изменений по оплате.",
+  "subscription_already_monthly": "Подписка уже оплачивается ежемесячно.",
+  "subscription_pay_with_store": "Оформить в App Store / Play",
+  "subscription_pay_with_card_browser": "Оплатить картой (браузер)",
+  "subscription_store_disclaimer": "Подписки в магазине используют фиксированные SKU; расчёт по местам — только при оплате картой.",
+  "subscription_store_unavailable": "Товары магазина не найдены. Создайте подписки в консолях.",
+  "subscription_store_success": "Подписка активирована.",
+  "subscription_billing_provider_appstore": "App Store",
+  "subscription_billing_provider_play": "Google Play",
+  "subscription_manage_in_store": "Управляйте подпиской в настройках Apple ID или в Google Play."
 }

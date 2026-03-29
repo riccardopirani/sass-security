@@ -709,6 +709,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get subscription_purchase_history => 'Purchase history';
 
   @override
+  String get subscription_section_invoices => 'Счета';
+
+  @override
   String get subscription_no_invoices =>
       'No invoices yet. Completed payments will appear here.';
 
@@ -759,4 +762,86 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Uncollectible';
+
+  @override
+  String get subscription_billing_monthly => 'Ежемесячно';
+
+  @override
+  String get subscription_billing_yearly => 'Ежегодно';
+
+  @override
+  String get subscription_billing_checkout_cadence =>
+      'Период оплаты (оформление)';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return 'Текущая оплата: $interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return 'Ориентир: $amount/год';
+  }
+
+  @override
+  String get subscription_switch_to_monthly =>
+      'Перейти на месячное при продлении';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title =>
+      'Перейти на месячную оплату?';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      'Годовой период действует до его окончания. После этого Stripe будет списывать месячную ставку за места. Автовозврат за неиспользованное время по годовому тарифу не предусмотрен.';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action =>
+      'Запланировать месячное';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled =>
+      'Месячная оплата запланирована с следующего продления.';
+
+  @override
+  String get subscription_billing_activity => 'События по оплате';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return 'Месячная оплата запланирована с $date';
+  }
+
+  @override
+  String get subscription_no_billing_events => 'Пока нет изменений по оплате.';
+
+  @override
+  String get subscription_already_monthly =>
+      'Подписка уже оплачивается ежемесячно.';
+
+  @override
+  String get subscription_pay_with_store => 'Оформить в App Store / Play';
+
+  @override
+  String get subscription_pay_with_card_browser => 'Оплатить картой (браузер)';
+
+  @override
+  String get subscription_store_disclaimer =>
+      'Подписки в магазине используют фиксированные SKU; расчёт по местам — только при оплате картой.';
+
+  @override
+  String get subscription_store_unavailable =>
+      'Товары магазина не найдены. Создайте подписки в консолях.';
+
+  @override
+  String get subscription_store_success => 'Подписка активирована.';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store =>
+      'Управляйте подпиской в настройках Apple ID или в Google Play.';
 }

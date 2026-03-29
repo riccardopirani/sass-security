@@ -3,8 +3,28 @@ import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
 import type Stripe from 'npm:stripe@14.25.0';
 
 import { handleOptions, json } from '../_shared/cors.ts';
+import { type MailLocale, resolveUserMailLocale } from '../_shared/transactional_email.ts';
+import { dispatchTransactionalEmail } from '../_shared/transactional_templates.ts';
 import { adminClient } from '../_shared/supabase.ts';
 import { planFromMetadata, stripe } from '../_shared/stripe.ts';
+
+const intlTag: Record<MailLocale, string> = {
+  en: 'en-US',
+  it: 'it-IT',
+  de: 'de-DE',
+  fr: 'fr-FR',
+  zh: 'zh-CN',
+  ru: 'ru-RU',
+};
+
+const formatPeriodEnd = (iso: string | null, locale: MailLocale): string => {
+  if (!iso) return '—';
+  try {
+    return new Intl.DateTimeFormat(intlTag[locale], { dateStyle: 'medium' }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+};
 
 const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') ?? '';
 
@@ -47,6 +67,12 @@ const parseLicensedSeats = (raw: string | null | undefined): number | null => {
   return Math.min(50_000, n);
 };
 
+const billingIntervalFromSubscription = (subscription: Stripe.Subscription): 'month' | 'year' => {
+  const price = subscription.items?.data?.[0]?.price;
+  const interval = price?.recurring?.interval;
+  return interval === 'year' ? 'year' : 'month';
+};
+
 const upsertSubscription = async (params: {
   companyId: string;
   userId: string;
@@ -56,6 +82,7 @@ const upsertSubscription = async (params: {
   status: string;
   currentPeriodEnd: string | null;
   licensedSeats?: number | null;
+  billingInterval?: 'month' | 'year';
 }) => {
   await adminClient.from('security_cg_subscriptions').upsert(
     {
@@ -67,6 +94,7 @@ const upsertSubscription = async (params: {
       status: params.status,
       current_period_end: params.currentPeriodEnd,
       licensed_seats: params.licensedSeats ?? null,
+      billing_interval: params.billingInterval ?? 'month',
       updated_at: new Date().toISOString(),
     },
     { onConflict: 'company_id' },
@@ -89,13 +117,17 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
   let currentPeriodEnd: string | null = null;
   let licensedSeats = parseLicensedSeats(session.metadata?.licensed_users);
 
+  let billingInterval: 'month' | 'year' = 'month';
   if (stripeSubscriptionId) {
-    const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+    const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId, {
+      expand: ['items.data.price'],
+    });
     plan = planFromMetadata(stripeSubscription.metadata?.plan ?? plan);
     licensedSeats =
       parseLicensedSeats(stripeSubscription.metadata?.licensed_users) ?? licensedSeats;
     status = stripeSubscription.status;
     currentPeriodEnd = toIso(stripeSubscription.current_period_end);
+    billingInterval = billingIntervalFromSubscription(stripeSubscription);
   }
 
   await upsertSubscription({
@@ -107,6 +139,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     status,
     currentPeriodEnd,
     licensedSeats,
+    billingInterval,
   });
 };
 
@@ -122,12 +155,16 @@ const handleInvoicePaid = async (invoice: Stripe.Invoice) => {
   let plan = planFromMetadata('flex');
   let currentPeriodEnd: string | null = null;
   let licensedSeats: number | null = null;
+  let billingInterval: 'month' | 'year' = 'month';
 
   if (stripeSubscriptionId) {
-    const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+    const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId, {
+      expand: ['items.data.price'],
+    });
     plan = planFromMetadata(stripeSubscription.metadata?.plan);
     licensedSeats = parseLicensedSeats(stripeSubscription.metadata?.licensed_users);
     currentPeriodEnd = toIso(stripeSubscription.current_period_end);
+    billingInterval = billingIntervalFromSubscription(stripeSubscription);
   }
 
   await upsertSubscription({
@@ -139,7 +176,42 @@ const handleInvoicePaid = async (invoice: Stripe.Invoice) => {
     status: 'active',
     currentPeriodEnd,
     licensedSeats,
+    billingInterval,
   });
+
+  try {
+    const locale = await resolveUserMailLocale(existing.user_id);
+    const prof = await adminClient
+      .from('security_cg_profiles')
+      .select('email,name')
+      .eq('id', existing.user_id)
+      .maybeSingle();
+    const email = prof.data?.email?.trim();
+    if (email && email.length > 3) {
+      const currency = (invoice.currency ?? 'usd').toUpperCase();
+      const amountPaid = invoice.amount_paid;
+      const amountDisplay =
+        amountPaid != null
+          ? new Intl.NumberFormat(intlTag[locale], {
+              style: 'currency',
+              currency,
+            }).format(amountPaid / 100)
+          : undefined;
+      await dispatchTransactionalEmail({
+        template: 'subscription_invoice_paid',
+        locale,
+        to: [email],
+        data: {
+          userName: prof.data?.name ?? undefined,
+          plan: String(plan),
+          periodEnd: formatPeriodEnd(currentPeriodEnd, locale),
+          amountDisplay,
+        },
+      });
+    }
+  } catch {
+    /* email is best-effort; subscription state already updated */
+  }
 };
 
 const handleInvoiceFailed = async (invoice: Stripe.Invoice) => {
@@ -162,6 +234,32 @@ const handleInvoiceFailed = async (invoice: Stripe.Invoice) => {
     title: 'Payment failed',
     message: 'Subscription payment failed. Please update billing details.',
   });
+
+  try {
+    const locale = await resolveUserMailLocale(existing.user_id);
+    const prof = await adminClient
+      .from('security_cg_profiles')
+      .select('email,name')
+      .eq('id', existing.user_id)
+      .maybeSingle();
+    const email = prof.data?.email?.trim();
+    const reason =
+      (invoice as Stripe.Invoice & { last_finalization_error?: { message?: string } })
+        .last_finalization_error?.message ?? '';
+    if (email && email.length > 3) {
+      await dispatchTransactionalEmail({
+        template: 'subscription_payment_failed',
+        locale,
+        to: [email],
+        data: {
+          userName: prof.data?.name ?? undefined,
+          reason: reason || undefined,
+        },
+      });
+    }
+  } catch {
+    /* best-effort */
+  }
 };
 
 const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
@@ -178,8 +276,17 @@ const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
     return;
   }
 
+  const rawPrice = subscription.items?.data?.[0]?.price;
+  let subResolved = subscription;
+  if (typeof rawPrice === 'string' || !rawPrice?.recurring) {
+    subResolved = await stripe.subscriptions.retrieve(subscription.id, {
+      expand: ['items.data.price'],
+    });
+  }
+
   const plan = planFromMetadata(subscription.metadata?.plan);
   const licensedSeats = parseLicensedSeats(subscription.metadata?.licensed_users);
+  const billingInterval = billingIntervalFromSubscription(subResolved);
 
   await upsertSubscription({
     companyId,
@@ -190,6 +297,7 @@ const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
     status: subscription.status,
     currentPeriodEnd: toIso(subscription.current_period_end),
     licensedSeats,
+    billingInterval,
   });
 };
 

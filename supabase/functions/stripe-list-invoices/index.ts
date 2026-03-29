@@ -37,28 +37,52 @@ serve(async (req) => {
       .maybeSingle();
 
     const customerId = row.data?.stripe_customer_id as string | null | undefined;
-    if (!customerId) {
-      return json({ invoices: [] });
+
+    let invoices: Array<{
+      id: string;
+      number: string | null;
+      created: number;
+      amount_paid: number;
+      amount_due: number;
+      currency: string;
+      status: string | null;
+      invoice_pdf: string | null;
+      hosted_invoice_url: string | null;
+    }> = [];
+
+    if (customerId) {
+      const list = await stripe.invoices.list({
+        customer: customerId,
+        limit: 40,
+      });
+      invoices = list.data.map((inv) => ({
+        id: inv.id,
+        number: inv.number,
+        created: inv.created,
+        amount_paid: inv.amount_paid,
+        amount_due: inv.amount_due,
+        currency: inv.currency,
+        status: inv.status,
+        invoice_pdf: inv.invoice_pdf,
+        hosted_invoice_url: inv.hosted_invoice_url,
+      }));
     }
 
-    const list = await stripe.invoices.list({
-      customer: customerId,
-      limit: 40,
-    });
+    const eventsRes = await adminClient
+      .from('security_cg_subscription_billing_events')
+      .select('id,event_type,details,created_at')
+      .eq('company_id', profile.data.company_id)
+      .order('created_at', { ascending: false })
+      .limit(50);
 
-    const invoices = list.data.map((inv) => ({
-      id: inv.id,
-      number: inv.number,
-      created: inv.created,
-      amount_paid: inv.amount_paid,
-      amount_due: inv.amount_due,
-      currency: inv.currency,
-      status: inv.status,
-      invoice_pdf: inv.invoice_pdf,
-      hosted_invoice_url: inv.hosted_invoice_url,
+    const billing_events = (eventsRes.data ?? []).map((e) => ({
+      id: e.id as string,
+      event_type: e.event_type as string,
+      details: e.details as Record<string, unknown>,
+      created_at: e.created_at as string,
     }));
 
-    return json({ invoices });
+    return json({ invoices, billing_events });
   } catch (error) {
     return json(
       {

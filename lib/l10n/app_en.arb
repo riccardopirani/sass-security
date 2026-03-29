@@ -274,6 +274,7 @@
   "subscription_continue_checkout": "Continue to checkout",
   "subscription_seats_invalid": "Enter a valid number of users (1 or more).",
   "subscription_purchase_history": "Purchase history",
+  "subscription_section_invoices": "Invoices",
   "subscription_no_invoices": "No invoices yet. Completed payments will appear here.",
   "subscription_history_admin_only": "Only company admins can view billing history and cancel subscriptions.",
   "subscription_invoice_on": "Date",
@@ -289,5 +290,42 @@
   "subscription_invoice_status_open": "Open",
   "subscription_invoice_status_draft": "Draft",
   "subscription_invoice_status_void": "Void",
-  "subscription_invoice_status_uncollectible": "Uncollectible"
+  "subscription_invoice_status_uncollectible": "Uncollectible",
+  "subscription_billing_monthly": "Monthly",
+  "subscription_billing_yearly": "Yearly",
+  "subscription_billing_checkout_cadence": "Billing cadence for checkout",
+  "subscription_billing_current": "Current billing: {interval}",
+  "@subscription_billing_current": {
+    "placeholders": {
+      "interval": {"type": "String"}
+    }
+  },
+  "subscription_estimated_yearly": "Estimated: {amount}/year",
+  "@subscription_estimated_yearly": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "subscription_switch_to_monthly": "Switch to monthly at renewal",
+  "subscription_switch_to_monthly_confirm_title": "Switch to monthly billing?",
+  "subscription_switch_to_monthly_confirm_body": "Your annual period continues until its end date. After that, Stripe will charge the monthly rate for your seats. There is no automatic refund for unused time on the annual term.",
+  "subscription_switch_to_monthly_confirm_action": "Schedule monthly",
+  "subscription_switch_to_monthly_scheduled": "Monthly billing is scheduled starting at your next renewal.",
+  "subscription_billing_activity": "Billing activity",
+  "subscription_event_switch_monthly": "Monthly billing scheduled from {date}",
+  "@subscription_event_switch_monthly": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "subscription_no_billing_events": "No billing changes yet.",
+  "subscription_already_monthly": "Your subscription is already billed monthly.",
+  "subscription_pay_with_store": "Subscribe with App Store / Play",
+  "subscription_pay_with_card_browser": "Pay with card (browser)",
+  "subscription_store_disclaimer": "Store subscriptions use fixed SKUs (see seat cap in App Store / Play Console). Per-seat pricing from the calculator applies to card checkout only.",
+  "subscription_store_unavailable": "Store products not found. Create matching subscriptions in App Store Connect and Google Play with the same product IDs as the app (or set IAP_PRODUCT_MONTHLY / IAP_PRODUCT_YEARLY).",
+  "subscription_store_success": "Subscription activated. Welcome!",
+  "subscription_billing_provider_appstore": "App Store",
+  "subscription_billing_provider_play": "Google Play",
+  "subscription_manage_in_store": "Manage this subscription in iPhone Settings → Apple ID → Subscriptions (or Play Store → Payments & subscriptions)."
 }

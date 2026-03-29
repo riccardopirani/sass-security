@@ -17,13 +17,14 @@ class ShellContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final w = MediaQuery.sizeOf(context).width;
     final hPad = horizontalPaddingForWidth(w);
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Align(
       alignment: Alignment.topCenter,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1480),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24),
+          padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24 + bottomInset),
           child: child,
         ),
       ),

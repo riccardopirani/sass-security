@@ -15,3 +15,8 @@ export function computeMonthlyUsd(users: number, riskScore: number): number {
 export function monthlyUsdToUnitCents(usd: number): number {
   return Math.max(50, Math.round(usd * 100));
 }
+
+/** Yearly subscription = 12× monthly estimate, in cents (Stripe per-period charge). */
+export function yearlyUsdToUnitCents(monthlyUsd: number): number {
+  return Math.max(50, Math.round(monthlyUsd * 12 * 100));
+}

@@ -267,6 +267,7 @@
   "subscription_continue_checkout": "Continue to checkout",
   "subscription_seats_invalid": "Enter a valid number of users (1 or more).",
   "subscription_purchase_history": "Purchase history",
+  "subscription_section_invoices": "Factures",
   "subscription_no_invoices": "No invoices yet. Completed payments will appear here.",
   "subscription_history_admin_only": "Only company admins can view billing history and cancel subscriptions.",
   "subscription_invoice_on": "Date",
@@ -282,5 +283,42 @@
   "subscription_invoice_status_open": "Open",
   "subscription_invoice_status_draft": "Draft",
   "subscription_invoice_status_void": "Void",
-  "subscription_invoice_status_uncollectible": "Uncollectible"
+  "subscription_invoice_status_uncollectible": "Uncollectible",
+  "subscription_billing_monthly": "Mensuel",
+  "subscription_billing_yearly": "Annuel",
+  "subscription_billing_checkout_cadence": "Cycle de facturation (paiement)",
+  "subscription_billing_current": "Facturation actuelle : {interval}",
+  "@subscription_billing_current": {
+    "placeholders": {
+      "interval": {"type": "String"}
+    }
+  },
+  "subscription_estimated_yearly": "Estimation : {amount}/an",
+  "@subscription_estimated_yearly": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "subscription_switch_to_monthly": "Passer au mensuel au renouvellement",
+  "subscription_switch_to_monthly_confirm_title": "Passer à la facturation mensuelle ?",
+  "subscription_switch_to_monthly_confirm_body": "Votre période annuelle se poursuit jusqu’à son terme. Ensuite Stripe appliquera le tarif mensuel par siège. Aucun remboursement automatique pour la partie annuelle non utilisée.",
+  "subscription_switch_to_monthly_confirm_action": "Planifier le mensuel",
+  "subscription_switch_to_monthly_scheduled": "La facturation mensuelle est planifiée dès le prochain renouvellement.",
+  "subscription_billing_activity": "Activité de facturation",
+  "subscription_event_switch_monthly": "Facturation mensuelle planifiée à partir du {date}",
+  "@subscription_event_switch_monthly": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "subscription_no_billing_events": "Aucun changement de facturation pour l’instant.",
+  "subscription_already_monthly": "Votre abonnement est déjà facturé mensuellement.",
+  "subscription_pay_with_store": "Abonnement App Store / Play",
+  "subscription_pay_with_card_browser": "Payer par carte (navigateur)",
+  "subscription_store_disclaimer": "Les abonnements magasin utilisent des SKU fixes ; le prix par siège du calculateur s’applique au paiement par carte.",
+  "subscription_store_unavailable": "Produits magasin introuvables. Créez les abonnements dans App Store Connect et Play Console.",
+  "subscription_store_success": "Abonnement activé.",
+  "subscription_billing_provider_appstore": "App Store",
+  "subscription_billing_provider_play": "Google Play",
+  "subscription_manage_in_store": "Gérez l’abonnement dans Réglages iOS ou l’application Google Play."
 }

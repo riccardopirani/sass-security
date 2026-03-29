@@ -36,6 +36,10 @@ serve(async (req) => {
     assertManagerRole(profile.role);
 
     const body = await req.json();
+    const mailLocale =
+      (body?.locale as string | undefined)?.trim() ||
+      req.headers.get('accept-language')?.split(',')[0]?.trim().split(/[-_]/)[0] ||
+      undefined;
     const title = (body?.title as string | undefined)?.trim();
     const message = (body?.message as string | undefined)?.trim();
     const severity = normalizeSeverity((body?.severity as string | undefined)?.trim().toLowerCase());
@@ -100,6 +104,7 @@ serve(async (req) => {
       title,
       message,
       severity,
+      locale: mailLocale,
       slackWebhookUrl: channelsInput.includes('slack') ? channel?.slack_webhook_url : null,
       teamsWebhookUrl: channelsInput.includes('teams') ? channel?.teams_webhook_url : null,
     });

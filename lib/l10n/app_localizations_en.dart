@@ -710,6 +710,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscription_purchase_history => 'Purchase history';
 
   @override
+  String get subscription_section_invoices => 'Invoices';
+
+  @override
   String get subscription_no_invoices =>
       'No invoices yet. Completed payments will appear here.';
 
@@ -760,4 +763,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Uncollectible';
+
+  @override
+  String get subscription_billing_monthly => 'Monthly';
+
+  @override
+  String get subscription_billing_yearly => 'Yearly';
+
+  @override
+  String get subscription_billing_checkout_cadence =>
+      'Billing cadence for checkout';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return 'Current billing: $interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return 'Estimated: $amount/year';
+  }
+
+  @override
+  String get subscription_switch_to_monthly => 'Switch to monthly at renewal';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title =>
+      'Switch to monthly billing?';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      'Your annual period continues until its end date. After that, Stripe will charge the monthly rate for your seats. There is no automatic refund for unused time on the annual term.';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action =>
+      'Schedule monthly';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled =>
+      'Monthly billing is scheduled starting at your next renewal.';
+
+  @override
+  String get subscription_billing_activity => 'Billing activity';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return 'Monthly billing scheduled from $date';
+  }
+
+  @override
+  String get subscription_no_billing_events => 'No billing changes yet.';
+
+  @override
+  String get subscription_already_monthly =>
+      'Your subscription is already billed monthly.';
+
+  @override
+  String get subscription_pay_with_store => 'Subscribe with App Store / Play';
+
+  @override
+  String get subscription_pay_with_card_browser => 'Pay with card (browser)';
+
+  @override
+  String get subscription_store_disclaimer =>
+      'Store subscriptions use fixed SKUs (see seat cap in App Store / Play Console). Per-seat pricing from the calculator applies to card checkout only.';
+
+  @override
+  String get subscription_store_unavailable =>
+      'Store products not found. Create matching subscriptions in App Store Connect and Google Play with the same product IDs as the app (or set IAP_PRODUCT_MONTHLY / IAP_PRODUCT_YEARLY).';
+
+  @override
+  String get subscription_store_success => 'Subscription activated. Welcome!';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store =>
+      'Manage this subscription in iPhone Settings → Apple ID → Subscriptions (or Play Store → Payments & subscriptions).';
 }

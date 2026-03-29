@@ -710,6 +710,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get subscription_purchase_history => 'Purchase history';
 
   @override
+  String get subscription_section_invoices => 'Rechnungen';
+
+  @override
   String get subscription_no_invoices =>
       'No invoices yet. Completed payments will appear here.';
 
@@ -760,4 +763,87 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Uncollectible';
+
+  @override
+  String get subscription_billing_monthly => 'Monatlich';
+
+  @override
+  String get subscription_billing_yearly => 'Jährlich';
+
+  @override
+  String get subscription_billing_checkout_cadence =>
+      'Abrechnungszeitraum (Checkout)';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return 'Aktuelle Abrechnung: $interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return 'Geschätzt: $amount/Jahr';
+  }
+
+  @override
+  String get subscription_switch_to_monthly =>
+      'Wechsel zu monatlich bei Verlängerung';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title =>
+      'Auf monatliche Abrechnung wechseln?';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      'Ihr Jahreszeitraum läuft bis zum Ende der aktuellen Periode. Danach berechnet Stripe den monatlichen Preis pro Lizenz. Es gibt keine automatische Rückerstattung für ungenutzte Monate im Jahrestarif.';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action =>
+      'Monatlich planen';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled =>
+      'Monatliche Abrechnung ist ab der nächsten Verlängerung geplant.';
+
+  @override
+  String get subscription_billing_activity => 'Abrechnungsaktivität';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return 'Monatliche Abrechnung geplant ab $date';
+  }
+
+  @override
+  String get subscription_no_billing_events =>
+      'Noch keine Abrechnungsänderungen.';
+
+  @override
+  String get subscription_already_monthly =>
+      'Ihr Abonnement wird bereits monatlich abgerechnet.';
+
+  @override
+  String get subscription_pay_with_store => 'App Store / Play abonnieren';
+
+  @override
+  String get subscription_pay_with_card_browser => 'Mit Karte zahlen (Browser)';
+
+  @override
+  String get subscription_store_disclaimer =>
+      'Store-Abonnements nutzen feste SKUs; die Sitzplatzberechnung gilt nur für Kartenzahlung.';
+
+  @override
+  String get subscription_store_unavailable =>
+      'Store-Produkte fehlen. Legen Sie passende Abonnements in den Konsolen an.';
+
+  @override
+  String get subscription_store_success => 'Abonnement aktiviert.';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store =>
+      'Verwalten Sie das Abonnement in den Abo-Einstellungen des App Store bzw. Play Store.';
 }

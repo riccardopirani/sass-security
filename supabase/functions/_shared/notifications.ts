@@ -1,3 +1,6 @@
+import { normalizeMailLocale } from './transactional_email.ts';
+import { dispatchTransactionalEmail } from './transactional_templates.ts';
+
 type ThreatSeverity = 'low' | 'medium' | 'high' | 'critical';
 
 type DispatchOptions = {
@@ -8,37 +11,29 @@ type DispatchOptions = {
   slackWebhookUrl?: string | null;
   teamsWebhookUrl?: string | null;
   fromEmail?: string | null;
+  /** BCP-47 or short code; defaults to DEFAULT_TRANSACTIONAL_LOCALE / en */
+  locale?: string | null;
 };
 
-const resendApiKey = Deno.env.get('RESEND_API_KEY') ?? '';
-const defaultFromEmail =
-  Deno.env.get('ALERTS_FROM_EMAIL') ?? 'CyberGuard Alerts <onboarding@resend.dev>';
-
 const sendEmail = async (options: DispatchOptions) => {
-  if (!resendApiKey || options.recipients.length === 0) {
+  if (options.recipients.length === 0) {
     return { sent: false, count: 0 };
   }
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      'Content-Type': 'application/json',
+  const locale = normalizeMailLocale(options.locale);
+  const result = await dispatchTransactionalEmail({
+    template: 'threat_alert',
+    locale,
+    to: options.recipients,
+    from: options.fromEmail ?? undefined,
+    data: {
+      title: options.title,
+      message: options.message,
+      severity: options.severity,
     },
-    body: JSON.stringify({
-      from: options.fromEmail || defaultFromEmail,
-      to: options.recipients,
-      subject: `[CyberGuard][${options.severity.toUpperCase()}] ${options.title}`,
-      text: options.message,
-      html: `<h3>${options.title}</h3><p>${options.message}</p>`,
-    }),
   });
 
-  if (!response.ok) {
-    return { sent: false, count: 0 };
-  }
-
-  return { sent: true, count: options.recipients.length };
+  return { sent: result.ok, count: result.ok ? options.recipients.length : 0 };
 };
 
 const sendWebhook = async (url: string, title: string, message: string, severity: ThreatSeverity) => {
@@ -75,3 +70,4 @@ export const dispatchThreatNotifications = async (options: DispatchOptions) => {
   };
 };
 
+export type { MailLocale } from './transactional_email.ts';

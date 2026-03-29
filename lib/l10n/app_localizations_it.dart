@@ -712,6 +712,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get subscription_purchase_history => 'Storico acquisti';
 
   @override
+  String get subscription_section_invoices => 'Fatture';
+
+  @override
   String get subscription_no_invoices =>
       'Nessuna fattura. I pagamenti completati compariranno qui.';
 
@@ -762,4 +765,86 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Insoluta';
+
+  @override
+  String get subscription_billing_monthly => 'Mensile';
+
+  @override
+  String get subscription_billing_yearly => 'Annuale';
+
+  @override
+  String get subscription_billing_checkout_cadence =>
+      'Periodo di fatturazione (checkout)';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return 'Fatturazione attuale: $interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return 'Stima: $amount/anno';
+  }
+
+  @override
+  String get subscription_switch_to_monthly => 'Passa al mensile al rinnovo';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title =>
+      'Passare alla fatturazione mensile?';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      'Il periodo annuale resta valido fino alla sua scadenza. Dopodiché Stripe addebiterà la tariffa mensile per le tue licenze. Non è previsto rimborso automatico del tempo non usato sull’anno.';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action =>
+      'Programma mensile';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled =>
+      'Fatturazione mensile programmata dal prossimo rinnovo.';
+
+  @override
+  String get subscription_billing_activity => 'Attività di fatturazione';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return 'Fatturazione mensile programmata dal $date';
+  }
+
+  @override
+  String get subscription_no_billing_events =>
+      'Nessuna modifica di fatturazione.';
+
+  @override
+  String get subscription_already_monthly =>
+      'L’abbonamento è già in fatturazione mensile.';
+
+  @override
+  String get subscription_pay_with_store => 'Abbonati con App Store / Play';
+
+  @override
+  String get subscription_pay_with_card_browser => 'Paga con carta (browser)';
+
+  @override
+  String get subscription_store_disclaimer =>
+      'Gli abbonamenti da store usano SKU fissi (vedi plafond postazioni in App Store / Play). Il prezzo per postazione della calcolatrice vale solo con pagamento a carte.';
+
+  @override
+  String get subscription_store_unavailable =>
+      'Prodotti store non trovati. Crea gli abbonamenti in App Store Connect e Play Console con gli stessi ID del codice (o IAP_PRODUCT_MONTHLY / IAP_PRODUCT_YEARLY).';
+
+  @override
+  String get subscription_store_success => 'Abbonamento attivato.';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store =>
+      'Gestisci l’abbonamento in Impostazioni iPhone → Apple ID → Abbonamenti (o Play Store → Pagamenti e abbonamenti).';
 }

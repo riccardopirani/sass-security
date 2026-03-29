@@ -1,8 +1,19 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../models/billing_history_event.dart';
 import '../models/invoice_history_item.dart';
 import '../models/subscription_record.dart';
+
+class BillingSnapshot {
+  const BillingSnapshot({
+    required this.invoices,
+    required this.billingEvents,
+  });
+
+  final List<InvoiceHistoryItem> invoices;
+  final List<BillingHistoryEvent> billingEvents;
+}
 
 class SubscriptionService {
   SubscriptionService({SupabaseClient? client})
@@ -14,7 +25,7 @@ class SubscriptionService {
     final row = await _client
         .from('security_cg_subscriptions')
         .select(
-          'plan,status,current_period_end,licensed_seats,stripe_subscription_id,created_at',
+          'plan,status,current_period_end,licensed_seats,stripe_subscription_id,billing_interval,billing_provider,created_at',
         )
         .eq('company_id', companyId)
         .order('created_at', ascending: false)
@@ -43,9 +54,11 @@ class SubscriptionService {
   Future<void> openCheckout({
     required int users,
     String? stripeLocale,
+    required String billingInterval,
   }) async {
     final body = <String, dynamic>{
       'users': users,
+      'billing_interval': billingInterval,
       if (stripeLocale != null && stripeLocale.isNotEmpty) 'locale': stripeLocale,
     };
     final response = await _client.functions.invoke(
@@ -64,16 +77,39 @@ class SubscriptionService {
     await _openUrl(url);
   }
 
-  Future<List<InvoiceHistoryItem>> fetchInvoiceHistory() async {
+  Future<BillingSnapshot> fetchBillingSnapshot() async {
     final response = await _client.functions.invoke('stripe-list-invoices');
     final data = response.data as Map<String, dynamic>?;
     final raw = data?['invoices'];
-    if (raw is! List) {
-      return const [];
+    final invList = raw is List
+        ? raw
+            .map((e) => InvoiceHistoryItem.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList()
+        : const <InvoiceHistoryItem>[];
+    final evRaw = data?['billing_events'];
+    final evList = evRaw is List
+        ? evRaw
+            .map((e) => BillingHistoryEvent.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList()
+        : const <BillingHistoryEvent>[];
+    return BillingSnapshot(invoices: invList, billingEvents: evList);
+  }
+
+  Future<void> scheduleMonthlyAtRenewal() async {
+    final response = await _client.functions.invoke('stripe-schedule-monthly');
+    final map = response.data;
+    if (map is Map<String, dynamic> && map['error'] != null) {
+      final code = map['error'];
+      if (code == 'already_monthly') {
+        throw SubscriptionBillingException('already_monthly');
+      }
+      throw SubscriptionBillingException(
+        (map['message'] ?? code)?.toString() ?? 'Request failed',
+      );
     }
-    return raw
-        .map((e) => InvoiceHistoryItem.fromJson(Map<String, dynamic>.from(e as Map)))
-        .toList();
+    if (response.status != 200) {
+      throw SubscriptionBillingException('Request failed');
+    }
   }
 
   Future<void> cancelSubscriptionAtPeriodEnd() async {
@@ -107,4 +143,12 @@ class SubscriptionService {
       throw const PostgrestException(message: 'Unable to open Stripe URL.');
     }
   }
+}
+
+class SubscriptionBillingException implements Exception {
+  SubscriptionBillingException(this.message);
+  final String message;
+
+  @override
+  String toString() => message;
 }

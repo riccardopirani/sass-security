@@ -267,6 +267,7 @@
   "subscription_continue_checkout": "Continue to checkout",
   "subscription_seats_invalid": "Enter a valid number of users (1 or more).",
   "subscription_purchase_history": "Purchase history",
+  "subscription_section_invoices": "Rechnungen",
   "subscription_no_invoices": "No invoices yet. Completed payments will appear here.",
   "subscription_history_admin_only": "Only company admins can view billing history and cancel subscriptions.",
   "subscription_invoice_on": "Date",
@@ -282,5 +283,42 @@
   "subscription_invoice_status_open": "Open",
   "subscription_invoice_status_draft": "Draft",
   "subscription_invoice_status_void": "Void",
-  "subscription_invoice_status_uncollectible": "Uncollectible"
+  "subscription_invoice_status_uncollectible": "Uncollectible",
+  "subscription_billing_monthly": "Monatlich",
+  "subscription_billing_yearly": "Jährlich",
+  "subscription_billing_checkout_cadence": "Abrechnungszeitraum (Checkout)",
+  "subscription_billing_current": "Aktuelle Abrechnung: {interval}",
+  "@subscription_billing_current": {
+    "placeholders": {
+      "interval": {"type": "String"}
+    }
+  },
+  "subscription_estimated_yearly": "Geschätzt: {amount}/Jahr",
+  "@subscription_estimated_yearly": {
+    "placeholders": {
+      "amount": {"type": "String"}
+    }
+  },
+  "subscription_switch_to_monthly": "Wechsel zu monatlich bei Verlängerung",
+  "subscription_switch_to_monthly_confirm_title": "Auf monatliche Abrechnung wechseln?",
+  "subscription_switch_to_monthly_confirm_body": "Ihr Jahreszeitraum läuft bis zum Ende der aktuellen Periode. Danach berechnet Stripe den monatlichen Preis pro Lizenz. Es gibt keine automatische Rückerstattung für ungenutzte Monate im Jahrestarif.",
+  "subscription_switch_to_monthly_confirm_action": "Monatlich planen",
+  "subscription_switch_to_monthly_scheduled": "Monatliche Abrechnung ist ab der nächsten Verlängerung geplant.",
+  "subscription_billing_activity": "Abrechnungsaktivität",
+  "subscription_event_switch_monthly": "Monatliche Abrechnung geplant ab {date}",
+  "@subscription_event_switch_monthly": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "subscription_no_billing_events": "Noch keine Abrechnungsänderungen.",
+  "subscription_already_monthly": "Ihr Abonnement wird bereits monatlich abgerechnet.",
+  "subscription_pay_with_store": "App Store / Play abonnieren",
+  "subscription_pay_with_card_browser": "Mit Karte zahlen (Browser)",
+  "subscription_store_disclaimer": "Store-Abonnements nutzen feste SKUs; die Sitzplatzberechnung gilt nur für Kartenzahlung.",
+  "subscription_store_unavailable": "Store-Produkte fehlen. Legen Sie passende Abonnements in den Konsolen an.",
+  "subscription_store_success": "Abonnement aktiviert.",
+  "subscription_billing_provider_appstore": "App Store",
+  "subscription_billing_provider_play": "Google Play",
+  "subscription_manage_in_store": "Verwalten Sie das Abonnement in den Abo-Einstellungen des App Store bzw. Play Store."
 }

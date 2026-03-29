@@ -704,6 +704,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get subscription_purchase_history => 'Purchase history';
 
   @override
+  String get subscription_section_invoices => '发票';
+
+  @override
   String get subscription_no_invoices =>
       'No invoices yet. Completed payments will appear here.';
 
@@ -754,4 +757,77 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Uncollectible';
+
+  @override
+  String get subscription_billing_monthly => '按月';
+
+  @override
+  String get subscription_billing_yearly => '按年';
+
+  @override
+  String get subscription_billing_checkout_cadence => '结账计费周期';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return '当前计费：$interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return '预计：$amount/年';
+  }
+
+  @override
+  String get subscription_switch_to_monthly => '在续订时改为按月';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title => '改为按月计费？';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      '当前年度周期将保持到期满。之后 Stripe 将按席位收取月费。年度计划中未使用的时间不会自动退款。';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action => '预约按月';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled => '已预约在下一次续订时改为按月计费。';
+
+  @override
+  String get subscription_billing_activity => '计费活动';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return '自 $date 起预约按月计费';
+  }
+
+  @override
+  String get subscription_no_billing_events => '暂无计费变更。';
+
+  @override
+  String get subscription_already_monthly => '订阅已是按月计费。';
+
+  @override
+  String get subscription_pay_with_store => '通过 App Store / Play 订阅';
+
+  @override
+  String get subscription_pay_with_card_browser => '银行卡支付（浏览器）';
+
+  @override
+  String get subscription_store_disclaimer => '应用商店订阅使用固定 SKU；按席位计价仅适用于银行卡结账。';
+
+  @override
+  String get subscription_store_unavailable => '未找到商店商品。请在开发者控制台创建匹配的商品。';
+
+  @override
+  String get subscription_store_success => '订阅已激活。';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store => '请在 iOS 设置或 Google Play 中管理订阅。';
 }

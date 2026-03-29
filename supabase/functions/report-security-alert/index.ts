@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
 
 import { handleOptions, json } from '../_shared/cors.ts';
+import { dispatchTransactionalEmail } from '../_shared/transactional_templates.ts';
 import { adminClient, requireUser } from '../_shared/supabase.ts';
 
 type IncidentType = 'virus' | 'hacking';
@@ -9,75 +10,8 @@ type AlertSeverity = 'low' | 'medium' | 'high';
 const validIncidentTypes = new Set<IncidentType>(['virus', 'hacking']);
 const validSeverities = new Set<AlertSeverity>(['low', 'medium', 'high']);
 
-const resendApiKey = Deno.env.get('RESEND_API_KEY') ?? '';
-const alertsFromEmail =
-  Deno.env.get('ALERTS_FROM_EMAIL') ?? 'CyberGuard Alerts <onboarding@resend.dev>';
-
 const incidentLabel = (type: IncidentType) =>
   type === 'hacking' ? 'Tentativo di hacking registrato' : 'Virus registrato';
-
-const escapeHtml = (value: string) =>
-  value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-
-const sendAlertEmail = async (
-  recipients: string[],
-  title: string,
-  details: string,
-  reporterName: string,
-  companyId: string,
-) => {
-  if (!resendApiKey) {
-    throw new Error('RESEND_API_KEY is not configured.');
-  }
-
-  if (recipients.length === 0) {
-    throw new Error('No recipients found for this company.');
-  }
-
-  const subject = `[CyberGuard Alert] ${title}`;
-  const text = [
-    `Nuova segnalazione di sicurezza: ${title}`,
-    '',
-    `Dettagli: ${details}`,
-    `Segnalata da: ${reporterName}`,
-    `Company ID: ${companyId}`,
-  ].join('\n');
-
-  const html = `
-    <h2>Nuova segnalazione di sicurezza</h2>
-    <p><strong>Titolo:</strong> ${escapeHtml(title)}</p>
-    <p><strong>Dettagli:</strong> ${escapeHtml(details)}</p>
-    <p><strong>Segnalata da:</strong> ${escapeHtml(reporterName)}</p>
-    <p><strong>Company ID:</strong> ${escapeHtml(companyId)}</p>
-  `;
-
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: alertsFromEmail,
-      to: recipients,
-      subject,
-      text,
-      html,
-    }),
-  });
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Unable to send alert email: ${body}`);
-  }
-
-  return { emailedCount: recipients.length };
-};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -91,6 +25,10 @@ serve(async (req) => {
   try {
     const user = await requireUser(req);
     const body = await req.json();
+    const mailLocale =
+      (body?.locale as string | undefined)?.trim() ||
+      req.headers.get('accept-language')?.split(',')[0]?.trim().split(/[-_]/)[0] ||
+      undefined;
 
     const incidentTypeRaw =
       (body?.incidentType as string | undefined)?.trim().toLowerCase() ?? '';
@@ -190,17 +128,31 @@ serve(async (req) => {
       recipients.add(reporterEmail);
     }
 
-    const emailResult = await sendAlertEmail(
-      [...recipients],
-      title,
-      detailsWithReporter,
-      reporterName,
-      reporter.company_id,
-    );
+    if (recipients.size === 0) {
+      return json({ error: 'No recipients found for this company.' }, 400);
+    }
+
+    const emailResult = await dispatchTransactionalEmail({
+      template: 'security_report',
+      locale: mailLocale,
+      to: [...recipients],
+      data: {
+        summary: detailsWithReporter,
+        reporter: reporterName,
+        companyId: reporter.company_id,
+      },
+    });
+
+    if (!emailResult.ok) {
+      return json(
+        { error: emailResult.error ?? 'Unable to send alert email' },
+        502,
+      );
+    }
 
     return json({
       alert_id: alertInsert.data.id,
-      emailed_count: emailResult.emailedCount,
+      emailed_count: recipients.size,
       recipients_count: recipients.size,
     });
   } catch (error) {

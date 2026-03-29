@@ -712,6 +712,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get subscription_purchase_history => 'Purchase history';
 
   @override
+  String get subscription_section_invoices => 'Factures';
+
+  @override
   String get subscription_no_invoices =>
       'No invoices yet. Completed payments will appear here.';
 
@@ -762,4 +765,88 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get subscription_invoice_status_uncollectible => 'Uncollectible';
+
+  @override
+  String get subscription_billing_monthly => 'Mensuel';
+
+  @override
+  String get subscription_billing_yearly => 'Annuel';
+
+  @override
+  String get subscription_billing_checkout_cadence =>
+      'Cycle de facturation (paiement)';
+
+  @override
+  String subscription_billing_current(String interval) {
+    return 'Facturation actuelle : $interval';
+  }
+
+  @override
+  String subscription_estimated_yearly(String amount) {
+    return 'Estimation : $amount/an';
+  }
+
+  @override
+  String get subscription_switch_to_monthly =>
+      'Passer au mensuel au renouvellement';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_title =>
+      'Passer à la facturation mensuelle ?';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_body =>
+      'Votre période annuelle se poursuit jusqu’à son terme. Ensuite Stripe appliquera le tarif mensuel par siège. Aucun remboursement automatique pour la partie annuelle non utilisée.';
+
+  @override
+  String get subscription_switch_to_monthly_confirm_action =>
+      'Planifier le mensuel';
+
+  @override
+  String get subscription_switch_to_monthly_scheduled =>
+      'La facturation mensuelle est planifiée dès le prochain renouvellement.';
+
+  @override
+  String get subscription_billing_activity => 'Activité de facturation';
+
+  @override
+  String subscription_event_switch_monthly(String date) {
+    return 'Facturation mensuelle planifiée à partir du $date';
+  }
+
+  @override
+  String get subscription_no_billing_events =>
+      'Aucun changement de facturation pour l’instant.';
+
+  @override
+  String get subscription_already_monthly =>
+      'Votre abonnement est déjà facturé mensuellement.';
+
+  @override
+  String get subscription_pay_with_store => 'Abonnement App Store / Play';
+
+  @override
+  String get subscription_pay_with_card_browser =>
+      'Payer par carte (navigateur)';
+
+  @override
+  String get subscription_store_disclaimer =>
+      'Les abonnements magasin utilisent des SKU fixes ; le prix par siège du calculateur s’applique au paiement par carte.';
+
+  @override
+  String get subscription_store_unavailable =>
+      'Produits magasin introuvables. Créez les abonnements dans App Store Connect et Play Console.';
+
+  @override
+  String get subscription_store_success => 'Abonnement activé.';
+
+  @override
+  String get subscription_billing_provider_appstore => 'App Store';
+
+  @override
+  String get subscription_billing_provider_play => 'Google Play';
+
+  @override
+  String get subscription_manage_in_store =>
+      'Gérez l’abonnement dans Réglages iOS ou l’application Google Play.';
 }
