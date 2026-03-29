@@ -926,4 +926,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pricingModelCta => 'Inizia la prova gratuita';
+
+  @override
+  String get pricingSimulatorTitle => 'Simulatore di prezzo';
+
+  @override
+  String get pricingSimulatorSubtitle =>
+      'Imposta postazioni e un risk score di esempio. Dopo l’iscrizione, il checkout usa il punteggio reale dalla dashboard.';
+
+  @override
+  String get pricingSimulatorSeatsLabel => 'Postazioni licenziate';
+
+  @override
+  String get pricingSimulatorSeatsHint => '1–50.000';
+
+  @override
+  String get pricingSimulatorRiskLabel => 'Risk score di esempio (0–100)';
+
+  @override
+  String get pricingSimulatorEstimateLabel =>
+      'Stima mensile (USD, tasse escluse)';
+
+  @override
+  String get pricingSimulatorDisclaimer =>
+      'Solo indicativa; all’checkout l’importo usa il risk score reale della tua azienda.';
 }

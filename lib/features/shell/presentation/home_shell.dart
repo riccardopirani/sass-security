@@ -80,7 +80,10 @@ class _HomeShellState extends State<HomeShell> {
           status == 'trialing' &&
           subscription?.currentPeriodEnd != null &&
           subscription!.currentPeriodEnd!.isAfter(now);
-      final hasAccess = status == 'active' || trialValid;
+      final awaitingPayment =
+          status == 'pending_checkout' || status == 'incomplete';
+      final hasAccess =
+          status == 'active' || trialValid || awaitingPayment;
       if (hasAccess) return;
 
       await showDialog<void>(

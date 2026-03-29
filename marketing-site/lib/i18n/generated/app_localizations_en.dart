@@ -925,4 +925,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pricingModelCta => 'Start free trial';
+
+  @override
+  String get pricingSimulatorTitle => 'Price simulator';
+
+  @override
+  String get pricingSimulatorSubtitle =>
+      'Set seats and an example risk score. After signup, checkout uses your live score from the dashboard.';
+
+  @override
+  String get pricingSimulatorSeatsLabel => 'Licensed seats';
+
+  @override
+  String get pricingSimulatorSeatsHint => '1–50,000';
+
+  @override
+  String get pricingSimulatorRiskLabel => 'Example risk score (0–100)';
+
+  @override
+  String get pricingSimulatorEstimateLabel =>
+      'Estimated monthly (USD, before tax)';
+
+  @override
+  String get pricingSimulatorDisclaimer =>
+      'Estimate only. Actual amount at checkout follows your company’s real risk score.';
 }

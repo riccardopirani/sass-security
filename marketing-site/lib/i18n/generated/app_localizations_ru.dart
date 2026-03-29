@@ -927,4 +927,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pricingModelCta => 'Start free trial';
+
+  @override
+  String get pricingSimulatorTitle => 'Калькулятор цены';
+
+  @override
+  String get pricingSimulatorSubtitle =>
+      'Укажите места и примерный risk score. После регистрации оплата использует актуальный score из панели.';
+
+  @override
+  String get pricingSimulatorSeatsLabel => 'Лицензируемые места';
+
+  @override
+  String get pricingSimulatorSeatsHint => '1–50 000';
+
+  @override
+  String get pricingSimulatorRiskLabel => 'Пример risk score (0–100)';
+
+  @override
+  String get pricingSimulatorEstimateLabel =>
+      'Ориентировочно в месяц (USD, без налогов)';
+
+  @override
+  String get pricingSimulatorDisclaimer =>
+      'Только ориентир; при оплате учитывается реальный risk score компании.';
 }

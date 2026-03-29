@@ -929,4 +929,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pricingModelCta => 'Start free trial';
+
+  @override
+  String get pricingSimulatorTitle => 'Preisrechner';
+
+  @override
+  String get pricingSimulatorSubtitle =>
+      'Lizenzen und einen Beispiel-Risk-Score einstellen. Nach der Anmeldung nutzt der Checkout Ihren echten Score aus dem Dashboard.';
+
+  @override
+  String get pricingSimulatorSeatsLabel => 'Lizenzierte Seats';
+
+  @override
+  String get pricingSimulatorSeatsHint => '1–50.000';
+
+  @override
+  String get pricingSimulatorRiskLabel => 'Beispiel-Risk-Score (0–100)';
+
+  @override
+  String get pricingSimulatorEstimateLabel =>
+      'Geschätzt pro Monat (USD, ohne Steuern)';
+
+  @override
+  String get pricingSimulatorDisclaimer =>
+      'Nur Schätzung; der Checkout verwendet Ihren echten Unternehmens-Risk-Score.';
 }

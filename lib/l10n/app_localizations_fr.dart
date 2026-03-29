@@ -178,6 +178,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Compte créé. Vérifiez votre e-mail pour confirmer.';
 
   @override
+  String get signup_licensed_seats_label => 'Sièges sous licence';
+
+  @override
+  String get signup_licensed_seats_hint =>
+      'Nombre d\'utilisateurs facturés (1–50 000)';
+
+  @override
+  String get sign_up_opening_checkout =>
+      'Compte créé. Ouverture du paiement sécurisé…';
+
+  @override
+  String get sign_up_verify_email_then_pay =>
+      'Compte créé. Confirmez l\'e-mail, puis connectez-vous pour payer.';
+
+  @override
   String get error_generic => 'Une erreur est survenue';
 
   @override

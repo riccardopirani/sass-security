@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sass_security/l10n/app_localizations.dart';
 
 import '../../../core/utils/app_snack.dart';
+import '../../subscription/data/subscription_service.dart';
 import '../data/auth_service.dart';
 import '../models/app_profile.dart';
 
@@ -21,6 +23,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   final _nameCtrl = TextEditingController();
   final _companyNameCtrl = TextEditingController();
   final _companyCodeCtrl = TextEditingController();
+  final _licensedSeatsCtrl = TextEditingController(text: '10');
 
   var _isLogin = true;
   var _busy = false;
@@ -34,6 +37,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     _nameCtrl.dispose();
     _companyNameCtrl.dispose();
     _companyCodeCtrl.dispose();
+    _licensedSeatsCtrl.dispose();
     super.dispose();
   }
 
@@ -51,7 +55,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           password: _passwordCtrl.text.trim(),
         );
       } else {
-        await widget.authService.signUp(
+        final response = await widget.authService.signUp(
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text.trim(),
           name: _nameCtrl.text.trim(),
@@ -65,7 +69,27 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               ? _companyCodeCtrl.text.trim()
               : null,
         );
-        if (mounted) {
+
+        final paidAdmin =
+            _role == AppUserRole.admin && !_startWithTrial;
+        if (paidAdmin && response.session != null) {
+          final seats = int.tryParse(_licensedSeatsCtrl.text.trim()) ?? 1;
+          final users = seats.clamp(1, 50000);
+          if (mounted) {
+            AppSnack.success(context, l10n.sign_up_opening_checkout);
+          }
+          try {
+            await SubscriptionService().openCheckout(users: users);
+          } catch (checkoutError) {
+            if (mounted) {
+              AppSnack.error(context, checkoutError.toString());
+            }
+          }
+        } else if (paidAdmin && response.session == null) {
+          if (mounted) {
+            AppSnack.success(context, l10n.sign_up_verify_email_then_pay);
+          }
+        } else if (mounted) {
           AppSnack.success(context, l10n.sign_up_success_check_email);
         }
       }
@@ -245,6 +269,32 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                       context,
                                     ).textTheme.bodySmall,
                                   ),
+                                  if (!_startWithTrial) ...[
+                                    const SizedBox(height: 12),
+                                    TextFormField(
+                                      controller: _licensedSeatsCtrl,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                      ],
+                                      decoration: InputDecoration(
+                                        labelText:
+                                            l10n.signup_licensed_seats_label,
+                                        hintText:
+                                            l10n.signup_licensed_seats_hint,
+                                      ),
+                                      validator: (v) {
+                                        final raw = v?.trim() ?? '';
+                                        final n = int.tryParse(raw);
+                                        if (n == null ||
+                                            n < 1 ||
+                                            n > 50000) {
+                                          return l10n.error_generic;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ],
                                 ],
                                 if (_role != AppUserRole.admin)
                                   TextFormField(

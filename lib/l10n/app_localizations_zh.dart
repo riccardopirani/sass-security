@@ -177,6 +177,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sign_up_success_check_email => '账户已创建，请检查邮箱完成验证。';
 
   @override
+  String get signup_licensed_seats_label => '授权座位数';
+
+  @override
+  String get signup_licensed_seats_hint => '计费用户数（1–50,000）';
+
+  @override
+  String get sign_up_opening_checkout => '账号已创建，正在打开安全结账…';
+
+  @override
+  String get sign_up_verify_email_then_pay => '账号已创建。请验证邮箱后登录以完成支付。';
+
+  @override
   String get error_generic => '出现错误';
 
   @override

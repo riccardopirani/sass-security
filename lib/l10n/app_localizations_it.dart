@@ -178,6 +178,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Account creato. Controlla l\'email per confermare.';
 
   @override
+  String get signup_licensed_seats_label => 'Postazioni licenziate';
+
+  @override
+  String get signup_licensed_seats_hint => 'Quanti utenti fatturare (1–50.000)';
+
+  @override
+  String get sign_up_opening_checkout =>
+      'Account creato. Apertura pagamento sicuro…';
+
+  @override
+  String get sign_up_verify_email_then_pay =>
+      'Account creato. Conferma l\'email, poi accedi per aprire il checkout e pagare.';
+
+  @override
   String get error_generic => 'Qualcosa è andato storto';
 
   @override

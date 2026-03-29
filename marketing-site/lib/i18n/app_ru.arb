@@ -257,5 +257,12 @@
   "pricingModelBullet1": "Company risk is computed automatically in the product dashboard.",
   "pricingModelBullet2": "You choose how many seats to buy when you open checkout in the app.",
   "pricingModelBullet3": "Cards and invoices are handled securely by Stripe.",
-  "pricingModelCta": "Start free trial"
+  "pricingModelCta": "Start free trial",
+  "pricingSimulatorTitle": "Калькулятор цены",
+  "pricingSimulatorSubtitle": "Укажите места и примерный risk score. После регистрации оплата использует актуальный score из панели.",
+  "pricingSimulatorSeatsLabel": "Лицензируемые места",
+  "pricingSimulatorSeatsHint": "1–50 000",
+  "pricingSimulatorRiskLabel": "Пример risk score (0–100)",
+  "pricingSimulatorEstimateLabel": "Ориентировочно в месяц (USD, без налогов)",
+  "pricingSimulatorDisclaimer": "Только ориентир; при оплате учитывается реальный risk score компании."
 }

@@ -1755,6 +1755,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start free trial'**
   String get pricingModelCta;
+
+  /// No description provided for @pricingSimulatorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Price simulator'**
+  String get pricingSimulatorTitle;
+
+  /// No description provided for @pricingSimulatorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set seats and an example risk score. After signup, checkout uses your live score from the dashboard.'**
+  String get pricingSimulatorSubtitle;
+
+  /// No description provided for @pricingSimulatorSeatsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Licensed seats'**
+  String get pricingSimulatorSeatsLabel;
+
+  /// No description provided for @pricingSimulatorSeatsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'1–50,000'**
+  String get pricingSimulatorSeatsHint;
+
+  /// No description provided for @pricingSimulatorRiskLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Example risk score (0–100)'**
+  String get pricingSimulatorRiskLabel;
+
+  /// No description provided for @pricingSimulatorEstimateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated monthly (USD, before tax)'**
+  String get pricingSimulatorEstimateLabel;
+
+  /// No description provided for @pricingSimulatorDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate only. Actual amount at checkout follows your company’s real risk score.'**
+  String get pricingSimulatorDisclaimer;
 }
 
 class _AppLocalizationsDelegate

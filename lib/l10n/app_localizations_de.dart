@@ -178,6 +178,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Konto erstellt. Bitte E-Mail zur Bestätigung prüfen.';
 
   @override
+  String get signup_licensed_seats_label => 'Lizenzierte Seats';
+
+  @override
+  String get signup_licensed_seats_hint => 'Anzahl Nutzer (1–50.000)';
+
+  @override
+  String get sign_up_opening_checkout =>
+      'Konto erstellt. Checkout wird geöffnet …';
+
+  @override
+  String get sign_up_verify_email_then_pay =>
+      'Konto erstellt. E-Mail bestätigen, dann anmelden, um Checkout und Zahlung abzuschließen.';
+
+  @override
   String get error_generic => 'Etwas ist schiefgelaufen';
 
   @override

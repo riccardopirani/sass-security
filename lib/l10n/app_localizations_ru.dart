@@ -178,6 +178,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'Аккаунт создан. Подтвердите email.';
 
   @override
+  String get signup_licensed_seats_label => 'Лицензируемые места';
+
+  @override
+  String get signup_licensed_seats_hint => 'Сколько пользователей (1–50 000)';
+
+  @override
+  String get sign_up_opening_checkout => 'Аккаунт создан. Открываем оплату…';
+
+  @override
+  String get sign_up_verify_email_then_pay =>
+      'Аккаунт создан. Подтвердите email, войдите и завершите оплату в checkout.';
+
+  @override
   String get error_generic => 'Что-то пошло не так';
 
   @override

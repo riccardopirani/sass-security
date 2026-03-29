@@ -257,5 +257,12 @@
   "pricingModelBullet1": "Company risk is computed automatically in the product dashboard.",
   "pricingModelBullet2": "You choose how many seats to buy when you open checkout in the app.",
   "pricingModelBullet3": "Cards and invoices are handled securely by Stripe.",
-  "pricingModelCta": "Start free trial"
+  "pricingModelCta": "Start free trial",
+  "pricingSimulatorTitle": "价格模拟",
+  "pricingSimulatorSubtitle": "调整席位数与示例风险分。注册后，结账将使用控制台中的实时公司风险分。",
+  "pricingSimulatorSeatsLabel": "授权席位数",
+  "pricingSimulatorSeatsHint": "1–50,000",
+  "pricingSimulatorRiskLabel": "示例风险分（0–100）",
+  "pricingSimulatorEstimateLabel": "预计月费（美元，税前）",
+  "pricingSimulatorDisclaimer": "仅供参考；实际结账金额以您公司的真实风险分为准。"
 }

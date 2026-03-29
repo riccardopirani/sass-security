@@ -274,5 +274,12 @@
   "pricingModelBullet1": "Il risk aziendale è calcolato automaticamente nella dashboard.",
   "pricingModelBullet2": "Scegli quante postazioni acquistare aprendo il checkout nell’app.",
   "pricingModelBullet3": "Carte e fatture sono gestite in modo sicuro da Stripe.",
-  "pricingModelCta": "Inizia la prova gratuita"
+  "pricingModelCta": "Inizia la prova gratuita",
+  "pricingSimulatorTitle": "Simulatore di prezzo",
+  "pricingSimulatorSubtitle": "Imposta postazioni e un risk score di esempio. Dopo l’iscrizione, il checkout usa il punteggio reale dalla dashboard.",
+  "pricingSimulatorSeatsLabel": "Postazioni licenziate",
+  "pricingSimulatorSeatsHint": "1–50.000",
+  "pricingSimulatorRiskLabel": "Risk score di esempio (0–100)",
+  "pricingSimulatorEstimateLabel": "Stima mensile (USD, tasse escluse)",
+  "pricingSimulatorDisclaimer": "Solo indicativa; all’checkout l’importo usa il risk score reale della tua azienda."
 }

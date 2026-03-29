@@ -274,5 +274,12 @@
   "pricingModelBullet1": "Company risk is computed automatically in the product dashboard.",
   "pricingModelBullet2": "You choose how many seats to buy when you open checkout in the app.",
   "pricingModelBullet3": "Cards and invoices are handled securely by Stripe.",
-  "pricingModelCta": "Start free trial"
+  "pricingModelCta": "Start free trial",
+  "pricingSimulatorTitle": "Price simulator",
+  "pricingSimulatorSubtitle": "Set seats and an example risk score. After signup, checkout uses your live score from the dashboard.",
+  "pricingSimulatorSeatsLabel": "Licensed seats",
+  "pricingSimulatorSeatsHint": "1–50,000",
+  "pricingSimulatorRiskLabel": "Example risk score (0–100)",
+  "pricingSimulatorEstimateLabel": "Estimated monthly (USD, before tax)",
+  "pricingSimulatorDisclaimer": "Estimate only. Actual amount at checkout follows your company’s real risk score."
 }

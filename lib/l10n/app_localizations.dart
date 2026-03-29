@@ -442,6 +442,30 @@ abstract class AppLocalizations {
   /// **'Account created. Check your email to confirm.'**
   String get sign_up_success_check_email;
 
+  /// No description provided for @signup_licensed_seats_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Licensed seats'**
+  String get signup_licensed_seats_label;
+
+  /// No description provided for @signup_licensed_seats_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many users to bill (1–50,000)'**
+  String get signup_licensed_seats_hint;
+
+  /// No description provided for @sign_up_opening_checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created. Opening secure checkout…'**
+  String get sign_up_opening_checkout;
+
+  /// No description provided for @sign_up_verify_email_then_pay.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created. Confirm your email, then sign in to open checkout and pay.'**
+  String get sign_up_verify_email_then_pay;
+
   /// No description provided for @error_generic.
   ///
   /// In en, this message translates to:

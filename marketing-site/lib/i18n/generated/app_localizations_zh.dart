@@ -895,4 +895,25 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get pricingModelCta => 'Start free trial';
+
+  @override
+  String get pricingSimulatorTitle => '价格模拟';
+
+  @override
+  String get pricingSimulatorSubtitle => '调整席位数与示例风险分。注册后，结账将使用控制台中的实时公司风险分。';
+
+  @override
+  String get pricingSimulatorSeatsLabel => '授权席位数';
+
+  @override
+  String get pricingSimulatorSeatsHint => '1–50,000';
+
+  @override
+  String get pricingSimulatorRiskLabel => '示例风险分（0–100）';
+
+  @override
+  String get pricingSimulatorEstimateLabel => '预计月费（美元，税前）';
+
+  @override
+  String get pricingSimulatorDisclaimer => '仅供参考；实际结账金额以您公司的真实风险分为准。';
 }
