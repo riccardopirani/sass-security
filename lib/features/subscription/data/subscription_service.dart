@@ -40,10 +40,17 @@ class SubscriptionService {
     return int.tryParse('$v')?.clamp(0, 100) ?? 0;
   }
 
-  Future<void> openCheckout({required int users}) async {
+  Future<void> openCheckout({
+    required int users,
+    String? stripeLocale,
+  }) async {
+    final body = <String, dynamic>{
+      'users': users,
+      if (stripeLocale != null && stripeLocale.isNotEmpty) 'locale': stripeLocale,
+    };
     final response = await _client.functions.invoke(
       'stripe-checkout',
-      body: {'users': users},
+      body: body,
     );
     final data = response.data as Map<String, dynamic>?;
     final url = data?['url'] as String?;
@@ -73,8 +80,14 @@ class SubscriptionService {
     await _client.functions.invoke('stripe-cancel-subscription');
   }
 
-  Future<void> openBillingPortal() async {
-    final response = await _client.functions.invoke('create-billing-portal');
+  Future<void> openBillingPortal({String? stripeLocale}) async {
+    final body = <String, dynamic>{
+      if (stripeLocale != null && stripeLocale.isNotEmpty) 'locale': stripeLocale,
+    };
+    final response = await _client.functions.invoke(
+      'create-billing-portal',
+      body: body,
+    );
     final data = response.data as Map<String, dynamic>?;
     final url = data?['url'] as String?;
 

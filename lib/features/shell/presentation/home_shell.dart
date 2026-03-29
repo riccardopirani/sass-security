@@ -105,14 +105,12 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
           status == 'trialing' &&
           subscription?.currentPeriodEnd != null &&
           subscription!.currentPeriodEnd!.isAfter(now);
-      final awaitingPayment =
-          status == 'pending_checkout' || status == 'incomplete';
-      final hasAccess =
-          status == 'active' || trialValid || awaitingPayment;
+      final hasAccess = status == 'active' || trialValid;
       if (hasAccess) return;
 
       await showDialog<void>(
         context: context,
+        useRootNavigator: true,
         barrierDismissible: false,
         builder: (dialogContext) {
           return AlertDialog(

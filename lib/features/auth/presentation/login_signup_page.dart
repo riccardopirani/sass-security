@@ -73,13 +73,17 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         final paidAdmin =
             _role == AppUserRole.admin && !_startWithTrial;
         if (paidAdmin && response.session != null) {
+          if (!mounted) return;
+          final stripeLocale =
+              Localizations.localeOf(context).toLanguageTag();
           final seats = int.tryParse(_licensedSeatsCtrl.text.trim()) ?? 1;
           final users = seats.clamp(1, 50000);
-          if (mounted) {
-            AppSnack.success(context, l10n.sign_up_opening_checkout);
-          }
+          AppSnack.success(context, l10n.sign_up_opening_checkout);
           try {
-            await SubscriptionService().openCheckout(users: users);
+            await SubscriptionService().openCheckout(
+              users: users,
+              stripeLocale: stripeLocale,
+            );
           } catch (checkoutError) {
             if (mounted) {
               AppSnack.error(context, checkoutError.toString());

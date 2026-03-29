@@ -123,7 +123,10 @@ class _PricingPageState extends State<PricingPage> {
     }
     setState(() => _checkoutLoading = true);
     try {
-      await _service.openCheckout(users: parsed);
+      await _service.openCheckout(
+        users: parsed,
+        stripeLocale: Localizations.localeOf(context).toLanguageTag(),
+      );
       if (mounted) {
         AppSnack.success(context, l10n.subscription_updated);
       }
@@ -142,7 +145,9 @@ class _PricingPageState extends State<PricingPage> {
   Future<void> _manage() async {
     final l10n = AppLocalizations.of(context);
     try {
-      await _service.openBillingPortal();
+      await _service.openBillingPortal(
+        stripeLocale: Localizations.localeOf(context).toLanguageTag(),
+      );
       if (mounted) {
         AppSnack.success(context, l10n.billing);
       }

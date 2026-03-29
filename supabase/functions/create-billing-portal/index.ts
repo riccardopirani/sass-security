@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
 
 import { handleOptions, json } from '../_shared/cors.ts';
 import { adminClient, requireUser } from '../_shared/supabase.ts';
+import { stripeUiLocale } from '../_shared/stripe_locale.ts';
 import { stripe } from '../_shared/stripe.ts';
 
 serve(async (req) => {
@@ -15,6 +16,16 @@ serve(async (req) => {
 
   try {
     const user = await requireUser(req);
+    const raw = await req.text();
+    let portalLocale: string | undefined;
+    if (raw.trim()) {
+      try {
+        const payload = JSON.parse(raw) as { locale?: unknown };
+        portalLocale = stripeUiLocale(payload?.locale);
+      } catch {
+        /* ignore malformed body */
+      }
+    }
 
     const profile = await adminClient
       .from('security_cg_profiles')
@@ -46,6 +57,7 @@ serve(async (req) => {
     const portal = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: `${appUrl}/#/subscription`,
+      ...(portalLocale ? { locale: portalLocale } : {}),
     });
 
     return json({ url: portal.url });

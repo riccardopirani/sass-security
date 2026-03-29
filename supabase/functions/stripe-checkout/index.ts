@@ -6,6 +6,7 @@ import {
   computeMonthlyUsd,
   monthlyUsdToUnitCents,
 } from '../_shared/pricing.ts';
+import { stripeUiLocale } from '../_shared/stripe_locale.ts';
 import { stripe } from '../_shared/stripe.ts';
 
 serve(async (req) => {
@@ -72,6 +73,7 @@ serve(async (req) => {
     }
 
     const appUrl = Deno.env.get('APP_URL') ?? 'http://localhost:3000';
+    const checkoutLocale = stripeUiLocale(payload?.locale);
 
     const meta = {
       user_id: user.id,
@@ -85,6 +87,7 @@ serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       customer: customerId,
+      ...(checkoutLocale ? { locale: checkoutLocale } : {}),
       allow_promotion_codes: true,
       line_items: [
         {
