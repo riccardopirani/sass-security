@@ -124,7 +124,7 @@ serve(async (req) => {
     }
 
     const profile = await adminClient
-      .from('cg_profiles')
+      .from('security_cg_profiles')
       .select('company_id,name,email')
       .eq('id', user.id)
       .single();
@@ -136,7 +136,7 @@ serve(async (req) => {
     const reporter = profile.data;
 
     const reporterEmployee = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('id')
       .eq('company_id', reporter.company_id)
       .eq('auth_user_id', user.id)
@@ -148,7 +148,7 @@ serve(async (req) => {
     const detailsWithReporter = `${detailsRaw}\n\nSegnalata da: ${reporterName} (${reporter.email})`;
 
     const alertInsert = await adminClient
-      .from('cg_alerts')
+      .from('security_cg_alerts')
       .insert({
         company_id: reporter.company_id,
         employee_id: reporterEmployeeId ?? null,
@@ -169,7 +169,7 @@ serve(async (req) => {
     }
 
     const employees = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('email')
       .eq('company_id', reporter.company_id);
 

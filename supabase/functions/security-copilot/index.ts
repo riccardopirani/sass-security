@@ -77,24 +77,24 @@ serve(async (req) => {
     }
 
     const topRisky = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('id,name,risk_score')
       .eq('company_id', profile.company_id)
-      .order('risk_score', ascending: false)
+      .order('risk_score', { ascending: false })
       .limit(3);
 
     const openIncidents = await adminClient
-      .from('cg_incidents')
+      .from('security_cg_incidents')
       .select('id,severity')
       .eq('company_id', profile.company_id)
       .eq('status', 'open');
 
     const openAlerts = await adminClient
-      .from('cg_alerts')
+      .from('security_cg_alerts')
       .select('id,severity,created_at')
       .eq('company_id', profile.company_id)
       .eq('is_read', false)
-      .order('created_at', ascending: false)
+      .order('created_at', { ascending: false })
       .limit(20);
 
     const context = {

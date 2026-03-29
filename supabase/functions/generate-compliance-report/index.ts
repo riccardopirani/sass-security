@@ -5,6 +5,39 @@ import { handleOptions, json } from '../_shared/cors.ts';
 import { getProfileOrThrow, isManagerRole } from '../_shared/roles.ts';
 import { adminClient, requireUser } from '../_shared/supabase.ts';
 
+const companySelect =
+  'id,name,risk_score,benchmark_percentile,industry,company_size,region';
+const companyFallbackSelect = 'id,name,risk_score,industry,company_size,region';
+
+const fetchCompanyWithBenchmarkFallback = async (companyId: string) => {
+  const company = await adminClient
+    .from('security_cg_companies')
+    .select(companySelect)
+    .eq('id', companyId)
+    .single();
+
+  if (company.error?.code !== '42703') {
+    return company;
+  }
+
+  const fallback = await adminClient
+    .from('security_cg_companies')
+    .select(companyFallbackSelect)
+    .eq('id', companyId)
+    .single();
+
+  return {
+    data:
+      fallback.data == null
+        ? null
+        : {
+            ...fallback.data,
+            benchmark_percentile: 0,
+          },
+    error: fallback.error,
+  };
+};
+
 const formatDate = (value: Date) =>
   `${value.getUTCFullYear()}-${`${value.getUTCMonth() + 1}`.padStart(2, '0')}-${`${value.getUTCDate()}`.padStart(2, '0')}`;
 
@@ -26,19 +59,15 @@ serve(async (req) => {
       return json({ error: 'Only manager/admin/auditor can generate reports' }, 403);
     }
 
-    const company = await adminClient
-      .from('cg_companies')
-      .select('id,name,risk_score,benchmark_percentile,industry,company_size,region')
-      .eq('id', profile.company_id)
-      .single();
+    const company = await fetchCompanyWithBenchmarkFallback(profile.company_id);
 
     const employees = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('id,risk_score,training_completion,mfa_enabled')
       .eq('company_id', profile.company_id);
 
     const incidents = await adminClient
-      .from('cg_incidents')
+      .from('security_cg_incidents')
       .select('id,severity,status,created_at')
       .eq('company_id', profile.company_id)
       .gte('created_at', new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString());
@@ -139,4 +168,3 @@ serve(async (req) => {
     );
   }
 });
-

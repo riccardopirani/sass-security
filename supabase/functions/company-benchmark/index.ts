@@ -4,6 +4,39 @@ import { handleOptions, json } from '../_shared/cors.ts';
 import { getProfileOrThrow } from '../_shared/roles.ts';
 import { adminClient, requireUser } from '../_shared/supabase.ts';
 
+const companySelect =
+  'id,name,risk_score,benchmark_percentile,industry,company_size,region';
+const companyFallbackSelect = 'id,name,risk_score,industry,company_size,region';
+
+const fetchCompanyWithBenchmarkFallback = async (companyId: string) => {
+  const company = await adminClient
+    .from('security_cg_companies')
+    .select(companySelect)
+    .eq('id', companyId)
+    .single();
+
+  if (company.error?.code !== '42703') {
+    return company;
+  }
+
+  const fallback = await adminClient
+    .from('security_cg_companies')
+    .select(companyFallbackSelect)
+    .eq('id', companyId)
+    .single();
+
+  return {
+    data:
+      fallback.data == null
+        ? null
+        : {
+            ...fallback.data,
+            benchmark_percentile: 0,
+          },
+    error: fallback.error,
+  };
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return handleOptions();
@@ -21,21 +54,17 @@ serve(async (req) => {
       target_company: profile.company_id,
     });
 
-    const company = await adminClient
-      .from('cg_companies')
-      .select('id,name,risk_score,benchmark_percentile,industry,company_size,region')
-      .eq('id', profile.company_id)
-      .single();
+    const company = await fetchCompanyWithBenchmarkFallback(profile.company_id);
 
     if (company.error || !company.data) {
       return json({ error: 'Company not found' }, 404);
     }
 
     const trend = await adminClient
-      .from('cg_company_score_snapshots')
+      .from('security_cg_company_score_snapshots')
       .select('snapshot_date,risk_score')
       .eq('company_id', profile.company_id)
-      .order('snapshot_date', ascending: false)
+      .order('snapshot_date', { ascending: false })
       .limit(30);
 
     const percentile = (company.data.benchmark_percentile as number | null) ?? 0;
@@ -52,4 +81,3 @@ serve(async (req) => {
     );
   }
 });
-

@@ -14,7 +14,7 @@ const toIso = (unixSeconds: number | null | undefined) =>
 const fetchExistingByStripe = async (stripeCustomerId?: string | null, stripeSubscriptionId?: string | null) => {
   if (stripeSubscriptionId) {
     const bySub = await adminClient
-      .from('cg_subscriptions')
+      .from('security_cg_subscriptions')
       .select('company_id,user_id')
       .eq('stripe_subscription_id', stripeSubscriptionId)
       .maybeSingle();
@@ -25,7 +25,7 @@ const fetchExistingByStripe = async (stripeCustomerId?: string | null, stripeSub
 
   if (stripeCustomerId) {
     const byCustomer = await adminClient
-      .from('cg_subscriptions')
+      .from('security_cg_subscriptions')
       .select('company_id,user_id')
       .eq('stripe_customer_id', stripeCustomerId)
       .maybeSingle();
@@ -46,7 +46,7 @@ const upsertSubscription = async (params: {
   status: string;
   currentPeriodEnd: string | null;
 }) => {
-  await adminClient.from('cg_subscriptions').upsert(
+  await adminClient.from('security_cg_subscriptions').upsert(
     {
       company_id: params.companyId,
       user_id: params.userId,
@@ -137,11 +137,11 @@ const handleInvoiceFailed = async (invoice: Stripe.Invoice) => {
   }
 
   await adminClient
-    .from('cg_subscriptions')
+    .from('security_cg_subscriptions')
     .update({ status: 'past_due', updated_at: new Date().toISOString() })
     .eq('company_id', existing.company_id);
 
-  await adminClient.from('cg_alerts').insert({
+  await adminClient.from('security_cg_alerts').insert({
     company_id: existing.company_id,
     severity: 'high',
     title: 'Payment failed',

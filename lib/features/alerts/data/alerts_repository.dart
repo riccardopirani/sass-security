@@ -10,7 +10,7 @@ class AlertsRepository {
 
   Stream<List<AlertItem>> streamByCompany(String companyId) {
     return _client
-        .from('cg_alerts')
+        .from('security_cg_alerts')
         .stream(primaryKey: ['id'])
         .eq('company_id', companyId)
         .order('created_at', ascending: false)
@@ -18,7 +18,7 @@ class AlertsRepository {
   }
 
   Future<void> markRead(String alertId) async {
-    await _client.from('cg_alerts').update({'is_read': true}).eq('id', alertId);
+    await _client.from('security_cg_alerts').update({'is_read': true}).eq('id', alertId);
   }
 
   Future<void> reportSecurityIncident({

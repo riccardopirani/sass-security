@@ -15,7 +15,7 @@ class CompanionService {
     }
 
     final employee = await _client
-        .from('cg_employees')
+        .from('security_cg_employees')
         .select('id,name,risk_score,training_completion,mfa_enabled,force_mfa')
         .eq('company_id', companyId)
         .eq('auth_user_id', user.id)
@@ -29,7 +29,7 @@ class CompanionService {
     final eventsRows = employeeId == null
         ? const <dynamic>[]
         : await _client
-              .from('cg_security_events')
+              .from('security_cg_security_events')
               .select('id,event_kind,severity,status,details,created_at')
               .eq('company_id', companyId)
               .eq('employee_id', employeeId)
@@ -40,7 +40,7 @@ class CompanionService {
     final trainingAssignments = employeeId == null
         ? const <dynamic>[]
         : await _client
-              .from('cg_training_assignments')
+              .from('security_cg_training_assignments')
               .select('id,trigger_reason,status,due_at,created_at')
               .eq('company_id', companyId)
               .eq('employee_id', employeeId)
@@ -71,7 +71,7 @@ class CompanionService {
 
   Future<void> completeAssignment(String assignmentId) async {
     await _client
-        .from('cg_training_assignments')
+        .from('security_cg_training_assignments')
         .update({
           'status': 'completed',
           'completed_at': DateTime.now().toIso8601String(),

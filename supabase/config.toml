@@ -1,0 +1,57 @@
+# Supabase local / deploy config — project ref matches host ouieulumtrnnjsjtlyxe.supabase.co
+project_id = "ouieulumtrnnjsjtlyxe"
+
+[api]
+enabled = true
+
+# Disable JWT verification on all Edge Functions (invoke with service role / anon as needed).
+[functions.attack-library]
+verify_jwt = false
+
+[functions.auto-remediation]
+verify_jwt = false
+
+[functions.behavior-profile]
+verify_jwt = false
+
+[functions.company-benchmark]
+verify_jwt = false
+
+[functions.create-billing-portal]
+verify_jwt = false
+
+[functions.create-checkout-session]
+verify_jwt = false
+
+[functions.dispatch-threat-alert]
+verify_jwt = false
+
+[functions.generate-compliance-report]
+verify_jwt = false
+
+[functions.generate-phishing-template]
+verify_jwt = false
+
+[functions.report-security-alert]
+verify_jwt = false
+
+[functions.resolve-security-event]
+verify_jwt = false
+
+[functions.scan-email-security]
+verify_jwt = false
+
+[functions.security-copilot]
+verify_jwt = false
+
+[functions.security-news]
+verify_jwt = false
+
+[functions.send-phishing-test]
+verify_jwt = false
+
+[functions.stripe-checkout]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false

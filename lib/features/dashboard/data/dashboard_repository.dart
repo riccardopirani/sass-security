@@ -8,40 +8,62 @@ class DashboardRepository {
 
   final SupabaseClient _client;
 
+  Future<Map<String, dynamic>?> _fetchCompanyRow(String companyId) async {
+    try {
+      return await _client
+          .from('security_cg_companies')
+          .select('risk_score,benchmark_percentile')
+          .eq('id', companyId)
+          .maybeSingle();
+    } on PostgrestException catch (error) {
+      if (error.code != '42703') {
+        rethrow;
+      }
+
+      final fallback = await _client
+          .from('security_cg_companies')
+          .select('risk_score')
+          .eq('id', companyId)
+          .maybeSingle();
+
+      if (fallback == null) {
+        return null;
+      }
+
+      return {...fallback, 'benchmark_percentile': 0};
+    }
+  }
+
   Future<DashboardMetrics> fetchMetrics(String companyId) async {
-    final companyRow = await _client
-        .from('cg_companies')
-        .select('risk_score,benchmark_percentile')
-        .eq('id', companyId)
-        .maybeSingle();
+    final companyRow = await _fetchCompanyRow(companyId);
 
     final campaigns = await _client
-        .from('cg_phishing_campaigns')
+        .from('security_cg_phishing_campaigns')
         .select('id')
         .eq('company_id', companyId)
         .inFilter('status', ['scheduled', 'sent']);
 
     final alerts = await _client
-        .from('cg_alerts')
+        .from('security_cg_alerts')
         .select('id')
         .eq('company_id', companyId)
         .eq('is_read', false);
 
     final incidents = await _client
-        .from('cg_incidents')
+        .from('security_cg_incidents')
         .select('id,severity')
         .eq('company_id', companyId)
         .eq('status', 'open');
 
     final rankingRows = await _client
-        .from('cg_employees')
+        .from('security_cg_employees')
         .select('id,name,risk_score')
         .eq('company_id', companyId)
         .order('risk_score', ascending: false)
         .limit(50);
 
     final snapshots = await _client
-        .from('cg_company_score_snapshots')
+        .from('security_cg_company_score_snapshots')
         .select('snapshot_date,risk_score')
         .eq('company_id', companyId)
         .order('snapshot_date', ascending: false)
@@ -51,7 +73,7 @@ class DashboardRepository {
         .subtract(Duration(days: DateTime.now().weekday - 1))
         .toIso8601String();
     final weeklyEvents = await _client
-        .from('cg_phishing_events')
+        .from('security_cg_phishing_events')
         .select('employee_id,event_type')
         .eq('company_id', companyId)
         .gte('created_at', startOfWeek);

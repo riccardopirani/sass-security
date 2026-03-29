@@ -28,7 +28,7 @@ serve(async (req) => {
     const employeeId = (body?.employeeId as string | undefined)?.trim();
 
     const query = adminClient
-      .from('cg_behavior_events')
+      .from('security_cg_behavior_events')
       .select('employee_id,event_type,risk_weight,metadata,created_at')
       .eq('company_id', profile.company_id)
       .gte('created_at', new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString());

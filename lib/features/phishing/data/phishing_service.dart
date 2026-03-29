@@ -44,7 +44,7 @@ class PhishingService {
 
   Future<List<Map<String, dynamic>>> listAttackLibrary(String companyId) async {
     final rows = await _client
-        .from('cg_attack_library')
+        .from('security_cg_attack_library')
         .select('id,category,name,subject_line,body_template,company_id')
         .or('company_id.is.null,company_id.eq.$companyId')
         .order('name', ascending: true);
@@ -54,7 +54,7 @@ class PhishingService {
 
   Future<List<PhishingCampaign>> listCampaigns(String companyId) async {
     final rows = await _client
-        .from('cg_phishing_campaigns')
+        .from('security_cg_phishing_campaigns')
         .select(
           'id,name,status,sent_count,opened_count,clicked_count,credential_submitted_count,ab_test_enabled,campaign_mode,generated_by_ai,created_at',
         )

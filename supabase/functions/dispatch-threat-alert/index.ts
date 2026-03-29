@@ -54,13 +54,13 @@ serve(async (req) => {
     }
 
     const channelSettings = await adminClient
-      .from('cg_notification_channels')
+      .from('security_cg_notification_channels')
       .select('email_enabled,slack_webhook_url,teams_webhook_url,push_enabled')
       .eq('company_id', profile.company_id)
       .maybeSingle();
 
     const recipientsResult = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('email')
       .eq('company_id', profile.company_id);
 
@@ -73,7 +73,7 @@ serve(async (req) => {
       .filter((email): email is string => Boolean(email));
 
     const alertInsert = await adminClient
-      .from('cg_alerts')
+      .from('security_cg_alerts')
       .insert({
         company_id: profile.company_id,
         employee_id: employeeId || null,

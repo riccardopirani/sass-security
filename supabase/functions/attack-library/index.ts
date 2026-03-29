@@ -15,10 +15,10 @@ serve(async (req) => {
 
     if (req.method === 'GET') {
       const rows = await adminClient
-        .from('cg_attack_library')
+        .from('security_cg_attack_library')
         .select('id,category,name,subject_line,body_template,company_id,created_at')
         .or(`company_id.is.null,company_id.eq.${profile.company_id}`)
-        .order('created_at', ascending: false)
+        .order('created_at', { ascending: false })
         .limit(200);
 
       if (rows.error) {
@@ -41,7 +41,7 @@ serve(async (req) => {
       }
 
       const inserted = await adminClient
-        .from('cg_attack_library')
+        .from('security_cg_attack_library')
         .insert({
           company_id: profile.company_id,
           category,

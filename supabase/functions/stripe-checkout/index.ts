@@ -19,7 +19,7 @@ serve(async (req) => {
     const plan = validatePlan(payload?.plan);
 
     const profile = await adminClient
-      .from('cg_profiles')
+      .from('security_cg_profiles')
       .select('id,company_id,role,email,name')
       .eq('id', user.id)
       .single();
@@ -38,7 +38,7 @@ serve(async (req) => {
     }
 
     const existing = await adminClient
-      .from('cg_subscriptions')
+      .from('security_cg_subscriptions')
       .select('stripe_customer_id')
       .eq('company_id', profile.data.company_id)
       .maybeSingle();
@@ -85,7 +85,7 @@ serve(async (req) => {
       },
     });
 
-    await adminClient.from('cg_subscriptions').upsert(
+    await adminClient.from('security_cg_subscriptions').upsert(
       {
         user_id: user.id,
         company_id: profile.data.company_id,

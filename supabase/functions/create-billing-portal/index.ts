@@ -17,7 +17,7 @@ serve(async (req) => {
     const user = await requireUser(req);
 
     const profile = await adminClient
-      .from('cg_profiles')
+      .from('security_cg_profiles')
       .select('company_id,role')
       .eq('id', user.id)
       .single();
@@ -31,7 +31,7 @@ serve(async (req) => {
     }
 
     const subscription = await adminClient
-      .from('cg_subscriptions')
+      .from('security_cg_subscriptions')
       .select('stripe_customer_id')
       .eq('company_id', profile.data.company_id)
       .maybeSingle();

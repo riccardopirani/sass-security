@@ -54,9 +54,9 @@ class AuthService {
     }
 
     final result = await _client
-        .from('cg_profiles')
+        .from('security_cg_profiles')
         .select(
-          'id,company_id,name,email,role,risk_score,companies:cg_companies!company_id(name,code)',
+          'id,company_id,name,email,role,risk_score,companies:security_cg_companies!company_id(name,code)',
         )
         .eq('id', user.id)
         .single();

@@ -8,7 +8,7 @@ class OrgService {
 
   Future<List<Map<String, dynamic>>> listDepartments(String companyId) async {
     final rows = await _client
-        .from('cg_departments')
+        .from('security_cg_departments')
         .select('id,name,created_at')
         .eq('company_id', companyId)
         .order('name', ascending: true);
@@ -17,7 +17,7 @@ class OrgService {
 
   Future<List<Map<String, dynamic>>> listTeams(String companyId) async {
     final rows = await _client
-        .from('cg_teams')
+        .from('security_cg_teams')
         .select('id,name,department_id,created_at')
         .eq('company_id', companyId)
         .order('name', ascending: true);
@@ -28,7 +28,7 @@ class OrgService {
     required String companyId,
     required String name,
   }) async {
-    await _client.from('cg_departments').insert({
+    await _client.from('security_cg_departments').insert({
       'company_id': companyId,
       'name': name.trim(),
     });
@@ -39,7 +39,7 @@ class OrgService {
     required String name,
     String? departmentId,
   }) async {
-    await _client.from('cg_teams').insert({
+    await _client.from('security_cg_teams').insert({
       'company_id': companyId,
       'name': name.trim(),
       'department_id': departmentId,

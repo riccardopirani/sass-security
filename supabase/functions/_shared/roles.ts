@@ -12,7 +12,7 @@ export type AppProfile = {
 
 export const getProfileOrThrow = async (userId: string): Promise<AppProfile> => {
   const profile = await adminClient
-    .from('cg_profiles')
+    .from('security_cg_profiles')
     .select('id,company_id,role,name,email')
     .eq('id', userId)
     .single();

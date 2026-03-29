@@ -25,7 +25,7 @@ serve(async (req) => {
     }
 
     const event = await adminClient
-      .from('cg_security_events')
+      .from('security_cg_security_events')
       .select('id,company_id,employee_id,event_kind,severity,status')
       .eq('id', eventId)
       .eq('company_id', profile.company_id)
@@ -37,14 +37,14 @@ serve(async (req) => {
 
     const nextStatus = 'resolved';
     await adminClient
-      .from('cg_security_events')
+      .from('security_cg_security_events')
       .update({
         status: nextStatus,
         updated_at: new Date().toISOString(),
       })
       .eq('id', eventId);
 
-    await adminClient.from('cg_alerts').insert({
+    await adminClient.from('security_cg_alerts').insert({
       company_id: profile.company_id,
       employee_id: event.data.employee_id,
       severity: event.data.severity,

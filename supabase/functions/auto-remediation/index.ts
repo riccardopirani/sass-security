@@ -76,7 +76,7 @@ serve(async (req) => {
     let targetEmployeeId = employeeId;
     if (!targetEmployeeId && incidentId) {
       const incident = await adminClient
-        .from('cg_incidents')
+        .from('security_cg_incidents')
         .select('employee_id')
         .eq('id', incidentId)
         .eq('company_id', profile.company_id)
@@ -89,7 +89,7 @@ serve(async (req) => {
     }
 
     const employee = await adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('id,risk_score,mfa_enabled')
       .eq('id', targetEmployeeId)
       .eq('company_id', profile.company_id)
@@ -100,7 +100,7 @@ serve(async (req) => {
     }
 
     const incidents = await adminClient
-      .from('cg_incidents')
+      .from('security_cg_incidents')
       .select('id,severity,status')
       .eq('company_id', profile.company_id)
       .eq('employee_id', targetEmployeeId)
@@ -116,7 +116,7 @@ serve(async (req) => {
 
     if (execute) {
       for (const suggestion of suggestions) {
-        await adminClient.from('cg_remediation_actions').insert({
+        await adminClient.from('security_cg_remediation_actions').insert({
           company_id: profile.company_id,
           employee_id: targetEmployeeId,
           incident_id: incidentId || null,
@@ -128,7 +128,7 @@ serve(async (req) => {
 
         if (suggestion.action_type === 'force_mfa') {
           await adminClient
-            .from('cg_employees')
+            .from('security_cg_employees')
             .update({ force_mfa: true, updated_at: new Date().toISOString() })
             .eq('id', targetEmployeeId);
         }
@@ -137,7 +137,7 @@ serve(async (req) => {
       }
     } else {
       for (const suggestion of suggestions) {
-        await adminClient.from('cg_remediation_actions').insert({
+        await adminClient.from('security_cg_remediation_actions').insert({
           company_id: profile.company_id,
           employee_id: targetEmployeeId,
           incident_id: incidentId || null,

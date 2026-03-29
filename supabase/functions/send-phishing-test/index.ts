@@ -59,7 +59,7 @@ serve(async (req) => {
     }
 
     let employeesQuery = adminClient
-      .from('cg_employees')
+      .from('security_cg_employees')
       .select('id')
       .eq('company_id', profile.company_id);
 
@@ -78,7 +78,7 @@ serve(async (req) => {
     }
 
     const campaignResult = await adminClient
-      .from('cg_phishing_campaigns')
+      .from('security_cg_phishing_campaigns')
       .insert({
         company_id: profile.company_id,
         created_by: user.id,
@@ -107,7 +107,7 @@ serve(async (req) => {
       event_type: 'sent',
     }));
 
-    await adminClient.from('cg_phishing_events').insert(sentEvents);
+    await adminClient.from('security_cg_phishing_events').insert(sentEvents);
 
     const simulatedEvents: Array<{
       company_id: string;
@@ -159,10 +159,10 @@ serve(async (req) => {
     }
 
     if (simulatedEvents.length > 0) {
-      await adminClient.from('cg_phishing_events').insert(simulatedEvents);
+      await adminClient.from('security_cg_phishing_events').insert(simulatedEvents);
     }
 
-    await adminClient.from('cg_alerts').insert({
+    await adminClient.from('security_cg_alerts').insert({
       company_id: profile.company_id,
       severity: 'low',
       title: 'Phishing campaign launched',

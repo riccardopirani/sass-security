@@ -74,7 +74,7 @@ serve(async (req) => {
     riskScore = Math.min(100, riskScore);
 
     const scanInsert = await adminClient
-      .from('cg_email_scans')
+      .from('security_cg_email_scans')
       .insert({
         company_id: profile.company_id,
         employee_id: employeeId || null,
@@ -95,7 +95,7 @@ serve(async (req) => {
 
     const severity = riskScore >= 80 ? 'critical' : riskScore >= 60 ? 'high' : riskScore >= 30 ? 'medium' : 'low';
     if (riskScore >= 60) {
-      await adminClient.from('cg_security_events').insert({
+      await adminClient.from('security_cg_security_events').insert({
         company_id: profile.company_id,
         employee_id: employeeId || null,
         event_kind: 'email_threat_detected',
@@ -103,7 +103,7 @@ serve(async (req) => {
         details: `Suspicious email from ${sender} with risk score ${riskScore}.`,
       });
 
-      await adminClient.from('cg_alerts').insert({
+      await adminClient.from('security_cg_alerts').insert({
         company_id: profile.company_id,
         employee_id: employeeId || null,
         severity,
@@ -115,7 +115,7 @@ serve(async (req) => {
     }
 
     if (employeeId && riskScore >= 40) {
-      await adminClient.from('cg_behavior_events').insert({
+      await adminClient.from('security_cg_behavior_events').insert({
         company_id: profile.company_id,
         employee_id: employeeId,
         event_type: 'suspicious_email_received',
