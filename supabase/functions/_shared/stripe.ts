@@ -1,39 +1,26 @@
 import Stripe from 'npm:stripe@14.25.0';
 
-export type Plan = 'starter' | 'pro' | 'business';
-
 const key = Deno.env.get('STRIPE_SECRET_KEY');
 if (!key) {
   throw new Error('Missing STRIPE_SECRET_KEY');
+}
+if (key.startsWith('pk_')) {
+  throw new Error(
+    'STRIPE_SECRET_KEY must be your Stripe secret key (sk_test_... or sk_live_...), not the publishable key (pk_...). Set it in Supabase Dashboard → Edge Functions → Secrets.',
+  );
 }
 
 export const stripe = new Stripe(key, {
   apiVersion: '2023-10-16',
 });
 
-const starter = Deno.env.get('STRIPE_PRICE_STARTER') ?? '';
-const pro = Deno.env.get('STRIPE_PRICE_PRO') ?? '';
-const business = Deno.env.get('STRIPE_PRICE_BUSINESS') ?? '';
+export type Plan = 'starter' | 'pro' | 'business' | 'flex';
 
-export const priceByPlan: Record<Plan, string> = {
-  starter,
-  pro,
-  business,
-};
-
-export const planByPrice = (priceId: string | null | undefined): Plan => {
-  if (priceId && priceId === priceByPlan.pro) {
-    return 'pro';
+export function planFromMetadata(
+  plan: string | null | undefined,
+): Plan {
+  if (plan === 'starter' || plan === 'pro' || plan === 'business' || plan === 'flex') {
+    return plan;
   }
-  if (priceId && priceId === priceByPlan.business) {
-    return 'business';
-  }
-  return 'starter';
-};
-
-export const validatePlan = (value: unknown): Plan => {
-  if (value === 'starter' || value === 'pro' || value === 'business') {
-    return value;
-  }
-  throw new Error('Invalid plan. Expected starter, pro, or business.');
-};
+  return 'flex';
+}

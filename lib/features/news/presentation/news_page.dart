@@ -41,16 +41,17 @@ class _NewsPageState extends State<NewsPage> {
 
   Future<void> _openLink(String url) async {
     final uri = Uri.tryParse(url);
+    final l10n = AppLocalizations.of(context);
     if (uri == null) {
       if (mounted) {
-        AppSnack.error(context, 'Link non valido');
+        AppSnack.error(context, l10n.invalid_news_link);
       }
       return;
     }
 
     final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!opened && mounted) {
-      AppSnack.error(context, 'Impossibile aprire la notizia');
+      AppSnack.error(context, l10n.cannot_open_news);
     }
   }
 
@@ -101,12 +102,12 @@ class _NewsPageState extends State<NewsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Security News',
+                      l10n.security_news_title,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Ultime news gratuite da forum e fonti cyber su virus, hacking e tools.',
+                      l10n.security_news_subtitle,
                       style: Theme.of(
                         context,
                       ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
@@ -117,25 +118,25 @@ class _NewsPageState extends State<NewsPage> {
                       runSpacing: 8,
                       children: [
                         _TopicChip(
-                          label: 'Tutte',
+                          label: l10n.news_topic_all,
                           selected: _selectedTopic == 'all',
                           onSelected: () =>
                               setState(() => _selectedTopic = 'all'),
                         ),
                         _TopicChip(
-                          label: 'Virus',
+                          label: l10n.incident_type_virus,
                           selected: _selectedTopic == 'virus',
                           onSelected: () =>
                               setState(() => _selectedTopic = 'virus'),
                         ),
                         _TopicChip(
-                          label: 'Hacking',
+                          label: l10n.incident_type_hacking,
                           selected: _selectedTopic == 'hacking',
                           onSelected: () =>
                               setState(() => _selectedTopic = 'hacking'),
                         ),
                         _TopicChip(
-                          label: 'Tools',
+                          label: l10n.news_topic_tools,
                           selected: _selectedTopic == 'tools',
                           onSelected: () =>
                               setState(() => _selectedTopic = 'tools'),
@@ -148,7 +149,7 @@ class _NewsPageState extends State<NewsPage> {
               const SizedBox(height: 12),
               if (items.isEmpty)
                 EmptyState(
-                  title: 'Nessuna news trovata per questo filtro',
+                  title: l10n.no_news_for_filter,
                   icon: Icons.newspaper_outlined,
                 ),
               ...items.map(
@@ -165,7 +166,7 @@ class _NewsPageState extends State<NewsPage> {
                           children: [
                             Row(
                               children: [
-                                _TopicBadge(topic: item.topic),
+                                _TopicBadge(topic: item.topic, l10n: l10n),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
@@ -247,9 +248,10 @@ class _TopicChip extends StatelessWidget {
 }
 
 class _TopicBadge extends StatelessWidget {
-  const _TopicBadge({required this.topic});
+  const _TopicBadge({required this.topic, required this.l10n});
 
   final String topic;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -258,14 +260,14 @@ class _TopicBadge extends StatelessWidget {
 
     switch (topic) {
       case 'virus':
-        label = 'VIRUS';
+        label = l10n.news_badge_virus;
         color = const Color(0xFFEF4444);
       case 'tools':
-        label = 'TOOLS';
+        label = l10n.news_badge_tools;
         color = const Color(0xFF10B981);
       case 'hacking':
       default:
-        label = 'HACKING';
+        label = l10n.news_badge_hacking;
         color = const Color(0xFFF59E0B);
     }
 

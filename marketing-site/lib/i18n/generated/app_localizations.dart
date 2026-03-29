@@ -649,13 +649,13 @@ abstract class AppLocalizations {
   /// No description provided for @pricingTitle.
   ///
   /// In en, this message translates to:
-  /// **'Simple pricing'**
+  /// **'Pricing'**
   String get pricingTitle;
 
   /// No description provided for @pricingSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Scale security by stage, not by complexity.'**
+  /// **'Usage-based subscription — no fixed tiers.'**
   String get pricingSubtitle;
 
   /// No description provided for @pricingStarter.
@@ -787,13 +787,13 @@ abstract class AppLocalizations {
   /// No description provided for @pricingFaq1Q.
   ///
   /// In en, this message translates to:
-  /// **'Can I change plans later?'**
+  /// **'Can I change seats or billing later?'**
   String get pricingFaq1Q;
 
   /// No description provided for @pricingFaq1A.
   ///
   /// In en, this message translates to:
-  /// **'Yes. Upgrades and downgrades are handled from billing settings with prorated adjustments.'**
+  /// **'Yes. Update payment methods in the Stripe billing portal; change seat count when you renew or re-subscribe from the app.'**
   String get pricingFaq1A;
 
   /// No description provided for @pricingFaq2Q.
@@ -805,7 +805,7 @@ abstract class AppLocalizations {
   /// No description provided for @pricingFaq2A.
   ///
   /// In en, this message translates to:
-  /// **'Every plan starts with a free trial period and no setup fee.'**
+  /// **'New company admins start with a trial; paid billing uses the in-app subscription page.'**
   String get pricingFaq2A;
 
   /// No description provided for @pricingFaq3Q.
@@ -829,7 +829,7 @@ abstract class AppLocalizations {
   /// No description provided for @pricingFaq4A.
   ///
   /// In en, this message translates to:
-  /// **'The Business plan includes multi-tenant management for agencies and groups.'**
+  /// **'Yes. Each company is a separate workspace with isolated data; add more organizations as you grow.'**
   String get pricingFaq4A;
 
   /// No description provided for @pricingFaq5Q.
@@ -841,7 +841,7 @@ abstract class AppLocalizations {
   /// No description provided for @pricingFaq5A.
   ///
   /// In en, this message translates to:
-  /// **'SSO is available on Pro and Business with policy controls.'**
+  /// **'Contact sales for enterprise SSO and advanced identity options.'**
   String get pricingFaq5A;
 
   /// No description provided for @pricingFaq6Q.
@@ -1639,25 +1639,25 @@ abstract class AppLocalizations {
   /// No description provided for @homePricingSectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Simple plans, no surprises'**
+  /// **'Fair pricing for your risk profile'**
   String get homePricingSectionTitle;
 
   /// No description provided for @homePricingSectionBody.
   ///
   /// In en, this message translates to:
-  /// **'Choose the plan that fits your company:'**
+  /// **'Subscription cost scales with team size and your company security score — not with rigid tiers.'**
   String get homePricingSectionBody;
 
   /// No description provided for @homePricingSectionBullets.
   ///
   /// In en, this message translates to:
-  /// **'Starter — for small businesses||Pro — for growing companies||Business — for structured organizations'**
+  /// **'Transparent formula in the app||Secure Stripe billing||Adjust seats when you subscribe'**
   String get homePricingSectionBullets;
 
   /// No description provided for @homePricingSectionTagline.
   ///
   /// In en, this message translates to:
-  /// **'You only pay for what you use'**
+  /// **'Start free, then pay based on seats and risk'**
   String get homePricingSectionTagline;
 
   /// No description provided for @homePricingSectionCtaFree.
@@ -1713,6 +1713,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Complete visibility||Automated security'**
   String get homeAfterBullets;
+
+  /// No description provided for @pricingModelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage-based pricing'**
+  String get pricingModelTitle;
+
+  /// No description provided for @pricingModelSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Starter / Pro / Business tiers. Your monthly fee reflects seat count and company risk (0–100).'**
+  String get pricingModelSubtitle;
+
+  /// No description provided for @pricingModelFormula.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly (USD, before tax) = 2.99 + (users × 0.22) + (users^1.1 × 0.02) + (risk score × 0.05).'**
+  String get pricingModelFormula;
+
+  /// No description provided for @pricingModelBullet1.
+  ///
+  /// In en, this message translates to:
+  /// **'Company risk is computed automatically in the product dashboard.'**
+  String get pricingModelBullet1;
+
+  /// No description provided for @pricingModelBullet2.
+  ///
+  /// In en, this message translates to:
+  /// **'You choose how many seats to buy when you open checkout in the app.'**
+  String get pricingModelBullet2;
+
+  /// No description provided for @pricingModelBullet3.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards and invoices are handled securely by Stripe.'**
+  String get pricingModelBullet3;
+
+  /// No description provided for @pricingModelCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Start free trial'**
+  String get pricingModelCta;
 }
 
 class _AppLocalizationsDelegate

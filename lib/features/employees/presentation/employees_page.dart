@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sass_security/l10n/app_localizations.dart';
 
 import '../../../core/utils/app_snack.dart';
+import '../../../core/widgets/employee_avatar.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/loading_skeleton.dart';
 import '../../auth/models/app_profile.dart';
+import '../data/employee_avatar_storage.dart';
 import '../data/employee_repository.dart';
 import '../models/employee_record.dart';
 
@@ -20,6 +25,7 @@ class EmployeesPage extends StatefulWidget {
 
 class _EmployeesPageState extends State<EmployeesPage> {
   final _repo = EmployeeRepository();
+  final _avatarStorage = EmployeeAvatarStorage();
   late Future<List<EmployeeRecord>> _future;
 
   @override
@@ -58,131 +64,224 @@ class _EmployeesPageState extends State<EmployeesPage> {
     var mfaEnabled = existing?.mfaEnabled ?? false;
     var forceMfa = existing?.forceMfa ?? false;
 
+    String? avatarUrl = existing?.avatarUrl;
+    Uint8List? pendingBytes;
+    String pendingExt = 'jpg';
+    var clearedAvatar = false;
+
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            existing == null ? l10n.add_employee : l10n.edit_employee,
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nameCtrl,
-                  decoration: InputDecoration(labelText: l10n.name),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: emailCtrl,
-                  decoration: InputDecoration(labelText: l10n.email),
-                ),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<AppUserRole>(
-                  initialValue: role,
-                  decoration: InputDecoration(labelText: l10n.role),
-                  items: [
-                    DropdownMenuItem(
-                      value: AppUserRole.admin,
-                      child: Text(l10n.admin),
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            Future<void> pickPhoto() async {
+              final picker = ImagePicker();
+              final file = await picker.pickImage(
+                source: ImageSource.gallery,
+                maxWidth: 1200,
+                maxHeight: 1200,
+                imageQuality: 88,
+              );
+              if (file == null) return;
+              final bytes = await file.readAsBytes();
+              if (bytes.length > EmployeeAvatarStorage.maxBytes) {
+                if (dialogContext.mounted) {
+                  AppSnack.error(dialogContext, l10n.photo_invalid);
+                }
+                return;
+              }
+              final name = file.name;
+              final dot = name.lastIndexOf('.');
+              if (dot >= 0 && dot < name.length - 1) {
+                pendingExt = name.substring(dot + 1).toLowerCase();
+                if (pendingExt == 'jpeg') pendingExt = 'jpg';
+              }
+              pendingBytes = bytes;
+              clearedAvatar = false;
+              setDialogState(() {});
+            }
+
+            void clearPhoto() {
+              pendingBytes = null;
+              avatarUrl = null;
+              clearedAvatar = true;
+              setDialogState(() {});
+            }
+
+            return AlertDialog(
+              title: Text(
+                existing == null ? l10n.add_employee : l10n.edit_employee,
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.profile.isManager) ...[
+                      Text(
+                        l10n.employee_photo,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          if (pendingBytes != null)
+                            ClipOval(
+                              child: Image.memory(
+                                pendingBytes!,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          else
+                            EmployeeAvatar(
+                              name: nameCtrl.text.isEmpty
+                                  ? '?'
+                                  : nameCtrl.text,
+                              imageUrl: avatarUrl,
+                              radius: 32,
+                            ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: [
+                                TextButton.icon(
+                                  onPressed: pickPhoto,
+                                  icon: const Icon(Icons.photo_camera_outlined),
+                                  label: Text(l10n.change_photo),
+                                ),
+                                if (pendingBytes != null ||
+                                    (avatarUrl != null &&
+                                        avatarUrl!.isNotEmpty))
+                                  TextButton.icon(
+                                    onPressed: clearPhoto,
+                                    icon: const Icon(Icons.delete_outline),
+                                    label: Text(l10n.remove_photo),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    TextField(
+                      controller: nameCtrl,
+                      decoration: InputDecoration(labelText: l10n.name),
+                      onChanged: (_) => setDialogState(() {}),
                     ),
-                    const DropdownMenuItem(
-                      value: AppUserRole.securityManager,
-                      child: Text('Security Manager'),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: emailCtrl,
+                      decoration: InputDecoration(labelText: l10n.email),
                     ),
-                    DropdownMenuItem(
-                      value: AppUserRole.employee,
-                      child: Text(l10n.employee),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<AppUserRole>(
+                      initialValue: role,
+                      decoration: InputDecoration(labelText: l10n.role),
+                      items: [
+                        DropdownMenuItem(
+                          value: AppUserRole.admin,
+                          child: Text(l10n.admin),
+                        ),
+                        DropdownMenuItem(
+                          value: AppUserRole.securityManager,
+                          child: Text(l10n.role_security_manager),
+                        ),
+                        DropdownMenuItem(
+                          value: AppUserRole.employee,
+                          child: Text(l10n.employee),
+                        ),
+                        DropdownMenuItem(
+                          value: AppUserRole.auditor,
+                          child: Text(l10n.role_auditor),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        if (value == null) return;
+                        setDialogState(() => role = value);
+                      },
                     ),
-                    const DropdownMenuItem(
-                      value: AppUserRole.auditor,
-                      child: Text('Auditor'),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: riskCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(labelText: l10n.risk_score),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: trainingCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.training_completion,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: passwordCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.password_behavior_risk,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: incidentCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.incident_history_risk,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: deviceCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.device_compliance_risk,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: behaviorCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.behavior_risk,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SwitchListTile(
+                      value: mfaEnabled,
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(l10n.mfa_enabled_label),
+                      onChanged: (value) {
+                        setDialogState(() => mfaEnabled = value);
+                      },
+                    ),
+                    SwitchListTile(
+                      value: forceMfa,
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(l10n.force_mfa_login),
+                      onChanged: (value) {
+                        setDialogState(() => forceMfa = value);
+                      },
                     ),
                   ],
-                  onChanged: (value) {
-                    if (value == null) {
-                      return;
-                    }
-                    role = value;
-                  },
                 ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: riskCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: l10n.risk_score),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(l10n.cancel),
                 ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: trainingCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: l10n.training_completion,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: passwordCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Password behavior risk (0-100)',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: incidentCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Incident history risk (0-100)',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: deviceCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Device compliance risk (0-100)',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: behaviorCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Behavior risk (0-100)',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SwitchListTile(
-                  value: mfaEnabled,
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('MFA enabled'),
-                  onChanged: (value) {
-                    mfaEnabled = value;
-                  },
-                ),
-                SwitchListTile(
-                  value: forceMfa,
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Force MFA on next login'),
-                  onChanged: (value) {
-                    forceMfa = value;
-                  },
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(l10n.save),
                 ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(l10n.cancel),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: Text(l10n.save),
-            ),
-          ],
+            );
+          },
         );
       },
     );
@@ -199,8 +298,9 @@ class _EmployeesPageState extends State<EmployeesPage> {
       final parsedDevice = int.tryParse(deviceCtrl.text.trim()) ?? 25;
       final parsedBehavior = int.tryParse(behaviorCtrl.text.trim()) ?? 15;
 
+      late final String employeeId;
       if (existing == null) {
-        await _repo.create(
+        employeeId = await _repo.create(
           companyId: widget.profile.companyId,
           name: nameCtrl.text.trim(),
           email: emailCtrl.text.trim(),
@@ -215,6 +315,15 @@ class _EmployeesPageState extends State<EmployeesPage> {
           forceMfa: forceMfa,
         );
       } else {
+        employeeId = existing.id;
+        final String? avatarForRow;
+        if (clearedAvatar && pendingBytes == null) {
+          avatarForRow = null;
+        } else if (pendingBytes != null) {
+          avatarForRow = existing.avatarUrl;
+        } else {
+          avatarForRow = existing.avatarUrl;
+        }
         await _repo.update(
           employeeId: existing.id,
           name: nameCtrl.text.trim(),
@@ -228,6 +337,30 @@ class _EmployeesPageState extends State<EmployeesPage> {
           behaviorRiskScore: parsedBehavior,
           mfaEnabled: mfaEnabled,
           forceMfa: forceMfa,
+          avatarUrl: avatarForRow,
+        );
+      }
+
+      if (pendingBytes != null) {
+        try {
+          final url = await _avatarStorage.upload(
+            companyId: widget.profile.companyId,
+            employeeId: employeeId,
+            bytes: pendingBytes!,
+            ext: pendingExt,
+          );
+          await _repo.updateAvatarUrl(employeeId, url);
+        } catch (_) {
+          if (mounted) {
+            AppSnack.error(context, l10n.photo_upload_failed);
+          }
+        }
+      } else if (clearedAvatar &&
+          existing != null &&
+          (existing.avatarUrl != null && existing.avatarUrl!.isNotEmpty)) {
+        await _avatarStorage.removeFilesForEmployee(
+          widget.profile.companyId,
+          employeeId,
         );
       }
 
@@ -245,6 +378,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
   Future<void> _delete(String id) async {
     final l10n = AppLocalizations.of(context);
     try {
+      await _avatarStorage.removeFilesForEmployee(
+        widget.profile.companyId,
+        id,
+      );
       await _repo.delete(id);
       if (mounted) {
         AppSnack.success(context, l10n.success);
@@ -327,11 +464,10 @@ class _EmployeesPageState extends State<EmployeesPage> {
               return GlassCard(
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: const Color(0xFF0EA5E9),
-                      child: Text(
-                        employee.name.isEmpty ? '?' : employee.name[0],
-                      ),
+                    EmployeeAvatar(
+                      name: employee.name,
+                      imageUrl: employee.avatarUrl,
+                      radius: 26,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -349,7 +485,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${l10n.risk_score}: ${employee.riskScore} | ${l10n.training_completion}: ${employee.trainingCompletion}% | MFA: ${employee.mfaEnabled ? 'ON' : 'OFF'}',
+                            '${l10n.risk_score}: ${employee.riskScore} | ${l10n.training_completion}: ${employee.trainingCompletion}% | ${l10n.mfa_enabled_label}: ${employee.mfaEnabled ? l10n.mfa_on : l10n.mfa_off}',
                             style: const TextStyle(color: Colors.white60),
                           ),
                         ],

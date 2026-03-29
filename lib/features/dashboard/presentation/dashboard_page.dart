@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sass_security/l10n/app_localizations.dart';
 
+import '../../../core/widgets/employee_avatar.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/loading_skeleton.dart';
 import '../../auth/models/app_profile.dart';
@@ -110,29 +111,29 @@ class _DashboardPageState extends State<DashboardPage> {
                             : constraints.maxWidth,
                       ),
                       _MetricCard(
-                        title: 'Open incidents',
+                        title: l10n.open_incidents,
                         value: '${data.openIncidents}',
                         width: wide
                             ? (constraints.maxWidth - 12) / 2
                             : constraints.maxWidth,
                       ),
                       _MetricCard(
-                        title: 'Critical incidents',
+                        title: l10n.critical_incidents,
                         value: '${data.criticalIncidents}',
                         width: wide
                             ? (constraints.maxWidth - 12) / 2
                             : constraints.maxWidth,
                       ),
                       _MetricCard(
-                        title: 'High risk employees',
+                        title: l10n.high_risk_employees_count,
                         value: '${data.highRiskEmployees}',
                         width: wide
                             ? (constraints.maxWidth - 12) / 2
                             : constraints.maxWidth,
                       ),
                       _MetricCard(
-                        title: 'Benchmark',
-                        value: 'Safer than ${data.benchmarkPercentile}%',
+                        title: l10n.metric_benchmark,
+                        value: l10n.benchmark_safer_than(data.benchmarkPercentile),
                         width: wide
                             ? (constraints.maxWidth - 12) / 2
                             : constraints.maxWidth,
@@ -140,8 +141,8 @@ class _DashboardPageState extends State<DashboardPage> {
                       _MetricCard(
                         title: l10n.security_posture,
                         value: data.companyRiskScore >= 70
-                            ? 'High Risk'
-                            : 'Stable',
+                            ? l10n.security_posture_high_risk
+                            : l10n.security_posture_stable,
                         width: wide
                             ? (constraints.maxWidth - 12) / 2
                             : constraints.maxWidth,
@@ -156,7 +157,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Top 10 risky users this week',
+                      l10n.top_risky_users_week,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 10),
@@ -164,9 +165,24 @@ class _DashboardPageState extends State<DashboardPage> {
                       (entry) => ListTile(
                         dense: true,
                         contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
-                          backgroundColor: const Color(0xFF7C3AED),
-                          child: Text('${entry.key + 1}'),
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: 28,
+                              child: Text(
+                                '${entry.key + 1}',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                            ),
+                            EmployeeAvatar(
+                              name: entry.value.name,
+                              imageUrl: entry.value.avatarUrl,
+                              radius: 18,
+                              backgroundColor: const Color(0xFF7C3AED),
+                            ),
+                          ],
                         ),
                         title: Text(entry.value.name),
                         trailing: Text('${entry.value.riskScore}/100'),
@@ -174,7 +190,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     if (data.topRiskyWeek.isEmpty)
                       Text(
-                        'No risky users this week.',
+                        l10n.no_risky_users_week,
                         style: Theme.of(
                           context,
                         ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
@@ -188,13 +204,13 @@ class _DashboardPageState extends State<DashboardPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Monthly risk trend',
+                      l10n.monthly_risk_trend,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 10),
                     if (data.riskTrend.isEmpty)
                       Text(
-                        'No trend data yet.',
+                        l10n.no_trend_data,
                         style: Theme.of(
                           context,
                         ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
@@ -239,9 +255,11 @@ class _DashboardPageState extends State<DashboardPage> {
                       (entry) => ListTile(
                         dense: true,
                         contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
+                        leading: EmployeeAvatar(
+                          name: entry.name,
+                          imageUrl: entry.avatarUrl,
+                          radius: 20,
                           backgroundColor: const Color(0xFF1D4ED8),
-                          child: Text(entry.name.isEmpty ? '?' : entry.name[0]),
                         ),
                         title: Text(entry.name),
                         trailing: Text('${entry.riskScore}/100'),

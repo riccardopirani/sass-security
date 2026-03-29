@@ -903,4 +903,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeAfterBullets => 'Visibilité complète||Sécurité automatisée';
+
+  @override
+  String get pricingModelTitle => 'Usage-based pricing';
+
+  @override
+  String get pricingModelSubtitle =>
+      'No Starter / Pro / Business tiers. Your monthly fee reflects seat count and company risk (0–100).';
+
+  @override
+  String get pricingModelFormula =>
+      'Monthly (USD, before tax) = 2.99 + (users × 0.22) + (users^1.1 × 0.02) + (risk score × 0.05).';
+
+  @override
+  String get pricingModelBullet1 =>
+      'Company risk is computed automatically in the product dashboard.';
+
+  @override
+  String get pricingModelBullet2 =>
+      'You choose how many seats to buy when you open checkout in the app.';
+
+  @override
+  String get pricingModelBullet3 =>
+      'Cards and invoices are handled securely by Stripe.';
+
+  @override
+  String get pricingModelCta => 'Start free trial';
 }

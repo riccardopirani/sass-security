@@ -84,7 +84,7 @@ class _PhishingPageState extends State<PhishingPage> {
           (generated['body_b'] as String?) ?? _templateBCtrl.text;
 
       if (mounted) {
-        AppSnack.success(context, 'AI templates generated');
+        AppSnack.success(context, l10n.ai_templates_generated);
       }
     } catch (error) {
       if (mounted) {
@@ -166,7 +166,7 @@ class _PhishingPageState extends State<PhishingPage> {
     if (!widget.profile.isManager) {
       return EmptyState(
         title: l10n.phishing,
-        subtitle: 'Admin/Security Manager access required.',
+        subtitle: l10n.manager_access_required,
         icon: Icons.lock_outline,
       );
     }
@@ -179,20 +179,20 @@ class _PhishingPageState extends State<PhishingPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'AI Phishing Simulation Engine',
+                l10n.ai_phishing_engine_title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
               if (_library.isNotEmpty)
                 DropdownButtonFormField<String?>(
                   initialValue: _selectedLibraryTemplateId,
-                  decoration: const InputDecoration(
-                    labelText: 'Attack simulation library',
+                  decoration: InputDecoration(
+                    labelText: l10n.attack_sim_library,
                   ),
                   items: [
-                    const DropdownMenuItem<String?>(
+                    DropdownMenuItem<String?>(
                       value: null,
-                      child: Text('Custom'),
+                      child: Text(l10n.custom),
                     ),
                     ..._library.map(
                       (item) => DropdownMenuItem<String?>(
@@ -214,16 +214,16 @@ class _PhishingPageState extends State<PhishingPage> {
               TextField(
                 controller: _templateACtrl,
                 maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Template A (primary)',
+                decoration: InputDecoration(
+                  labelText: l10n.template_primary,
                 ),
               ),
               const SizedBox(height: 10),
               TextField(
                 controller: _templateBCtrl,
                 maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Template B (A/B test)',
+                decoration: InputDecoration(
+                  labelText: l10n.template_ab_test,
                 ),
               ),
               const SizedBox(height: 12),
@@ -232,28 +232,28 @@ class _PhishingPageState extends State<PhishingPage> {
                 runSpacing: 8,
                 children: [
                   FilterChip(
-                    label: const Text('Use AI'),
+                    label: Text(l10n.use_ai),
                     selected: _useAi,
                     onSelected: _sending
                         ? null
                         : (value) => setState(() => _useAi = value),
                   ),
                   FilterChip(
-                    label: const Text('A/B test'),
+                    label: Text(l10n.ab_test),
                     selected: _abTest,
                     onSelected: _sending
                         ? null
                         : (value) => setState(() => _abTest = value),
                   ),
                   ChoiceChip(
-                    label: const Text('Manual'),
+                    label: Text(l10n.manual_mode),
                     selected: _campaignMode == 'manual',
                     onSelected: _sending
                         ? null
                         : (_) => setState(() => _campaignMode = 'manual'),
                   ),
                   ChoiceChip(
-                    label: const Text('Automatic'),
+                    label: Text(l10n.automatic_mode),
                     selected: _campaignMode == 'automatic',
                     onSelected: _sending
                         ? null
@@ -269,7 +269,9 @@ class _PhishingPageState extends State<PhishingPage> {
                     onPressed: (_sending || _generating || !_useAi)
                         ? null
                         : _generateAiTemplates,
-                    child: Text(_generating ? l10n.loading : 'Generate AI A/B'),
+                    child: Text(
+                      _generating ? l10n.loading : l10n.generate_ai_ab,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(

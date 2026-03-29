@@ -2,7 +2,11 @@ import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
 
 import { corsHeaders, handleOptions, json } from '../_shared/cors.ts';
 import { adminClient, requireUser } from '../_shared/supabase.ts';
-import { priceByPlan, stripe, validatePlan } from '../_shared/stripe.ts';
+import {
+  computeMonthlyUsd,
+  monthlyUsdToUnitCents,
+} from '../_shared/pricing.ts';
+import { stripe } from '../_shared/stripe.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -16,7 +20,10 @@ serve(async (req) => {
   try {
     const user = await requireUser(req);
     const payload = await req.json();
-    const plan = validatePlan(payload?.plan);
+    const users = Math.min(
+      50_000,
+      Math.max(1, Math.floor(Number(payload?.users) || 1)),
+    );
 
     const profile = await adminClient
       .from('security_cg_profiles')
@@ -32,15 +39,22 @@ serve(async (req) => {
       return json({ error: 'Only admins can create subscriptions' }, 403);
     }
 
-    const priceId = priceByPlan[plan];
-    if (!priceId) {
-      return json({ error: 'Price ID not configured for plan' }, 500);
-    }
+    const companyId = profile.data.company_id;
+
+    const company = await adminClient
+      .from('security_cg_companies')
+      .select('risk_score')
+      .eq('id', companyId)
+      .maybeSingle();
+
+    const riskScore = Number(company.data?.risk_score ?? 0);
+    const monthlyUsd = computeMonthlyUsd(users, riskScore);
+    const unitCents = monthlyUsdToUnitCents(monthlyUsd);
 
     const existing = await adminClient
       .from('security_cg_subscriptions')
       .select('stripe_customer_id')
-      .eq('company_id', profile.data.company_id)
+      .eq('company_id', companyId)
       .maybeSingle();
 
     let customerId = existing.data?.stripe_customer_id ?? null;
@@ -51,7 +65,7 @@ serve(async (req) => {
         name: profile.data.name,
         metadata: {
           user_id: user.id,
-          company_id: profile.data.company_id,
+          company_id: companyId,
         },
       });
       customerId = customer.id;
@@ -59,38 +73,48 @@ serve(async (req) => {
 
     const appUrl = Deno.env.get('APP_URL') ?? 'http://localhost:3000';
 
+    const meta = {
+      user_id: user.id,
+      company_id: companyId,
+      plan: 'flex',
+      licensed_users: String(users),
+      risk_score: String(Math.round(riskScore)),
+      monthly_amount_usd: monthlyUsd.toFixed(2),
+    };
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       customer: customerId,
       allow_promotion_codes: true,
       line_items: [
         {
-          price: priceId,
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: `CyberGuard (${users} seats)`,
+              metadata: meta,
+            },
+            recurring: { interval: 'month' },
+            unit_amount: unitCents,
+          },
           quantity: 1,
         },
       ],
       success_url: `${appUrl}/#/subscription?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appUrl}/#/subscription?checkout=cancel`,
-      metadata: {
-        user_id: user.id,
-        company_id: profile.data.company_id,
-        plan,
-      },
+      metadata: meta,
       subscription_data: {
-        metadata: {
-          user_id: user.id,
-          company_id: profile.data.company_id,
-          plan,
-        },
+        metadata: meta,
       },
     });
 
     await adminClient.from('security_cg_subscriptions').upsert(
       {
         user_id: user.id,
-        company_id: profile.data.company_id,
+        company_id: companyId,
         stripe_customer_id: customerId,
-        plan,
+        plan: 'flex',
+        licensed_seats: users,
         status: 'incomplete',
       },
       { onConflict: 'company_id' },
@@ -100,6 +124,10 @@ serve(async (req) => {
       JSON.stringify({
         id: session.id,
         url: session.url,
+        monthly_usd: monthlyUsd,
+        unit_cents: unitCents,
+        users,
+        risk_score: Math.round(riskScore),
       }),
       {
         status: 200,

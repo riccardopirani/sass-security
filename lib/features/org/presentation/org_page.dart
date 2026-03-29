@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sass_security/l10n/app_localizations.dart';
 
 import '../../../core/utils/app_snack.dart';
 import '../../../core/widgets/empty_state.dart';
@@ -99,10 +100,12 @@ class _OrgPageState extends State<OrgPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     if (!widget.profile.isManager) {
-      return const EmptyState(
-        title: 'Teams & Departments',
-        subtitle: 'Admin/Security Manager access required.',
+      return EmptyState(
+        title: l10n.teams_departments_title,
+        subtitle: l10n.org_manager_required,
         icon: Icons.lock_outline,
       );
     }
@@ -119,14 +122,14 @@ class _OrgPageState extends State<OrgPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Departments',
+                l10n.departments,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: _departmentCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'New department name',
+                decoration: InputDecoration(
+                  labelText: l10n.new_department_name,
                 ),
               ),
               const SizedBox(height: 8),
@@ -134,18 +137,18 @@ class _OrgPageState extends State<OrgPage> {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: _addDepartment,
-                  child: const Text('Add department'),
+                  child: Text(l10n.add_department),
                 ),
               ),
               const SizedBox(height: 8),
               ..._departments.map(
                 (dept) => ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text((dept['name'] as String?) ?? 'Unnamed'),
+                  title: Text((dept['name'] as String?) ?? l10n.unnamed),
                 ),
               ),
               if (_departments.isEmpty)
-                const Text('No departments yet.'),
+                Text(l10n.no_departments),
             ],
           ),
         ),
@@ -155,24 +158,24 @@ class _OrgPageState extends State<OrgPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Teams',
+                l10n.teams,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 initialValue: _selectedDepartmentId,
-                decoration: const InputDecoration(
-                  labelText: 'Department (optional)',
+                decoration: InputDecoration(
+                  labelText: l10n.department_optional,
                 ),
                 items: [
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: null,
-                    child: Text('No department'),
+                    child: Text(l10n.no_department),
                   ),
                   ..._departments.map(
                     (dept) => DropdownMenuItem(
                       value: dept['id'] as String?,
-                      child: Text((dept['name'] as String?) ?? 'Unnamed'),
+                      child: Text((dept['name'] as String?) ?? l10n.unnamed),
                     ),
                   ),
                 ],
@@ -183,25 +186,25 @@ class _OrgPageState extends State<OrgPage> {
               const SizedBox(height: 8),
               TextField(
                 controller: _teamCtrl,
-                decoration: const InputDecoration(labelText: 'New team name'),
+                decoration: InputDecoration(labelText: l10n.new_team_name),
               ),
               const SizedBox(height: 8),
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: _addTeam,
-                  child: const Text('Add team'),
+                  child: Text(l10n.add_team),
                 ),
               ),
               const SizedBox(height: 8),
               ..._teams.map(
                 (team) => ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text((team['name'] as String?) ?? 'Unnamed'),
+                  title: Text((team['name'] as String?) ?? l10n.unnamed),
                 ),
               ),
               if (_teams.isEmpty)
-                const Text('No teams yet.'),
+                Text(l10n.no_teams),
             ],
           ),
         ),

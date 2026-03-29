@@ -555,6 +555,942 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set SUPABASE_URL and SUPABASE_ANON_KEY via --dart-define'**
   String get setup_instructions;
+
+  /// No description provided for @nav_news.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get nav_news;
+
+  /// No description provided for @nav_companion.
+  ///
+  /// In en, this message translates to:
+  /// **'Companion'**
+  String get nav_companion;
+
+  /// No description provided for @nav_security_ops.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Ops'**
+  String get nav_security_ops;
+
+  /// No description provided for @subscription_required_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription required'**
+  String get subscription_required_title;
+
+  /// No description provided for @subscription_required_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.'**
+  String get subscription_required_body;
+
+  /// No description provided for @go_to_plans.
+  ///
+  /// In en, this message translates to:
+  /// **'View plans'**
+  String get go_to_plans;
+
+  /// No description provided for @exit_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get exit_app;
+
+  /// No description provided for @role_security_manager.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Manager'**
+  String get role_security_manager;
+
+  /// No description provided for @role_auditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Auditor'**
+  String get role_auditor;
+
+  /// No description provided for @open_incidents.
+  ///
+  /// In en, this message translates to:
+  /// **'Open incidents'**
+  String get open_incidents;
+
+  /// No description provided for @critical_incidents.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical incidents'**
+  String get critical_incidents;
+
+  /// No description provided for @high_risk_employees_count.
+  ///
+  /// In en, this message translates to:
+  /// **'High risk employees'**
+  String get high_risk_employees_count;
+
+  /// No description provided for @metric_benchmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Benchmark'**
+  String get metric_benchmark;
+
+  /// No description provided for @benchmark_safer_than.
+  ///
+  /// In en, this message translates to:
+  /// **'Safer than {percent}%'**
+  String benchmark_safer_than(int percent);
+
+  /// No description provided for @security_posture_high_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'High risk'**
+  String get security_posture_high_risk;
+
+  /// No description provided for @security_posture_stable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get security_posture_stable;
+
+  /// No description provided for @top_risky_users_week.
+  ///
+  /// In en, this message translates to:
+  /// **'Top 10 risky users this week'**
+  String get top_risky_users_week;
+
+  /// No description provided for @no_risky_users_week.
+  ///
+  /// In en, this message translates to:
+  /// **'No risky users this week.'**
+  String get no_risky_users_week;
+
+  /// No description provided for @monthly_risk_trend.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly risk trend'**
+  String get monthly_risk_trend;
+
+  /// No description provided for @no_trend_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No trend data yet.'**
+  String get no_trend_data;
+
+  /// No description provided for @manager_access_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin or Security Manager access required.'**
+  String get manager_access_required;
+
+  /// No description provided for @attack_sim_library.
+  ///
+  /// In en, this message translates to:
+  /// **'Attack simulation library'**
+  String get attack_sim_library;
+
+  /// No description provided for @custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get custom;
+
+  /// No description provided for @template_primary.
+  ///
+  /// In en, this message translates to:
+  /// **'Template A (primary)'**
+  String get template_primary;
+
+  /// No description provided for @template_ab_test.
+  ///
+  /// In en, this message translates to:
+  /// **'Template B (A/B test)'**
+  String get template_ab_test;
+
+  /// No description provided for @use_ai.
+  ///
+  /// In en, this message translates to:
+  /// **'Use AI'**
+  String get use_ai;
+
+  /// No description provided for @ab_test.
+  ///
+  /// In en, this message translates to:
+  /// **'A/B test'**
+  String get ab_test;
+
+  /// No description provided for @manual_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get manual_mode;
+
+  /// No description provided for @automatic_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get automatic_mode;
+
+  /// No description provided for @generate_ai_ab.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate AI A/B'**
+  String get generate_ai_ab;
+
+  /// No description provided for @ai_templates_generated.
+  ///
+  /// In en, this message translates to:
+  /// **'AI templates generated'**
+  String get ai_templates_generated;
+
+  /// No description provided for @credential_submitted_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Cred'**
+  String get credential_submitted_short;
+
+  /// No description provided for @teams_departments_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Teams & Departments'**
+  String get teams_departments_title;
+
+  /// No description provided for @org_manager_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin or Security Manager access required.'**
+  String get org_manager_required;
+
+  /// No description provided for @departments.
+  ///
+  /// In en, this message translates to:
+  /// **'Departments'**
+  String get departments;
+
+  /// No description provided for @new_department_name.
+  ///
+  /// In en, this message translates to:
+  /// **'New department name'**
+  String get new_department_name;
+
+  /// No description provided for @add_department.
+  ///
+  /// In en, this message translates to:
+  /// **'Add department'**
+  String get add_department;
+
+  /// No description provided for @unnamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed'**
+  String get unnamed;
+
+  /// No description provided for @no_departments.
+  ///
+  /// In en, this message translates to:
+  /// **'No departments yet.'**
+  String get no_departments;
+
+  /// No description provided for @teams.
+  ///
+  /// In en, this message translates to:
+  /// **'Teams'**
+  String get teams;
+
+  /// No description provided for @department_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Department (optional)'**
+  String get department_optional;
+
+  /// No description provided for @no_department.
+  ///
+  /// In en, this message translates to:
+  /// **'No department'**
+  String get no_department;
+
+  /// No description provided for @new_team_name.
+  ///
+  /// In en, this message translates to:
+  /// **'New team name'**
+  String get new_team_name;
+
+  /// No description provided for @add_team.
+  ///
+  /// In en, this message translates to:
+  /// **'Add team'**
+  String get add_team;
+
+  /// No description provided for @no_teams.
+  ///
+  /// In en, this message translates to:
+  /// **'No teams yet.'**
+  String get no_teams;
+
+  /// No description provided for @security_operations_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Operations'**
+  String get security_operations_title;
+
+  /// No description provided for @ops_access_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager or Auditor access required.'**
+  String get ops_access_required;
+
+  /// No description provided for @copilot_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask: \"Is this event dangerous?\"'**
+  String get copilot_hint;
+
+  /// No description provided for @ask_copilot.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask Copilot'**
+  String get ask_copilot;
+
+  /// No description provided for @refresh_analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh analytics'**
+  String get refresh_analytics;
+
+  /// No description provided for @employee_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Employee ID'**
+  String get employee_id;
+
+  /// No description provided for @suggest_actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest actions'**
+  String get suggest_actions;
+
+  /// No description provided for @execute_actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Execute actions'**
+  String get execute_actions;
+
+  /// No description provided for @sender_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender email'**
+  String get sender_email;
+
+  /// No description provided for @subject_field.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get subject_field;
+
+  /// No description provided for @body_excerpt.
+  ///
+  /// In en, this message translates to:
+  /// **'Body excerpt'**
+  String get body_excerpt;
+
+  /// No description provided for @scan_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan email'**
+  String get scan_email;
+
+  /// No description provided for @generate_compliance_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate GDPR/Security PDF'**
+  String get generate_compliance_pdf;
+
+  /// No description provided for @copilot_no_answer.
+  ///
+  /// In en, this message translates to:
+  /// **'No answer.'**
+  String get copilot_no_answer;
+
+  /// No description provided for @no_benchmark_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No benchmark data.'**
+  String get no_benchmark_data;
+
+  /// No description provided for @employee_id_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Employee ID is required'**
+  String get employee_id_required;
+
+  /// No description provided for @email_fields_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Sender, subject and body are required'**
+  String get email_fields_required;
+
+  /// No description provided for @action_applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Action applied'**
+  String get action_applied;
+
+  /// No description provided for @training_marked_complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Training marked as completed'**
+  String get training_marked_complete;
+
+  /// No description provided for @invalid_news_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid link'**
+  String get invalid_news_link;
+
+  /// No description provided for @cannot_open_news.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open the article'**
+  String get cannot_open_news;
+
+  /// No description provided for @no_news_for_filter.
+  ///
+  /// In en, this message translates to:
+  /// **'No news found for this filter'**
+  String get no_news_for_filter;
+
+  /// No description provided for @security_news_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Security News'**
+  String get security_news_title;
+
+  /// No description provided for @security_news_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest free articles from forums and cyber sources on viruses, hacking, and tools.'**
+  String get security_news_subtitle;
+
+  /// No description provided for @news_topic_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get news_topic_all;
+
+  /// No description provided for @news_topic_tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get news_topic_tools;
+
+  /// No description provided for @news_badge_virus.
+  ///
+  /// In en, this message translates to:
+  /// **'VIRUS'**
+  String get news_badge_virus;
+
+  /// No description provided for @news_badge_hacking.
+  ///
+  /// In en, this message translates to:
+  /// **'HACKING'**
+  String get news_badge_hacking;
+
+  /// No description provided for @news_badge_tools.
+  ///
+  /// In en, this message translates to:
+  /// **'TOOLS'**
+  String get news_badge_tools;
+
+  /// No description provided for @read_more.
+  ///
+  /// In en, this message translates to:
+  /// **'Read more'**
+  String get read_more;
+
+  /// No description provided for @report_incident_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Report virus or hacking'**
+  String get report_incident_title;
+
+  /// No description provided for @incident_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident type'**
+  String get incident_type;
+
+  /// No description provided for @incident_type_virus.
+  ///
+  /// In en, this message translates to:
+  /// **'Virus'**
+  String get incident_type_virus;
+
+  /// No description provided for @incident_type_hacking.
+  ///
+  /// In en, this message translates to:
+  /// **'Hacking'**
+  String get incident_type_hacking;
+
+  /// No description provided for @severity_critical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get severity_critical;
+
+  /// No description provided for @incident_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get incident_title;
+
+  /// No description provided for @incident_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident details'**
+  String get incident_details;
+
+  /// No description provided for @send_alert.
+  ///
+  /// In en, this message translates to:
+  /// **'Send alert'**
+  String get send_alert;
+
+  /// No description provided for @incident_report_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent and email forwarded to the company.'**
+  String get incident_report_sent;
+
+  /// No description provided for @companion_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Security Companion'**
+  String get companion_title;
+
+  /// No description provided for @companion_no_employee.
+  ///
+  /// In en, this message translates to:
+  /// **'No linked employee profile found.'**
+  String get companion_no_employee;
+
+  /// No description provided for @companion_user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get companion_user;
+
+  /// No description provided for @companion_risk_score.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk score'**
+  String get companion_risk_score;
+
+  /// No description provided for @companion_training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training completion'**
+  String get companion_training;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @mfa_enabled_label.
+  ///
+  /// In en, this message translates to:
+  /// **'MFA enabled'**
+  String get mfa_enabled_label;
+
+  /// No description provided for @force_mfa_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Force MFA on next login'**
+  String get force_mfa_login;
+
+  /// No description provided for @suspicious_activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspicious activity'**
+  String get suspicious_activity;
+
+  /// No description provided for @no_open_suspicious.
+  ///
+  /// In en, this message translates to:
+  /// **'No open suspicious activity.'**
+  String get no_open_suspicious;
+
+  /// No description provided for @approve.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approve;
+
+  /// No description provided for @block.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get block;
+
+  /// No description provided for @adaptive_learning.
+  ///
+  /// In en, this message translates to:
+  /// **'Adaptive micro-learning'**
+  String get adaptive_learning;
+
+  /// No description provided for @no_training_assignments.
+  ///
+  /// In en, this message translates to:
+  /// **'No active training assignments.'**
+  String get no_training_assignments;
+
+  /// No description provided for @training_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get training_label;
+
+  /// No description provided for @assignment_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get assignment_status;
+
+  /// No description provided for @complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get complete;
+
+  /// No description provided for @subscription_activation.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription activation'**
+  String get subscription_activation;
+
+  /// No description provided for @trial_30_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Free 30 days'**
+  String get trial_30_days;
+
+  /// No description provided for @stripe_monthly_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Stripe monthly now'**
+  String get stripe_monthly_now;
+
+  /// No description provided for @trial_then_paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days free, then subscription prompt'**
+  String get trial_then_paywall;
+
+  /// No description provided for @stripe_pay_immediately.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly subscription with Stripe immediately'**
+  String get stripe_pay_immediately;
+
+  /// No description provided for @plan_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get plan_label;
+
+  /// No description provided for @plan_price_starter.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter - \$29/mo'**
+  String get plan_price_starter;
+
+  /// No description provided for @plan_price_pro.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro - \$79/mo'**
+  String get plan_price_pro;
+
+  /// No description provided for @plan_price_business.
+  ///
+  /// In en, this message translates to:
+  /// **'Business - \$199/mo'**
+  String get plan_price_business;
+
+  /// No description provided for @password_behavior_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Password behavior risk (0-100)'**
+  String get password_behavior_risk;
+
+  /// No description provided for @incident_history_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident history risk (0-100)'**
+  String get incident_history_risk;
+
+  /// No description provided for @device_compliance_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Device compliance risk (0-100)'**
+  String get device_compliance_risk;
+
+  /// No description provided for @behavior_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior risk (0-100)'**
+  String get behavior_risk;
+
+  /// No description provided for @mfa_on.
+  ///
+  /// In en, this message translates to:
+  /// **'ON'**
+  String get mfa_on;
+
+  /// No description provided for @mfa_off.
+  ///
+  /// In en, this message translates to:
+  /// **'OFF'**
+  String get mfa_off;
+
+  /// No description provided for @employee_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo'**
+  String get employee_photo;
+
+  /// No description provided for @change_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get change_photo;
+
+  /// No description provided for @remove_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get remove_photo;
+
+  /// No description provided for @photo_upload_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not upload photo'**
+  String get photo_upload_failed;
+
+  /// No description provided for @photo_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a valid image'**
+  String get photo_invalid;
+
+  /// No description provided for @behavior_risk_profile_line.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior risk profile: {score}/100 (samples: {samples})'**
+  String behavior_risk_profile_line(int score, int samples);
+
+  /// No description provided for @ai_phishing_engine_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Phishing Simulation Engine'**
+  String get ai_phishing_engine_title;
+
+  /// No description provided for @ai_copilot_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Security Copilot'**
+  String get ai_copilot_title;
+
+  /// No description provided for @behavior_benchmark_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavior analytics & benchmark'**
+  String get behavior_benchmark_section;
+
+  /// No description provided for @auto_remediation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-remediation'**
+  String get auto_remediation_title;
+
+  /// No description provided for @email_security_layer_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Email security layer'**
+  String get email_security_layer_title;
+
+  /// No description provided for @audit_reports_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit & compliance reports'**
+  String get audit_reports_title;
+
+  /// No description provided for @remediation_summary_line.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested: {suggested} | Executed: {executed} | Risk: {risk}'**
+  String remediation_summary_line(int suggested, int executed, int risk);
+
+  /// No description provided for @email_scan_summary_line.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk score: {score} | Severity: {severity}'**
+  String email_scan_summary_line(int score, String severity);
+
+  /// No description provided for @report_generated_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated: {file} | PDF payload size: {chars} characters'**
+  String report_generated_summary(String file, int chars);
+
+  /// No description provided for @subscription_plan_flex.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-user pricing'**
+  String get subscription_plan_flex;
+
+  /// No description provided for @subscription_seats_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of users (seats)'**
+  String get subscription_seats_label;
+
+  /// No description provided for @subscription_pricing_explainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly price uses your company risk score (0–100) and seat count: base {base} + (users × 0.22) + (users^1.1 × 0.02) + (risk × 0.05).'**
+  String subscription_pricing_explainer(String base);
+
+  /// No description provided for @subscription_company_risk_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Company risk score: {score}/100'**
+  String subscription_company_risk_value(int score);
+
+  /// No description provided for @subscription_estimated_monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated: {amount}/month'**
+  String subscription_estimated_monthly(String amount);
+
+  /// No description provided for @subscription_continue_checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to checkout'**
+  String get subscription_continue_checkout;
+
+  /// No description provided for @subscription_seats_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number of users (1 or more).'**
+  String get subscription_seats_invalid;
+
+  /// No description provided for @subscription_purchase_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase history'**
+  String get subscription_purchase_history;
+
+  /// No description provided for @subscription_no_invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet. Completed payments will appear here.'**
+  String get subscription_no_invoices;
+
+  /// No description provided for @subscription_history_admin_only.
+  ///
+  /// In en, this message translates to:
+  /// **'Only company admins can view billing history and cancel subscriptions.'**
+  String get subscription_history_admin_only;
+
+  /// No description provided for @subscription_invoice_on.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get subscription_invoice_on;
+
+  /// No description provided for @subscription_invoice_ref.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get subscription_invoice_ref;
+
+  /// No description provided for @subscription_open_invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get subscription_open_invoice;
+
+  /// No description provided for @subscription_download_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get subscription_download_pdf;
+
+  /// No description provided for @subscription_cancel_subscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel subscription'**
+  String get subscription_cancel_subscription;
+
+  /// No description provided for @subscription_cancel_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel subscription?'**
+  String get subscription_cancel_confirm_title;
+
+  /// No description provided for @subscription_cancel_confirm_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your access will continue until the end of the current billing period. You can resubscribe anytime.'**
+  String get subscription_cancel_confirm_body;
+
+  /// No description provided for @subscription_cancel_confirm_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel at period end'**
+  String get subscription_cancel_confirm_action;
+
+  /// No description provided for @subscription_cancel_scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation scheduled at the end of the billing period.'**
+  String get subscription_cancel_scheduled;
+
+  /// No description provided for @subscription_invoice_status_paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get subscription_invoice_status_paid;
+
+  /// No description provided for @subscription_invoice_status_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get subscription_invoice_status_open;
+
+  /// No description provided for @subscription_invoice_status_draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get subscription_invoice_status_draft;
+
+  /// No description provided for @subscription_invoice_status_void.
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get subscription_invoice_status_void;
+
+  /// No description provided for @subscription_invoice_status_uncollectible.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncollectible'**
+  String get subscription_invoice_status_uncollectible;
 }
 
 class _AppLocalizationsDelegate

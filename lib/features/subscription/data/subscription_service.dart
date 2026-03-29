@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../models/invoice_history_item.dart';
 import '../models/subscription_record.dart';
 
 class SubscriptionService {
@@ -12,7 +13,9 @@ class SubscriptionService {
   Future<SubscriptionRecord?> currentForCompany(String companyId) async {
     final row = await _client
         .from('security_cg_subscriptions')
-        .select('plan,status,current_period_end,created_at')
+        .select(
+          'plan,status,current_period_end,licensed_seats,stripe_subscription_id,created_at',
+        )
         .eq('company_id', companyId)
         .order('created_at', ascending: false)
         .limit(1)
@@ -25,10 +28,22 @@ class SubscriptionService {
     return SubscriptionRecord.fromMap(row);
   }
 
-  Future<void> openCheckout(String plan) async {
+  Future<int> fetchCompanyRiskScore(String companyId) async {
+    final row = await _client
+        .from('security_cg_companies')
+        .select('risk_score')
+        .eq('id', companyId)
+        .maybeSingle();
+    if (row == null) return 0;
+    final v = row['risk_score'];
+    if (v is num) return v.round().clamp(0, 100);
+    return int.tryParse('$v')?.clamp(0, 100) ?? 0;
+  }
+
+  Future<void> openCheckout({required int users}) async {
     final response = await _client.functions.invoke(
       'stripe-checkout',
-      body: {'plan': plan},
+      body: {'users': users},
     );
     final data = response.data as Map<String, dynamic>?;
     final url = data?['url'] as String?;
@@ -40,6 +55,22 @@ class SubscriptionService {
     }
 
     await _openUrl(url);
+  }
+
+  Future<List<InvoiceHistoryItem>> fetchInvoiceHistory() async {
+    final response = await _client.functions.invoke('stripe-list-invoices');
+    final data = response.data as Map<String, dynamic>?;
+    final raw = data?['invoices'];
+    if (raw is! List) {
+      return const [];
+    }
+    return raw
+        .map((e) => InvoiceHistoryItem.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
+  }
+
+  Future<void> cancelSubscriptionAtPeriodEnd() async {
+    await _client.functions.invoke('stripe-cancel-subscription');
   }
 
   Future<void> openBillingPortal() async {

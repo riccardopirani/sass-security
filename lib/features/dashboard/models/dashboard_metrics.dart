@@ -1,8 +1,15 @@
 class RiskRankEntry {
-  const RiskRankEntry({required this.name, required this.riskScore});
+  const RiskRankEntry({
+    required this.name,
+    required this.riskScore,
+    this.id,
+    this.avatarUrl,
+  });
 
   final String name;
   final int riskScore;
+  final String? id;
+  final String? avatarUrl;
 }
 
 class DashboardMetrics {

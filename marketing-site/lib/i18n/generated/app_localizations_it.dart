@@ -306,11 +306,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Admin, manager, and analyst roles with auditable permission boundaries.';
 
   @override
-  String get pricingTitle => 'Prezzi semplici';
+  String get pricingTitle => 'Prezzi';
 
   @override
   String get pricingSubtitle =>
-      'Scala la sicurezza per fase, non per complessita.';
+      'Abbonamento in base all’uso — nessun piano fisso.';
 
   @override
   String get pricingStarter => 'Starter';
@@ -376,18 +376,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pricingFaqTitle => 'Domande frequenti';
 
   @override
-  String get pricingFaq1Q => 'Can I change plans later?';
+  String get pricingFaq1Q => 'Posso cambiare postazioni o fatturazione?';
 
   @override
   String get pricingFaq1A =>
-      'Yes. Upgrades and downgrades are handled from billing settings with prorated adjustments.';
+      'Sì. Aggiorni il pagamento nel portale Stripe; le postazioni le imposti al checkout nell’app.';
 
   @override
-  String get pricingFaq2Q => 'Is there a free trial?';
+  String get pricingFaq2Q => 'C’è una prova gratuita?';
 
   @override
   String get pricingFaq2A =>
-      'Every plan starts with a free trial period and no setup fee.';
+      'I nuovi admin azienda hanno una prova; il pagamento passa dalla pagina abbonamenti nell’app.';
 
   @override
   String get pricingFaq3Q => 'Do you support Stripe billing?';
@@ -401,14 +401,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pricingFaq4A =>
-      'The Business plan includes multi-tenant management for agencies and groups.';
+      'Sì. Ogni azienda ha un workspace isolato; aggiungi organizzazioni man mano che cresci.';
 
   @override
-  String get pricingFaq5Q => 'Can we use SSO?';
+  String get pricingFaq5Q => 'Supportate SSO?';
 
   @override
   String get pricingFaq5A =>
-      'SSO is available on Pro and Business with policy controls.';
+      'Contatta il team commerciale per SSO enterprise e identità avanzate.';
 
   @override
   String get pricingFaq6Q => 'Is mobile included?';
@@ -858,18 +858,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeMultiLangTagline => 'Perfetto per team globali';
 
   @override
-  String get homePricingSectionTitle => 'Piani semplici, senza sorprese';
+  String get homePricingSectionTitle =>
+      'Prezzi coerenti col tuo profilo di rischio';
 
   @override
   String get homePricingSectionBody =>
-      'Scegli il piano più adatto alla tua azienda:';
+      'Il costo scala con le dimensioni del team e il security score aziendale — non con piani rigidi.';
 
   @override
   String get homePricingSectionBullets =>
-      'Starter — per piccole realtà||Pro — per aziende in crescita||Business — per organizzazioni strutturate';
+      'Formula trasparente nell’app||Pagamenti Stripe sicuri||Postazioni scelte al checkout';
 
   @override
-  String get homePricingSectionTagline => 'Paghi solo ciò che usi';
+  String get homePricingSectionTagline =>
+      'Inizia gratis, poi paghi in base a postazioni e rischio';
 
   @override
   String get homePricingSectionCtaFree => 'Inizia gratis';
@@ -898,4 +900,30 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get homeAfterBullets => 'Visibilità completa||Sicurezza automatizzata';
+
+  @override
+  String get pricingModelTitle => 'Prezzo in base all’uso';
+
+  @override
+  String get pricingModelSubtitle =>
+      'Niente piani Starter/Pro/Business fissi: il canone dipende da postazioni e risk score aziendale (0–100).';
+
+  @override
+  String get pricingModelFormula =>
+      'Mensile (USD, tasse escluse) = 2,99 + (utenti × 0,22) + (utenti^1,1 × 0,02) + (risk score × 0,05).';
+
+  @override
+  String get pricingModelBullet1 =>
+      'Il risk aziendale è calcolato automaticamente nella dashboard.';
+
+  @override
+  String get pricingModelBullet2 =>
+      'Scegli quante postazioni acquistare aprendo il checkout nell’app.';
+
+  @override
+  String get pricingModelBullet3 =>
+      'Carte e fatture sono gestite in modo sicuro da Stripe.';
+
+  @override
+  String get pricingModelCta => 'Inizia la prova gratuita';
 }

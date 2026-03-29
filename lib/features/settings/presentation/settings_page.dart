@@ -113,9 +113,9 @@ class SettingsPage extends StatelessWidget {
       case AppUserRole.admin:
         return l10n.admin;
       case AppUserRole.securityManager:
-        return 'Security Manager';
+        return l10n.role_security_manager;
       case AppUserRole.auditor:
-        return 'Auditor';
+        return l10n.role_auditor;
       case AppUserRole.employee:
         return l10n.employee;
     }

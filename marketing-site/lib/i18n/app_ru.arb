@@ -250,5 +250,12 @@
   "homeBeforeTitle": "До",
   "homeBeforeBullets": "Ручное управление||Нет контроля",
   "homeAfterTitle": "После",
-  "homeAfterBullets": "Полная видимость||Автоматизированная безопасность"
+  "homeAfterBullets": "Полная видимость||Автоматизированная безопасность",
+  "pricingModelTitle": "Usage-based pricing",
+  "pricingModelSubtitle": "No Starter / Pro / Business tiers. Your monthly fee reflects seat count and company risk (0–100).",
+  "pricingModelFormula": "Monthly (USD, before tax) = 2.99 + (users × 0.22) + (users^1.1 × 0.02) + (risk score × 0.05).",
+  "pricingModelBullet1": "Company risk is computed automatically in the product dashboard.",
+  "pricingModelBullet2": "You choose how many seats to buy when you open checkout in the app.",
+  "pricingModelBullet3": "Cards and invoices are handled securely by Stripe.",
+  "pricingModelCta": "Start free trial"
 }

@@ -4,7 +4,8 @@ project_id = "ouieulumtrnnjsjtlyxe"
 [api]
 enabled = true
 
-# Disable JWT verification on all Edge Functions (invoke with service role / anon as needed).
+# Edge Functions: keep one [functions.<slug>] block per folder under supabase/functions/
+# (excluding _shared). verify_jwt = false matches app invokes with anon + user JWT in header.
 [functions.attack-library]
 verify_jwt = false
 
@@ -54,4 +55,10 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.stripe-webhook]
+verify_jwt = false
+
+[functions.stripe-list-invoices]
+verify_jwt = false
+
+[functions.stripe-cancel-subscription]
 verify_jwt = false

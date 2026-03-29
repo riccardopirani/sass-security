@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sass_security/l10n/app_localizations.dart';
 
 import '../../../core/utils/app_snack.dart';
 import '../../../core/widgets/empty_state.dart';
@@ -45,11 +46,13 @@ class _OperationsPageState extends State<OperationsPage> {
     if (_copilotCtrl.text.trim().isEmpty) {
       return;
     }
+    final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
     try {
       final response = await _service.askCopilot(_copilotCtrl.text.trim());
       setState(() {
-        _copilotAnswer = (response['answer'] as String?) ?? 'No answer.';
+        _copilotAnswer =
+            (response['answer'] as String?) ?? l10n.copilot_no_answer;
       });
     } catch (error) {
       if (mounted) {
@@ -63,17 +66,18 @@ class _OperationsPageState extends State<OperationsPage> {
   }
 
   Future<void> _loadBenchmarkAndBehavior() async {
+    final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
     try {
       final benchmark = await _service.fetchBenchmark();
       final behavior = await _service.fetchBehaviorProfile();
 
       setState(() {
-        _benchmarkMessage =
-            (benchmark['peer_message'] as String?) ?? 'No benchmark data.';
-        _behaviorSummary =
-            'Behavior risk profile: ${behavior['behavior_risk_profile'] ?? 0}/100 '
-            '(samples: ${behavior['samples'] ?? 0})';
+        _benchmarkMessage = (benchmark['peer_message'] as String?) ??
+            l10n.no_benchmark_data;
+        final score = (behavior['behavior_risk_profile'] as num?)?.toInt() ?? 0;
+        final samples = (behavior['samples'] as num?)?.toInt() ?? 0;
+        _behaviorSummary = l10n.behavior_risk_profile_line(score, samples);
       });
     } catch (error) {
       if (mounted) {
@@ -87,9 +91,10 @@ class _OperationsPageState extends State<OperationsPage> {
   }
 
   Future<void> _suggestRemediation({required bool execute}) async {
+    final l10n = AppLocalizations.of(context);
     final employeeId = _remediationEmployeeCtrl.text.trim();
     if (employeeId.isEmpty) {
-      AppSnack.error(context, 'Employee ID is required');
+      AppSnack.error(context, l10n.employee_id_required);
       return;
     }
     setState(() => _busy = true);
@@ -103,8 +108,11 @@ class _OperationsPageState extends State<OperationsPage> {
       final executed = (result['executed_actions'] as List<dynamic>? ?? const [])
           .length;
       setState(() {
-        _remediationSummary =
-            'Suggested: $suggested | Executed: $executed | Risk: ${result['risk_score'] ?? 0}';
+        _remediationSummary = l10n.remediation_summary_line(
+          suggested,
+          executed,
+          (result['risk_score'] as num?)?.toInt() ?? 0,
+        );
       });
     } catch (error) {
       if (mounted) {
@@ -118,11 +126,12 @@ class _OperationsPageState extends State<OperationsPage> {
   }
 
   Future<void> _scanEmail() async {
+    final l10n = AppLocalizations.of(context);
     final sender = _emailSenderCtrl.text.trim();
     final subject = _emailSubjectCtrl.text.trim();
     final body = _emailBodyCtrl.text.trim();
     if (sender.isEmpty || subject.isEmpty || body.isEmpty) {
-      AppSnack.error(context, 'Sender, subject and body are required');
+      AppSnack.error(context, l10n.email_fields_required);
       return;
     }
 
@@ -134,8 +143,10 @@ class _OperationsPageState extends State<OperationsPage> {
         body: body,
       );
       setState(() {
-        _emailScanSummary =
-            'Risk score: ${result['risk_score'] ?? 0} | Severity: ${result['severity'] ?? 'n/a'}';
+        _emailScanSummary = l10n.email_scan_summary_line(
+          (result['risk_score'] as num?)?.toInt() ?? 0,
+          '${result['severity'] ?? 'n/a'}',
+        );
       });
     } catch (error) {
       if (mounted) {
@@ -149,6 +160,7 @@ class _OperationsPageState extends State<OperationsPage> {
   }
 
   Future<void> _generateReport() async {
+    final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
     try {
       final result = await _service.generateComplianceReport();
@@ -156,8 +168,7 @@ class _OperationsPageState extends State<OperationsPage> {
           (result['file_name'] as String?) ?? 'cyberguard_compliance.pdf';
       final base64 = (result['pdf_base64'] as String?) ?? '';
       setState(() {
-        _reportSummary =
-            'Generated: $fileName | PDF payload size: ${base64.length} chars';
+        _reportSummary = l10n.report_generated_summary(fileName, base64.length);
       });
     } catch (error) {
       if (mounted) {
@@ -172,10 +183,12 @@ class _OperationsPageState extends State<OperationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     if (!widget.profile.isManager && !widget.profile.isAuditor) {
-      return const EmptyState(
-        title: 'Security Operations',
-        subtitle: 'Manager or Auditor access required.',
+      return EmptyState(
+        title: l10n.security_operations_title,
+        subtitle: l10n.ops_access_required,
         icon: Icons.lock_outline,
       );
     }
@@ -188,7 +201,7 @@ class _OperationsPageState extends State<OperationsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'AI Security Copilot',
+                l10n.ai_copilot_title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
@@ -196,8 +209,8 @@ class _OperationsPageState extends State<OperationsPage> {
                 controller: _copilotCtrl,
                 minLines: 1,
                 maxLines: 2,
-                decoration: const InputDecoration(
-                  labelText: 'Ask: "Questo evento è pericoloso?"',
+                decoration: InputDecoration(
+                  labelText: l10n.copilot_hint,
                 ),
               ),
               const SizedBox(height: 8),
@@ -205,7 +218,7 @@ class _OperationsPageState extends State<OperationsPage> {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: _busy ? null : _runCopilot,
-                  child: const Text('Ask Copilot'),
+                  child: Text(l10n.ask_copilot),
                 ),
               ),
               if (_copilotAnswer.isNotEmpty) ...[
@@ -221,13 +234,13 @@ class _OperationsPageState extends State<OperationsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Behavior Analytics + Benchmark',
+                l10n.behavior_benchmark_section,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: _busy ? null : _loadBenchmarkAndBehavior,
-                child: const Text('Refresh analytics'),
+                child: Text(l10n.refresh_analytics),
               ),
               if (_benchmarkMessage.isNotEmpty) ...[
                 const SizedBox(height: 8),
@@ -247,14 +260,14 @@ class _OperationsPageState extends State<OperationsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Auto-remediation',
+                  l10n.auto_remediation_title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _remediationEmployeeCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Employee ID',
+                  decoration: InputDecoration(
+                    labelText: l10n.employee_id,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -265,13 +278,13 @@ class _OperationsPageState extends State<OperationsPage> {
                       onPressed: _busy
                           ? null
                           : () => _suggestRemediation(execute: false),
-                      child: const Text('Suggest actions'),
+                      child: Text(l10n.suggest_actions),
                     ),
                     ElevatedButton(
                       onPressed: _busy
                           ? null
                           : () => _suggestRemediation(execute: true),
-                      child: const Text('Execute actions'),
+                      child: Text(l10n.execute_actions),
                     ),
                   ],
                 ),
@@ -288,29 +301,29 @@ class _OperationsPageState extends State<OperationsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Email Security Layer',
+                  l10n.email_security_layer_title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _emailSenderCtrl,
-                  decoration: const InputDecoration(labelText: 'Sender email'),
+                  decoration: InputDecoration(labelText: l10n.sender_email),
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _emailSubjectCtrl,
-                  decoration: const InputDecoration(labelText: 'Subject'),
+                  decoration: InputDecoration(labelText: l10n.subject_field),
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _emailBodyCtrl,
                   maxLines: 3,
-                  decoration: const InputDecoration(labelText: 'Body excerpt'),
+                  decoration: InputDecoration(labelText: l10n.body_excerpt),
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: _busy ? null : _scanEmail,
-                  child: const Text('Scan email'),
+                  child: Text(l10n.scan_email),
                 ),
                 if (_emailScanSummary.isNotEmpty) ...[
                   const SizedBox(height: 8),
@@ -326,13 +339,13 @@ class _OperationsPageState extends State<OperationsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Audit & Compliance Reports',
+                l10n.audit_reports_title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: _busy ? null : _generateReport,
-                child: const Text('Generate GDPR/Security PDF'),
+                child: Text(l10n.generate_compliance_pdf),
               ),
               if (_reportSummary.isNotEmpty) ...[
                 const SizedBox(height: 8),

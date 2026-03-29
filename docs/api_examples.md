@@ -9,7 +9,7 @@ curl -X POST "<SUPABASE_URL>/functions/v1/stripe-checkout" \
   -H "Authorization: Bearer <USER_JWT>" \
   -H "apikey: <SUPABASE_ANON_KEY>" \
   -H "Content-Type: application/json" \
-  -d '{"plan":"pro"}'
+  -d '{"users":10}'
 ```
 
 ## 2. Billing Portal Session

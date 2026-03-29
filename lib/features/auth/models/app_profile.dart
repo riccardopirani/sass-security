@@ -37,6 +37,7 @@ class AppProfile {
     required this.riskScore,
     this.companyName,
     this.companyCode,
+    this.avatarUrl,
   });
 
   final String id;
@@ -47,6 +48,8 @@ class AppProfile {
   final int riskScore;
   final String? companyName;
   final String? companyCode;
+  /// From linked [security_cg_employees] row (auth_user_id), when set.
+  final String? avatarUrl;
 
   bool get isAdmin => role == AppUserRole.admin;
   bool get isManager =>
@@ -65,6 +68,7 @@ class AppProfile {
       riskScore: (map['risk_score'] as num?)?.toInt() ?? 0,
       companyName: companyMap?['name'] as String?,
       companyCode: companyMap?['code'] as String?,
+      avatarUrl: map['avatar_url'] as String?,
     );
   }
 }

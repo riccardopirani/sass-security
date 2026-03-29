@@ -5,7 +5,7 @@ import '../models/employee_record.dart';
 
 class EmployeeRepository {
   EmployeeRepository({SupabaseClient? client})
-    : _client = client ?? Supabase.instance.client;
+      : _client = client ?? Supabase.instance.client;
 
   final SupabaseClient _client;
 
@@ -13,7 +13,7 @@ class EmployeeRepository {
     final rows = await _client
         .from('security_cg_employees')
         .select(
-          'id,name,email,role,risk_score,training_completion,password_behavior_score,incident_history_score,device_compliance_score,behavior_risk_score,mfa_enabled,force_mfa,department_id,team_id',
+          'id,name,email,role,risk_score,training_completion,password_behavior_score,incident_history_score,device_compliance_score,behavior_risk_score,mfa_enabled,force_mfa,department_id,team_id,avatar_url',
         )
         .eq('company_id', companyId)
         .order('risk_score', ascending: false);
@@ -23,7 +23,7 @@ class EmployeeRepository {
         .toList();
   }
 
-  Future<void> create({
+  Future<String> create({
     required String companyId,
     required String name,
     required String email,
@@ -38,23 +38,30 @@ class EmployeeRepository {
     bool forceMfa = false,
     String? departmentId,
     String? teamId,
+    String? avatarUrl,
   }) async {
-    await _client.from('security_cg_employees').insert({
-      'company_id': companyId,
-      'name': name,
-      'email': email,
-      'role': roleToString(role),
-      'risk_score': riskScore,
-      'training_completion': trainingCompletion,
-      'password_behavior_score': passwordBehaviorScore,
-      'incident_history_score': incidentHistoryScore,
-      'device_compliance_score': deviceComplianceScore,
-      'behavior_risk_score': behaviorRiskScore,
-      'mfa_enabled': mfaEnabled,
-      'force_mfa': forceMfa,
-      'department_id': departmentId,
-      'team_id': teamId,
-    });
+    final row = await _client
+        .from('security_cg_employees')
+        .insert({
+          'company_id': companyId,
+          'name': name,
+          'email': email,
+          'role': roleToString(role),
+          'risk_score': riskScore,
+          'training_completion': trainingCompletion,
+          'password_behavior_score': passwordBehaviorScore,
+          'incident_history_score': incidentHistoryScore,
+          'device_compliance_score': deviceComplianceScore,
+          'behavior_risk_score': behaviorRiskScore,
+          'mfa_enabled': mfaEnabled,
+          'force_mfa': forceMfa,
+          'department_id': departmentId,
+          'team_id': teamId,
+          if (avatarUrl != null) 'avatar_url': avatarUrl,
+        })
+        .select('id')
+        .single();
+    return row['id'] as String;
   }
 
   Future<void> update({
@@ -72,25 +79,30 @@ class EmployeeRepository {
     required bool forceMfa,
     String? departmentId,
     String? teamId,
+    String? avatarUrl,
   }) async {
+    await _client.from('security_cg_employees').update({
+      'name': name,
+      'email': email,
+      'role': roleToString(role),
+      'risk_score': riskScore,
+      'training_completion': trainingCompletion,
+      'password_behavior_score': passwordBehaviorScore,
+      'incident_history_score': incidentHistoryScore,
+      'device_compliance_score': deviceComplianceScore,
+      'behavior_risk_score': behaviorRiskScore,
+      'mfa_enabled': mfaEnabled,
+      'force_mfa': forceMfa,
+      'department_id': departmentId,
+      'team_id': teamId,
+      'avatar_url': avatarUrl,
+    }).eq('id', employeeId);
+  }
+
+  Future<void> updateAvatarUrl(String employeeId, String? avatarUrl) async {
     await _client
         .from('security_cg_employees')
-        .update({
-          'name': name,
-          'email': email,
-          'role': roleToString(role),
-          'risk_score': riskScore,
-          'training_completion': trainingCompletion,
-          'password_behavior_score': passwordBehaviorScore,
-          'incident_history_score': incidentHistoryScore,
-          'device_compliance_score': deviceComplianceScore,
-          'behavior_risk_score': behaviorRiskScore,
-          'mfa_enabled': mfaEnabled,
-          'force_mfa': forceMfa,
-          'department_id': departmentId,
-          'team_id': teamId,
-        })
-        .eq('id', employeeId);
+        .update({'avatar_url': avatarUrl}).eq('id', employeeId);
   }
 
   Future<void> delete(String employeeId) async {

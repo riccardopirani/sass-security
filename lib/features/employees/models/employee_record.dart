@@ -16,6 +16,7 @@ class EmployeeRecord {
     required this.forceMfa,
     this.departmentId,
     this.teamId,
+    this.avatarUrl,
   });
 
   final String id;
@@ -32,6 +33,7 @@ class EmployeeRecord {
   final bool forceMfa;
   final String? departmentId;
   final String? teamId;
+  final String? avatarUrl;
 
   factory EmployeeRecord.fromMap(Map<String, dynamic> map) {
     return EmployeeRecord(
@@ -52,6 +54,7 @@ class EmployeeRecord {
       forceMfa: (map['force_mfa'] as bool?) ?? false,
       departmentId: map['department_id'] as String?,
       teamId: map['team_id'] as String?,
+      avatarUrl: map['avatar_url'] as String?,
     );
   }
 }

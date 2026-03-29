@@ -304,10 +304,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Admin, manager, and analyst roles with auditable permission boundaries.';
 
   @override
-  String get pricingTitle => 'Simple pricing';
+  String get pricingTitle => 'Pricing';
 
   @override
-  String get pricingSubtitle => 'Scale security by stage, not by complexity.';
+  String get pricingSubtitle => 'Usage-based subscription — no fixed tiers.';
 
   @override
   String get pricingStarter => 'Starter';
@@ -373,18 +373,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pricingFaqTitle => 'Frequently asked questions';
 
   @override
-  String get pricingFaq1Q => 'Can I change plans later?';
+  String get pricingFaq1Q => 'Can I change seats or billing later?';
 
   @override
   String get pricingFaq1A =>
-      'Yes. Upgrades and downgrades are handled from billing settings with prorated adjustments.';
+      'Yes. Update payment methods in the Stripe billing portal; change seat count when you renew or re-subscribe from the app.';
 
   @override
   String get pricingFaq2Q => 'Is there a free trial?';
 
   @override
   String get pricingFaq2A =>
-      'Every plan starts with a free trial period and no setup fee.';
+      'New company admins start with a trial; paid billing uses the in-app subscription page.';
 
   @override
   String get pricingFaq3Q => 'Do you support Stripe billing?';
@@ -398,14 +398,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pricingFaq4A =>
-      'The Business plan includes multi-tenant management for agencies and groups.';
+      'Yes. Each company is a separate workspace with isolated data; add more organizations as you grow.';
 
   @override
   String get pricingFaq5Q => 'Can we use SSO?';
 
   @override
   String get pricingFaq5A =>
-      'SSO is available on Pro and Business with policy controls.';
+      'Contact sales for enterprise SSO and advanced identity options.';
 
   @override
   String get pricingFaq6Q => 'Is mobile included?';
@@ -858,18 +858,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeMultiLangTagline => 'Perfect for global teams';
 
   @override
-  String get homePricingSectionTitle => 'Simple plans, no surprises';
+  String get homePricingSectionTitle => 'Fair pricing for your risk profile';
 
   @override
   String get homePricingSectionBody =>
-      'Choose the plan that fits your company:';
+      'Subscription cost scales with team size and your company security score — not with rigid tiers.';
 
   @override
   String get homePricingSectionBullets =>
-      'Starter — for small businesses||Pro — for growing companies||Business — for structured organizations';
+      'Transparent formula in the app||Secure Stripe billing||Adjust seats when you subscribe';
 
   @override
-  String get homePricingSectionTagline => 'You only pay for what you use';
+  String get homePricingSectionTagline =>
+      'Start free, then pay based on seats and risk';
 
   @override
   String get homePricingSectionCtaFree => 'Start free';
@@ -898,4 +899,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeAfterBullets => 'Complete visibility||Automated security';
+
+  @override
+  String get pricingModelTitle => 'Usage-based pricing';
+
+  @override
+  String get pricingModelSubtitle =>
+      'No Starter / Pro / Business tiers. Your monthly fee reflects seat count and company risk (0–100).';
+
+  @override
+  String get pricingModelFormula =>
+      'Monthly (USD, before tax) = 2.99 + (users × 0.22) + (users^1.1 × 0.02) + (risk score × 0.05).';
+
+  @override
+  String get pricingModelBullet1 =>
+      'Company risk is computed automatically in the product dashboard.';
+
+  @override
+  String get pricingModelBullet2 =>
+      'You choose how many seats to buy when you open checkout in the app.';
+
+  @override
+  String get pricingModelBullet3 =>
+      'Cards and invoices are handled securely by Stripe.';
+
+  @override
+  String get pricingModelCta => 'Start free trial';
 }

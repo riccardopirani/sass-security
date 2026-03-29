@@ -24,7 +24,7 @@ Production-ready SaaS starter for SMB cybersecurity with Flutter (web/mobile), S
 - Incident reporting from `Alerts` (`virus`/`hacking`) with company-wide email notification
 - News section with free cyber feeds (Hacker News, Reddit, StackExchange, BleepingComputer)
 - Security score engine (phishing behavior + training completion)
-- Stripe plans: `starter`, `pro`, `business`
+- Stripe subscription: dynamic monthly price from seat count + company risk score (see `lib/core/pricing/subscription_price.dart` and `supabase/functions/_shared/pricing.ts`)
 - Language support:
   - English (`en`)
   - Italian (`it`)
@@ -65,23 +65,32 @@ flutter run \
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
-- `STRIPE_PRICE_STARTER`
-- `STRIPE_PRICE_PRO`
-- `STRIPE_PRICE_BUSINESS`
 - `APP_URL`
 - `RESEND_API_KEY`
 - `ALERTS_FROM_EMAIL`
 
-3. Deploy functions:
+3. Deploy functions (run each slug once; list matches `supabase/functions/*/index.ts` and `config.toml`):
 
 ```bash
-supabase functions deploy stripe-checkout
-supabase functions deploy create-checkout-session
+supabase functions deploy attack-library
+supabase functions deploy auto-remediation
+supabase functions deploy behavior-profile
+supabase functions deploy company-benchmark
 supabase functions deploy create-billing-portal
-supabase functions deploy stripe-webhook
-supabase functions deploy send-phishing-test
+supabase functions deploy create-checkout-session
+supabase functions deploy dispatch-threat-alert
+supabase functions deploy generate-compliance-report
+supabase functions deploy generate-phishing-template
 supabase functions deploy report-security-alert
+supabase functions deploy resolve-security-event
+supabase functions deploy scan-email-security
+supabase functions deploy security-copilot
 supabase functions deploy security-news
+supabase functions deploy send-phishing-test
+supabase functions deploy stripe-cancel-subscription
+supabase functions deploy stripe-checkout
+supabase functions deploy stripe-list-invoices
+supabase functions deploy stripe-webhook
 ```
 
 ## Stripe Webhooks Handled

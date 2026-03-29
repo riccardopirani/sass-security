@@ -18,7 +18,7 @@ class AuthService {
     required String name,
     required AppUserRole role,
     String onboardingMode = 'trial',
-    String selectedPlan = 'starter',
+    String selectedPlan = 'flex',
     String? companyName,
     String? companyCode,
   }) async {
@@ -61,7 +61,18 @@ class AuthService {
         .eq('id', user.id)
         .single();
 
-    return AppProfile.fromMap(result);
+    final empAvatar = await _client
+        .from('security_cg_employees')
+        .select('avatar_url')
+        .eq('auth_user_id', user.id)
+        .maybeSingle();
+
+    final merged = Map<String, dynamic>.from(result);
+    if (empAvatar != null && empAvatar['avatar_url'] != null) {
+      merged['avatar_url'] = empAvatar['avatar_url'];
+    }
+
+    return AppProfile.fromMap(merged);
   }
 
   Future<void> signOut() async {

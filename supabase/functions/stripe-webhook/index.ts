@@ -4,14 +4,17 @@ import type Stripe from 'npm:stripe@14.25.0';
 
 import { handleOptions, json } from '../_shared/cors.ts';
 import { adminClient } from '../_shared/supabase.ts';
-import { planByPrice, stripe } from '../_shared/stripe.ts';
+import { planFromMetadata, stripe } from '../_shared/stripe.ts';
 
 const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') ?? '';
 
 const toIso = (unixSeconds: number | null | undefined) =>
   unixSeconds ? new Date(unixSeconds * 1000).toISOString() : null;
 
-const fetchExistingByStripe = async (stripeCustomerId?: string | null, stripeSubscriptionId?: string | null) => {
+const fetchExistingByStripe = async (
+  stripeCustomerId?: string | null,
+  stripeSubscriptionId?: string | null,
+) => {
   if (stripeSubscriptionId) {
     const bySub = await adminClient
       .from('security_cg_subscriptions')
@@ -37,14 +40,22 @@ const fetchExistingByStripe = async (stripeCustomerId?: string | null, stripeSub
   return null;
 };
 
+const parseLicensedSeats = (raw: string | null | undefined): number | null => {
+  if (raw == null || raw === '') return null;
+  const n = Math.floor(Number(raw));
+  if (!Number.isFinite(n) || n < 1) return null;
+  return Math.min(50_000, n);
+};
+
 const upsertSubscription = async (params: {
   companyId: string;
   userId: string;
   customerId: string | null;
   subscriptionId: string | null;
-  plan: 'starter' | 'pro' | 'business';
+  plan: ReturnType<typeof planFromMetadata>;
   status: string;
   currentPeriodEnd: string | null;
+  licensedSeats?: number | null;
 }) => {
   await adminClient.from('security_cg_subscriptions').upsert(
     {
@@ -55,6 +66,7 @@ const upsertSubscription = async (params: {
       plan: params.plan,
       status: params.status,
       current_period_end: params.currentPeriodEnd,
+      licensed_seats: params.licensedSeats ?? null,
       updated_at: new Date().toISOString(),
     },
     { onConflict: 'company_id' },
@@ -72,19 +84,18 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
   const stripeSubscriptionId =
     typeof session.subscription === 'string' ? session.subscription : null;
 
-  let plan: 'starter' | 'pro' | 'business' = 'starter';
+  let plan = planFromMetadata(session.metadata?.plan);
   let status = 'active';
   let currentPeriodEnd: string | null = null;
+  let licensedSeats = parseLicensedSeats(session.metadata?.licensed_users);
 
   if (stripeSubscriptionId) {
     const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
-    plan = planByPrice(stripeSubscription.items.data[0]?.price?.id);
+    plan = planFromMetadata(stripeSubscription.metadata?.plan ?? plan);
+    licensedSeats =
+      parseLicensedSeats(stripeSubscription.metadata?.licensed_users) ?? licensedSeats;
     status = stripeSubscription.status;
     currentPeriodEnd = toIso(stripeSubscription.current_period_end);
-  }
-
-  if (session.metadata?.plan === 'starter' || session.metadata?.plan === 'pro' || session.metadata?.plan === 'business') {
-    plan = session.metadata.plan;
   }
 
   await upsertSubscription({
@@ -95,6 +106,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     plan,
     status,
     currentPeriodEnd,
+    licensedSeats,
   });
 };
 
@@ -107,12 +119,14 @@ const handleInvoicePaid = async (invoice: Stripe.Invoice) => {
     return;
   }
 
-  let plan: 'starter' | 'pro' | 'business' = 'starter';
+  let plan = planFromMetadata('flex');
   let currentPeriodEnd: string | null = null;
+  let licensedSeats: number | null = null;
 
   if (stripeSubscriptionId) {
     const stripeSubscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
-    plan = planByPrice(stripeSubscription.items.data[0]?.price?.id);
+    plan = planFromMetadata(stripeSubscription.metadata?.plan);
+    licensedSeats = parseLicensedSeats(stripeSubscription.metadata?.licensed_users);
     currentPeriodEnd = toIso(stripeSubscription.current_period_end);
   }
 
@@ -124,6 +138,7 @@ const handleInvoicePaid = async (invoice: Stripe.Invoice) => {
     plan,
     status: 'active',
     currentPeriodEnd,
+    licensedSeats,
   });
 };
 
@@ -163,11 +178,8 @@ const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
     return;
   }
 
-  const planFromMeta = subscription.metadata?.plan;
-  const plan =
-    planFromMeta === 'starter' || planFromMeta === 'pro' || planFromMeta === 'business'
-      ? planFromMeta
-      : planByPrice(subscription.items.data[0]?.price?.id);
+  const plan = planFromMetadata(subscription.metadata?.plan);
+  const licensedSeats = parseLicensedSeats(subscription.metadata?.licensed_users);
 
   await upsertSubscription({
     companyId,
@@ -177,6 +189,7 @@ const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
     plan,
     status: subscription.status,
     currentPeriodEnd: toIso(subscription.current_period_end),
+    licensedSeats,
   });
 };
 

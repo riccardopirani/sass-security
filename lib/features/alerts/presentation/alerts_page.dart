@@ -54,10 +54,7 @@ class _AlertsPageState extends State<AlertsPage> {
       _titleCtrl.clear();
       _detailsCtrl.clear();
       if (mounted) {
-        AppSnack.success(
-          context,
-          'Segnalazione inviata ed email inoltrata a tutta l\'azienda.',
-        );
+        AppSnack.success(context, l10n.incident_report_sent);
       }
     } catch (error) {
       if (mounted) {
@@ -86,20 +83,23 @@ class _AlertsPageState extends State<AlertsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Segnala virus o hacking registrato',
+                    l10n.report_incident_title,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
                     initialValue: _incidentType,
-                    decoration: const InputDecoration(
-                      labelText: 'Tipo di incidente',
+                    decoration: InputDecoration(
+                      labelText: l10n.incident_type,
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'virus', child: Text('Virus')),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'virus',
+                        child: Text(l10n.incident_type_virus),
+                      ),
                       DropdownMenuItem(
                         value: 'hacking',
-                        child: Text('Hacking'),
+                        child: Text(l10n.incident_type_hacking),
                       ),
                     ],
                     onChanged: _sending
@@ -113,9 +113,9 @@ class _AlertsPageState extends State<AlertsPage> {
                     initialValue: _severity,
                     decoration: InputDecoration(labelText: l10n.severity),
                     items: [
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'critical',
-                        child: Text('Critical'),
+                        child: Text(l10n.severity_critical),
                       ),
                       DropdownMenuItem(value: 'high', child: Text(l10n.high)),
                       DropdownMenuItem(
@@ -134,15 +134,15 @@ class _AlertsPageState extends State<AlertsPage> {
                   TextField(
                     controller: _titleCtrl,
                     enabled: !_sending,
-                    decoration: const InputDecoration(labelText: 'Titolo'),
+                    decoration: InputDecoration(labelText: l10n.incident_title),
                   ),
                   const SizedBox(height: 10),
                   TextField(
                     controller: _detailsCtrl,
                     enabled: !_sending,
                     maxLines: 3,
-                    decoration: const InputDecoration(
-                      labelText: 'Dettagli incidente',
+                    decoration: InputDecoration(
+                      labelText: l10n.incident_details,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -150,7 +150,7 @@ class _AlertsPageState extends State<AlertsPage> {
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
                       onPressed: _sending ? null : _submitIncident,
-                      child: Text(_sending ? l10n.loading : 'Invia alert'),
+                      child: Text(_sending ? l10n.loading : l10n.send_alert),
                     ),
                   ),
                 ],
@@ -186,15 +186,15 @@ class _AlertsPageState extends State<AlertsPage> {
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(alert.message),
                     ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         _SeverityChip(severity: alert.severity),
                         if (!alert.isRead)
-                          TextButton(
+                          IconButton(
+                            icon: const Icon(Icons.done_all_outlined, size: 22),
+                            tooltip: l10n.mark_read,
                             onPressed: () => _repo.markRead(alert.id),
-                            child: Text(l10n.mark_read),
                           ),
                       ],
                     ),

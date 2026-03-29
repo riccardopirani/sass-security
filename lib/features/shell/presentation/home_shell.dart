@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sass_security/l10n/app_localizations.dart';
 
 import '../../../core/localization/locale_controller.dart';
+import '../../../core/widgets/employee_avatar.dart';
 import '../../../core/widgets/shell_content.dart';
 import '../../alerts/presentation/alerts_page.dart';
 import '../../auth/data/auth_service.dart';
@@ -85,17 +86,14 @@ class _HomeShellState extends State<HomeShell> {
       await showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) {
+        builder: (dialogContext) {
           return AlertDialog(
-            title: const Text('Abbonamento richiesto'),
-            content: const Text(
-              'Il periodo gratuito e terminato oppure non e attivo alcun piano. '
-              'Completa il pagamento su Stripe per continuare a usare la piattaforma.',
-            ),
+            title: Text(l10n.subscription_required_title),
+            content: Text(l10n.subscription_required_body),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(dialogContext).pop();
                   if (!mounted) return;
                   final items = _items(l10n);
                   final pricingIndex = items.indexWhere(
@@ -105,14 +103,14 @@ class _HomeShellState extends State<HomeShell> {
                     setState(() => _selected = pricingIndex);
                   }
                 },
-                child: const Text('Vai ai piani'),
+                child: Text(l10n.go_to_plans),
               ),
               TextButton(
                 onPressed: () async {
-                  Navigator.of(context).pop();
+                  Navigator.of(dialogContext).pop();
                   await widget.authService.signOut();
                 },
-                child: const Text('Esci'),
+                child: Text(l10n.logout),
               ),
             ],
           );
@@ -294,17 +292,17 @@ class _HomeShellState extends State<HomeShell> {
         page: EmployeesPage(profile: widget.profile),
       ),
       _ShellItem(
-        label: 'Alerts',
+        label: l10n.alerts,
         icon: Icons.notifications_active_rounded,
         page: AlertsPage(profile: widget.profile),
       ),
       _ShellItem(
-        label: 'News',
+        label: l10n.nav_news,
         icon: Icons.newspaper_rounded,
         page: NewsPage(profile: widget.profile),
       ),
       _ShellItem(
-        label: 'Companion',
+        label: l10n.nav_companion,
         icon: Icons.smartphone_rounded,
         page: CompanionPage(profile: widget.profile),
       ),
@@ -316,7 +314,7 @@ class _HomeShellState extends State<HomeShell> {
         ),
       if (widget.profile.isManager || widget.profile.isAuditor)
         _ShellItem(
-          label: 'Security Ops',
+          label: l10n.nav_security_ops,
           icon: Icons.psychology_alt_rounded,
           page: OperationsPage(profile: widget.profile),
         ),
@@ -455,6 +453,7 @@ class _DrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(12, 12, 12, 8),
       padding: const EdgeInsets.all(20),
@@ -493,7 +492,7 @@ class _DrawerHeader extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'CyberGuard',
+                  l10n.app_title,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
@@ -504,15 +503,28 @@ class _DrawerHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Text(
-            profile.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
+          Row(
+            children: [
+              EmployeeAvatar(
+                name: profile.name,
+                imageUrl: profile.avatarUrl,
+                radius: 22,
+                backgroundColor: Colors.white.withValues(alpha: 0.35),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  profile.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 4),
           Text(
@@ -585,18 +597,12 @@ class _SideRail extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Tooltip(
                     message: profile.name,
-                    child: CircleAvatar(
+                    child: EmployeeAvatar(
+                      name: profile.name,
+                      imageUrl: profile.avatarUrl,
                       radius: 20,
-                      backgroundColor: const Color(0xFF14B8A6).withValues(alpha: 0.25),
-                      child: Text(
-                        profile.name.isNotEmpty
-                            ? profile.name[0].toUpperCase()
-                            : '?',
-                        style: const TextStyle(
-                          color: Color(0xFF14B8A6),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
+                      backgroundColor:
+                          const Color(0xFF14B8A6).withValues(alpha: 0.25),
                     ),
                   ),
                 ),
@@ -670,16 +676,11 @@ class _RailUserCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CircleAvatar(
+            EmployeeAvatar(
+              name: profile.name,
+              imageUrl: profile.avatarUrl,
               radius: 20,
               backgroundColor: const Color(0xFF14B8A6).withValues(alpha: 0.22),
-              child: Text(
-                profile.name.isNotEmpty ? profile.name[0].toUpperCase() : '?',
-                style: const TextStyle(
-                  color: Color(0xFF14B8A6),
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
             ),
             const SizedBox(width: 10),
             Expanded(

@@ -26,7 +26,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   var _busy = false;
   var _role = AppUserRole.admin;
   var _startWithTrial = true;
-  var _selectedPlan = 'starter';
 
   @override
   void dispose() {
@@ -58,7 +57,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           name: _nameCtrl.text.trim(),
           role: _role,
           onboardingMode: _startWithTrial ? 'trial' : 'paid',
-          selectedPlan: _selectedPlan,
+          selectedPlan: 'flex',
           companyName: _role == AppUserRole.admin
               ? _companyNameCtrl.text.trim()
               : null,
@@ -175,17 +174,17 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                       value: AppUserRole.admin,
                                       child: Text(l10n.admin),
                                     ),
-                                    const DropdownMenuItem(
+                                    DropdownMenuItem(
                                       value: AppUserRole.securityManager,
-                                      child: Text('Security Manager'),
+                                      child: Text(l10n.role_security_manager),
                                     ),
                                     DropdownMenuItem(
                                       value: AppUserRole.employee,
                                       child: Text(l10n.employee),
                                     ),
-                                    const DropdownMenuItem(
+                                    DropdownMenuItem(
                                       value: AppUserRole.auditor,
-                                      child: Text('Auditor'),
+                                      child: Text(l10n.role_auditor),
                                     ),
                                   ],
                                   onChanged: (value) {
@@ -213,21 +212,21 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                 if (_role == AppUserRole.admin) ...[
                                   const SizedBox(height: 12),
                                   Text(
-                                    'Attivazione abbonamento',
+                                    l10n.subscription_activation,
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleMedium,
                                   ),
                                   const SizedBox(height: 8),
                                   SegmentedButton<bool>(
-                                    segments: const [
+                                    segments: [
                                       ButtonSegment<bool>(
                                         value: true,
-                                        label: Text('Gratis 30gg'),
+                                        label: Text(l10n.trial_30_days),
                                       ),
                                       ButtonSegment<bool>(
                                         value: false,
-                                        label: Text('Stripe mensile subito'),
+                                        label: Text(l10n.stripe_monthly_now),
                                       ),
                                     ],
                                     selected: {_startWithTrial},
@@ -240,36 +239,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                                   const SizedBox(height: 8),
                                   Text(
                                     _startWithTrial
-                                        ? 'Gratis 30 giorni, poi popup abbonamento'
-                                        : 'Abbonamento mensile subito con Stripe',
+                                        ? l10n.trial_then_paywall
+                                        : l10n.stripe_pay_immediately,
                                     style: Theme.of(
                                       context,
                                     ).textTheme.bodySmall,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  DropdownButtonFormField<String>(
-                                    initialValue: _selectedPlan,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Piano',
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: 'starter',
-                                        child: Text('Starter - \$29/mese'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'pro',
-                                        child: Text('Pro - \$79/mese'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'business',
-                                        child: Text('Business - \$199/mese'),
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      if (value == null) return;
-                                      setState(() => _selectedPlan = value);
-                                    },
                                   ),
                                 ],
                                 if (_role != AppUserRole.admin)

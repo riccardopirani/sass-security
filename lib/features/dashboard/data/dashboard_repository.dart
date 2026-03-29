@@ -57,7 +57,7 @@ class DashboardRepository {
 
     final rankingRows = await _client
         .from('security_cg_employees')
-        .select('id,name,risk_score')
+        .select('id,name,risk_score,avatar_url')
         .eq('company_id', companyId)
         .order('risk_score', ascending: false)
         .limit(50);
@@ -82,8 +82,10 @@ class DashboardRepository {
         .take(5)
         .map(
           (row) => RiskRankEntry(
+            id: row['id'] as String?,
             name: (row['name'] as String?) ?? 'Unknown',
             riskScore: (row['risk_score'] as num?)?.toInt() ?? 0,
+            avatarUrl: row['avatar_url'] as String?,
           ),
         )
         .toList();
@@ -109,8 +111,10 @@ class DashboardRepository {
       final id = row['id'] as String?;
       final baseScore = (row['risk_score'] as num?)?.toInt() ?? 0;
       return RiskRankEntry(
+        id: id,
         name: (row['name'] as String?) ?? 'Unknown',
         riskScore: baseScore + (id == null ? 0 : (weeklyScoreBoost[id] ?? 0)),
+        avatarUrl: row['avatar_url'] as String?,
       );
     }).toList()..sort((a, b) => b.riskScore.compareTo(a.riskScore));
 

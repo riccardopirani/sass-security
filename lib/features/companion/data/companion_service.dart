@@ -16,7 +16,9 @@ class CompanionService {
 
     final employee = await _client
         .from('security_cg_employees')
-        .select('id,name,risk_score,training_completion,mfa_enabled,force_mfa')
+        .select(
+          'id,name,risk_score,training_completion,mfa_enabled,force_mfa,avatar_url',
+        )
         .eq('company_id', companyId)
         .eq('auth_user_id', user.id)
         .maybeSingle();
@@ -48,14 +50,22 @@ class CompanionService {
               .order('created_at', ascending: false)
               .limit(20);
 
-    final events = (eventsRows as List)
-        .map((row) => SecurityEventItem.fromMap(row as Map<String, dynamic>))
-        .toList();
+    final events = <SecurityEventItem>[];
+    for (final row in eventsRows) {
+      events.add(
+        SecurityEventItem.fromMap(Map<String, dynamic>.from(row as Map)),
+      );
+    }
+
+    final assignments = <Map<String, dynamic>>[];
+    for (final row in trainingAssignments) {
+      assignments.add(Map<String, dynamic>.from(row as Map));
+    }
 
     return {
       'employee': employee,
       'events': events,
-      'assignments': (trainingAssignments as List).cast<Map<String, dynamic>>(),
+      'assignments': assignments,
     };
   }
 
