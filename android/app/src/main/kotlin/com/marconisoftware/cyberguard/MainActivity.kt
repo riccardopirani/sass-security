@@ -1,4 +1,4 @@
-package com.example.sass_security
+package com.marconisoftware.cyberguard
 
 import io.flutter.embedding.android.FlutterActivity
 

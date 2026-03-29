@@ -202,7 +202,8 @@ serve(async (req) => {
 
     if (platform === 'android') {
       const packageName = String(
-        payload?.package_name ?? Deno.env.get('ANDROID_PACKAGE_NAME') ?? 'com.example.sass_security',
+        payload?.package_name ?? Deno.env.get('ANDROID_PACKAGE_NAME') ??
+          'com.marconisoftware.cyberguard',
       ).trim();
       const productId = String(payload?.product_id ?? '').trim();
       const purchaseToken = String(payload?.purchase_token ?? '').trim();
