@@ -41,10 +41,22 @@ class CyberGuardApp extends StatelessWidget {
             onLoginPressed: (context) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => AuthGate(
-                    localeController: localeController,
-                    backendReady: backendReady,
-                    backendError: backendError,
+                  builder: (_) => AnimatedBuilder(
+                    animation: localeController,
+                    builder: (context, _) => Localizations(
+                      locale: localeController.locale,
+                      delegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      child: AuthGate(
+                        localeController: localeController,
+                        backendReady: backendReady,
+                        backendError: backendError,
+                      ),
+                    ),
                   ),
                 ),
               );

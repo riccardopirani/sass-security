@@ -33,13 +33,16 @@ Future<void> main() async {
       if (!context.mounted) return;
       await Navigator.of(context).push(
         PageRouteBuilder<void>(
-          pageBuilder: (_, __, ___) => Localizations(
-            locale: localeController.locale,
-            delegates: AppLocalizations.localizationsDelegates,
-            child: AuthGate(
-              localeController: localeController,
-              backendReady: backendReady,
-              backendError: backendError,
+          pageBuilder: (_, __, ___) => AnimatedBuilder(
+            animation: localeController,
+            builder: (context, __) => Localizations(
+              locale: localeController.locale,
+              delegates: AppLocalizations.localizationsDelegates,
+              child: AuthGate(
+                localeController: localeController,
+                backendReady: backendReady,
+                backendError: backendError,
+              ),
             ),
           ),
           transitionsBuilder: (_, animation, __, child) {

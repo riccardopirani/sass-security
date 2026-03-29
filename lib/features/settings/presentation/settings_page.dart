@@ -45,22 +45,28 @@ class SettingsPage extends StatelessWidget {
                 '${l10n.company_code}: ${profile.companyCode ?? l10n.unknown}',
               ),
               const SizedBox(height: 18),
-              DropdownButtonFormField<Locale>(
-                initialValue: localeController.locale,
-                decoration: InputDecoration(labelText: l10n.choose_language),
-                items: LocaleController.supportedLocales
-                    .map(
-                      (locale) => DropdownMenuItem(
-                        value: locale,
-                        child: Text(_labelForLocale(locale)),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (locale) {
-                  if (locale == null) {
-                    return;
-                  }
-                  localeController.setLocale(locale);
+              ListenableBuilder(
+                listenable: localeController,
+                builder: (context, _) {
+                  return DropdownButtonFormField<Locale>(
+                    key: ValueKey(localeController.locale.languageCode),
+                    initialValue: localeController.locale,
+                    decoration: InputDecoration(labelText: l10n.choose_language),
+                    items: LocaleController.supportedLocales
+                        .map(
+                          (locale) => DropdownMenuItem(
+                            value: locale,
+                            child: Text(_labelForLocale(locale)),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (locale) {
+                      if (locale == null) {
+                        return;
+                      }
+                      localeController.setLocale(locale);
+                    },
+                  );
                 },
               ),
               const SizedBox(height: 18),

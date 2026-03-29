@@ -24,6 +24,42 @@ class AppTheme {
         error: Color(0xFFF43F5E),
       ),
       textTheme: textTheme,
+      navigationRailTheme: NavigationRailThemeData(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        selectedIconTheme: const IconThemeData(color: _accent, size: 24),
+        unselectedIconTheme: IconThemeData(
+          color: Colors.white.withValues(alpha: 0.5),
+          size: 24,
+        ),
+        selectedLabelTextStyle: const TextStyle(
+          color: _accent,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+          letterSpacing: 0.2,
+        ),
+        unselectedLabelTextStyle: TextStyle(
+          color: Colors.white.withValues(alpha: 0.45),
+          fontSize: 11,
+          letterSpacing: 0.1,
+        ),
+        indicatorColor: _accent.withValues(alpha: 0.18),
+        useIndicator: true,
+        indicatorShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ),
+      navigationDrawerTheme: NavigationDrawerThemeData(
+        backgroundColor: const Color(0xF20F172A),
+        indicatorColor: _accent.withValues(alpha: 0.2),
+      ),
+      drawerTheme: const DrawerThemeData(
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.horizontal(right: Radius.circular(24)),
+        ),
+      ),
       cardTheme: CardThemeData(
         color: _surface,
         elevation: 0,
