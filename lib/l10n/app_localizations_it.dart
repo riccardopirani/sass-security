@@ -263,7 +263,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get subscription_required_body =>
-      'La prova gratuita di 30 giorni e finita, oppure l\'abbonamento non e attivo o il rinnovo non e andato a buon fine. Apri Abbonamento per scegliere le postazioni e pagare in sicurezza con Stripe e continuare a usare CyberGuard.';
+      'La prova gratuita di 30 giorni è finita, oppure l\'abbonamento non è attivo o il rinnovo non è andato a buon fine. Apri Abbonamento per scegliere le postazioni e pagare in sicurezza con Stripe e continuare a usare CyberGuard.';
 
   @override
   String get go_to_plans => 'Vai all\'abbonamento';
