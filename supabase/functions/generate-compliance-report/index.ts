@@ -7,7 +7,7 @@ import { adminClient, requireUser } from '../_shared/supabase.ts';
 
 const companySelect =
   'id,name,risk_score,benchmark_percentile,industry,company_size,region';
-const companyFallbackSelect = 'id,name,risk_score,industry,company_size,region';
+const companyFallbackSelect = 'id,name,risk_score';
 
 const fetchCompanyWithBenchmarkFallback = async (companyId: string) => {
   const company = await adminClient
@@ -33,6 +33,9 @@ const fetchCompanyWithBenchmarkFallback = async (companyId: string) => {
         : {
             ...fallback.data,
             benchmark_percentile: 0,
+            industry: 'general',
+            company_size: 'smb',
+            region: 'global',
           },
     error: fallback.error,
   };

@@ -15,6 +15,42 @@ begin
        from information_schema.columns
        where table_schema = 'public'
          and table_name = 'cg_companies'
+         and column_name = 'industry'
+     ) then
+    alter table public.cg_companies
+      add column industry text not null default 'general';
+  end if;
+
+  if to_regclass('public.cg_companies') is not null
+     and not exists (
+       select 1
+       from information_schema.columns
+       where table_schema = 'public'
+         and table_name = 'cg_companies'
+         and column_name = 'company_size'
+     ) then
+    alter table public.cg_companies
+      add column company_size text not null default 'smb';
+  end if;
+
+  if to_regclass('public.cg_companies') is not null
+     and not exists (
+       select 1
+       from information_schema.columns
+       where table_schema = 'public'
+         and table_name = 'cg_companies'
+         and column_name = 'region'
+     ) then
+    alter table public.cg_companies
+      add column region text not null default 'global';
+  end if;
+
+  if to_regclass('public.cg_companies') is not null
+     and not exists (
+       select 1
+       from information_schema.columns
+       where table_schema = 'public'
+         and table_name = 'cg_companies'
          and column_name = 'benchmark_percentile'
      ) then
     alter table public.cg_companies
