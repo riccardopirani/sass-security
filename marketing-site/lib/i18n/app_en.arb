@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "appBrand": "CyberGuard",
   "navHome": "Home",
   "navFeatures": "Features",
   "navPricing": "Pricing",

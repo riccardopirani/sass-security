@@ -1,5 +1,8 @@
 {
   "app_title": "CyberGuard",
+  "marketing_landing_headline": "Cybersicherheitsplattform f\u00fcr SMB-Teams",
+  "marketing_landing_body": "CyberGuard hilft kleinen und mittleren Unternehmen, Phishing zu verhindern, Warnungen in Echtzeit zu \u00fcberwachen und die Sicherheitslage der Mitarbeitenden zu verbessern.",
+  "marketing_landing_same_account": "Derselbe Account funktioniert im Web und in der Mobile App.",
   "login": "Anmelden",
   "signup": "Registrieren",
   "email": "E-Mail",
@@ -12,6 +15,7 @@
   "employee": "Mitarbeiter",
   "dashboard": "Dashboard",
   "risk_score": "Risikowert",
+  "risk_score_fraction": "{score}/100",
   "company_risk_score": "Unternehmensrisiko",
   "active_campaigns": "Aktive Phishing-Kampagnen",
   "alerts": "Warnungen",

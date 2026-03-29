@@ -12,6 +12,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get app_title => 'CyberGuard';
 
   @override
+  String get marketing_landing_headline =>
+      'Cybersicherheitsplattform für SMB-Teams';
+
+  @override
+  String get marketing_landing_body =>
+      'CyberGuard hilft kleinen und mittleren Unternehmen, Phishing zu verhindern, Warnungen in Echtzeit zu überwachen und die Sicherheitslage der Mitarbeitenden zu verbessern.';
+
+  @override
+  String get marketing_landing_same_account =>
+      'Derselbe Account funktioniert im Web und in der Mobile App.';
+
+  @override
   String get login => 'Anmelden';
 
   @override
@@ -46,6 +58,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get risk_score => 'Risikowert';
+
+  @override
+  String risk_score_fraction(int score) {
+    return '$score/100';
+  }
 
   @override
   String get company_risk_score => 'Unternehmensrisiko';

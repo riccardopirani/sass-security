@@ -185,7 +185,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           ],
                         ),
                         title: Text(entry.value.name),
-                        trailing: Text('${entry.value.riskScore}/100'),
+                        trailing: Text(
+                          l10n.risk_score_fraction(entry.value.riskScore),
+                        ),
                       ),
                     ),
                     if (data.topRiskyWeek.isEmpty)
@@ -262,7 +264,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           backgroundColor: const Color(0xFF1D4ED8),
                         ),
                         title: Text(entry.name),
-                        trailing: Text('${entry.riskScore}/100'),
+                        trailing: Text(
+                          l10n.risk_score_fraction(entry.riskScore),
+                        ),
                       ),
                     ),
                     if (data.riskRanking.isEmpty)

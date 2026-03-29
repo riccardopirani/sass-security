@@ -12,6 +12,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get app_title => 'CyberGuard';
 
   @override
+  String get marketing_landing_headline => 'Кибербезопасность для команд SMB';
+
+  @override
+  String get marketing_landing_body =>
+      'CyberGuard помогает малому и среднему бизнесу предотвращать фишинг, отслеживать оповещения в реальном времени и повышать кибербезопасность сотрудников.';
+
+  @override
+  String get marketing_landing_same_account =>
+      'Один аккаунт работает в веб-версии и в мобильном приложении.';
+
+  @override
   String get login => 'Вход';
 
   @override
@@ -46,6 +57,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get risk_score => 'Оценка риска';
+
+  @override
+  String risk_score_fraction(int score) {
+    return '$score/100';
+  }
 
   @override
   String get company_risk_score => 'Риск компании';

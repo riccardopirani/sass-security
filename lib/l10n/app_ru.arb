@@ -1,5 +1,8 @@
 {
   "app_title": "CyberGuard",
+  "marketing_landing_headline": "Кибербезопасность для команд SMB",
+  "marketing_landing_body": "CyberGuard помогает малому и среднему бизнесу предотвращать фишинг, отслеживать оповещения в реальном времени и повышать кибербезопасность сотрудников.",
+  "marketing_landing_same_account": "Один аккаунт работает в веб-версии и в мобильном приложении.",
   "login": "Вход",
   "signup": "Регистрация",
   "email": "Email",
@@ -12,6 +15,7 @@
   "employee": "Сотрудник",
   "dashboard": "Панель",
   "risk_score": "Оценка риска",
+  "risk_score_fraction": "{score}/100",
   "company_risk_score": "Риск компании",
   "active_campaigns": "Активные фишинг-кампании",
   "alerts": "Оповещения",

@@ -1,5 +1,8 @@
 {
   "app_title": "CyberGuard",
+  "marketing_landing_headline": "面向 SMB 团队的网络安全平台",
+  "marketing_landing_body": "CyberGuard 帮助中小企业防范钓鱼、实时监控告警并提升员工安全态势。",
+  "marketing_landing_same_account": "同一账号适用于网页端与移动应用。",
   "login": "登录",
   "signup": "注册",
   "email": "邮箱",
@@ -12,6 +15,7 @@
   "employee": "员工",
   "dashboard": "仪表盘",
   "risk_score": "风险评分",
+  "risk_score_fraction": "{score}/100",
   "company_risk_score": "公司风险评分",
   "active_campaigns": "进行中的钓鱼活动",
   "alerts": "告警",

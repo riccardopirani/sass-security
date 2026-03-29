@@ -1,5 +1,8 @@
 {
   "app_title": "CyberGuard",
+  "marketing_landing_headline": "Piattaforma di cybersecurity per team PMI",
+  "marketing_landing_body": "CyberGuard aiuta le piccole e medie imprese a prevenire il phishing, monitorare gli avvisi in tempo reale e migliorare la postura di sicurezza dei dipendenti.",
+  "marketing_landing_same_account": "Lo stesso account funziona su Web e sull'app mobile.",
   "login": "Accedi",
   "signup": "Registrati",
   "email": "Email",
@@ -12,6 +15,7 @@
   "employee": "Dipendente",
   "dashboard": "Dashboard",
   "risk_score": "Punteggio di rischio",
+  "risk_score_fraction": "{score}/100",
   "company_risk_score": "Punteggio rischio aziendale",
   "active_campaigns": "Campagne phishing attive",
   "alerts": "Avvisi",

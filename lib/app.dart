@@ -25,7 +25,8 @@ class CyberGuardApp extends StatelessWidget {
       animation: localeController,
       builder: (context, _) {
         return MaterialApp(
-          title: 'CyberGuard',
+          onGenerateTitle: (context) =>
+              AppLocalizations.of(context).app_title,
           debugShowCheckedModeBanner: false,
           locale: localeController.locale,
           supportedLocales: LocaleController.supportedLocales,

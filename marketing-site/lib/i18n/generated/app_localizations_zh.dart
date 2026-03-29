@@ -9,6 +9,9 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get appBrand => 'CyberGuard';
+
+  @override
   String get navHome => '首页';
 
   @override

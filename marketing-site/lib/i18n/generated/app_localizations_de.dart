@@ -9,6 +9,9 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String get appBrand => 'CyberGuard';
+
+  @override
   String get navHome => 'Start';
 
   @override

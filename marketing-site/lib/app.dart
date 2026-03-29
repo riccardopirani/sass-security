@@ -14,7 +14,7 @@ class CyberGuardApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
-      title: 'CyberGuard',
+      onGenerateTitle: (context) => AppLocalizations.of(context).appBrand,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       routerConfig: router,

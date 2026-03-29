@@ -106,6 +106,12 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
+  /// No description provided for @appBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'CyberGuard'**
+  String get appBrand;
+
   /// No description provided for @navHome.
   ///
   /// In en, this message translates to:

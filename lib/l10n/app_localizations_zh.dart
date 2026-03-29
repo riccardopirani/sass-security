@@ -12,6 +12,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get app_title => 'CyberGuard';
 
   @override
+  String get marketing_landing_headline => '面向 SMB 团队的网络安全平台';
+
+  @override
+  String get marketing_landing_body => 'CyberGuard 帮助中小企业防范钓鱼、实时监控告警并提升员工安全态势。';
+
+  @override
+  String get marketing_landing_same_account => '同一账号适用于网页端与移动应用。';
+
+  @override
   String get login => '登录';
 
   @override
@@ -46,6 +55,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get risk_score => '风险评分';
+
+  @override
+  String risk_score_fraction(int score) {
+    return '$score/100';
+  }
 
   @override
   String get company_risk_score => '公司风险评分';

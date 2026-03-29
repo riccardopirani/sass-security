@@ -99,7 +99,7 @@ class _TopNav extends StatelessWidget {
             InkWell(
               onTap: () => context.go('/$localeCode'),
               child: Text(
-                'CyberGuard',
+                l10n.appBrand,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: AppColors.accent,
                   fontWeight: FontWeight.w700,

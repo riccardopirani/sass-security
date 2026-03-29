@@ -112,6 +112,24 @@ abstract class AppLocalizations {
   /// **'CyberGuard'**
   String get app_title;
 
+  /// No description provided for @marketing_landing_headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Cybersecurity platform for SMB teams'**
+  String get marketing_landing_headline;
+
+  /// No description provided for @marketing_landing_body.
+  ///
+  /// In en, this message translates to:
+  /// **'CyberGuard helps small and medium businesses prevent phishing, monitor alerts in real time, and improve employee security posture.'**
+  String get marketing_landing_body;
+
+  /// No description provided for @marketing_landing_same_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Same account works across Web and Mobile App.'**
+  String get marketing_landing_same_account;
+
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
@@ -183,6 +201,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Risk Score'**
   String get risk_score;
+
+  /// No description provided for @risk_score_fraction.
+  ///
+  /// In en, this message translates to:
+  /// **'{score}/100'**
+  String risk_score_fraction(int score);
 
   /// No description provided for @company_risk_score.
   ///

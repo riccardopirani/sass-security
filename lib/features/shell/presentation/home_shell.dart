@@ -672,13 +672,14 @@ class _RailLogoCompact extends StatelessWidget {
 class _RailBrandHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       children: [
         const _RailLogoCompact(),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
-            'CyberGuard',
+            l10n.app_title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.4,

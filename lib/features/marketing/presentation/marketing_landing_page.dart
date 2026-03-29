@@ -56,12 +56,12 @@ class MarketingLandingPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Cybersecurity platform for SMB teams',
+                              l10n.marketing_landing_headline,
                               style: Theme.of(context).textTheme.displaySmall,
                             ),
                             const SizedBox(height: 14),
                             Text(
-                              'CyberGuard helps small and medium businesses prevent phishing, monitor alerts in real time, and improve employee security posture.',
+                              l10n.marketing_landing_body,
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(color: Colors.white70),
                             ),
@@ -82,7 +82,7 @@ class MarketingLandingPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 24),
                             Text(
-                              'Same account works across Web and Mobile App.',
+                              l10n.marketing_landing_same_account,
                               style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(color: Colors.white60),
                             ),
