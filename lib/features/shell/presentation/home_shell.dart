@@ -39,11 +39,12 @@ class HomeShell extends StatefulWidget {
   State<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends State<HomeShell> {
+class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _selected = 0;
   final _subscriptionService = SubscriptionService();
   var _subscriptionGateChecked = false;
+  var _subscriptionGateRunning = false;
 
   static const _bodyGradient = LinearGradient(
     colors: [
@@ -56,6 +57,27 @@ class _HomeShellState extends State<HomeShell> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _enforceSubscriptionGate();
+      });
+    }
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_subscriptionGateChecked) return;
@@ -66,7 +88,10 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   Future<void> _enforceSubscriptionGate() async {
-    if (!mounted || !widget.profile.isAdmin) return;
+    if (!mounted || !widget.profile.isAdmin || _subscriptionGateRunning) {
+      return;
+    }
+    _subscriptionGateRunning = true;
     try {
       final l10n = AppLocalizations.of(context);
       final subscription = await _subscriptionService.currentForCompany(
@@ -92,9 +117,11 @@ class _HomeShellState extends State<HomeShell> {
         builder: (dialogContext) {
           return AlertDialog(
             title: Text(l10n.subscription_required_title),
-            content: Text(l10n.subscription_required_body),
+            content: SingleChildScrollView(
+              child: Text(l10n.subscription_required_body),
+            ),
             actions: [
-              TextButton(
+              FilledButton(
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
                   if (!mounted) return;
@@ -121,6 +148,8 @@ class _HomeShellState extends State<HomeShell> {
       );
     } catch (_) {
       // If subscription check fails, do not block navigation.
+    } finally {
+      _subscriptionGateRunning = false;
     }
   }
 

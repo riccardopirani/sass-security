@@ -259,14 +259,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nav_security_ops => 'Security Ops';
 
   @override
-  String get subscription_required_title => 'Subscription required';
+  String get subscription_required_title => 'Abonnement erforderlich';
 
   @override
   String get subscription_required_body =>
-      'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.';
+      'Ihre 30-Tage-Testversion ist beendet, das Abonnement ist nicht aktiv oder die Verlängerung ist fehlgeschlagen. Öffnen Sie „Abonnement“, wählen Sie Plätze und zahlen Sie sicher über Stripe, um CyberGuard weiter zu nutzen.';
 
   @override
-  String get go_to_plans => 'View plans';
+  String get go_to_plans => 'Abonnement öffnen';
 
   @override
   String get exit_app => 'Sign out';

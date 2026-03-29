@@ -256,14 +256,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nav_security_ops => 'Security Ops';
 
   @override
-  String get subscription_required_title => 'Subscription required';
+  String get subscription_required_title => '需要订阅';
 
   @override
   String get subscription_required_body =>
-      'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.';
+      '30天免费试用已结束，订阅未激活或续费支付失败。请打开订阅页选择座位并通过 Stripe 安全付费以继续使用 CyberGuard。';
 
   @override
-  String get go_to_plans => 'View plans';
+  String get go_to_plans => '打开订阅';
 
   @override
   String get exit_app => 'Sign out';

@@ -607,13 +607,13 @@ abstract class AppLocalizations {
   /// No description provided for @subscription_required_body.
   ///
   /// In en, this message translates to:
-  /// **'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.'**
+  /// **'Your 30-day free trial has ended, your subscription is not active, or renewal payment failed. Open Subscription to choose your seats and pay securely with Stripe to continue using CyberGuard.'**
   String get subscription_required_body;
 
   /// No description provided for @go_to_plans.
   ///
   /// In en, this message translates to:
-  /// **'View plans'**
+  /// **'Open subscription'**
   String get go_to_plans;
 
   /// No description provided for @exit_app.

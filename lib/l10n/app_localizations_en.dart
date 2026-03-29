@@ -263,10 +263,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subscription_required_body =>
-      'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.';
+      'Your 30-day free trial has ended, your subscription is not active, or renewal payment failed. Open Subscription to choose your seats and pay securely with Stripe to continue using CyberGuard.';
 
   @override
-  String get go_to_plans => 'View plans';
+  String get go_to_plans => 'Open subscription';
 
   @override
   String get exit_app => 'Sign out';

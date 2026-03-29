@@ -259,14 +259,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get nav_security_ops => 'Security Ops';
 
   @override
-  String get subscription_required_title => 'Subscription required';
+  String get subscription_required_title => 'Требуется подписка';
 
   @override
   String get subscription_required_body =>
-      'Your free period has ended or no plan is active. Complete payment on Stripe to continue using the platform.';
+      '30-дневный бесплатный период окончен, подписка не активна или оплата продления не прошла. Откройте Подписку, выберите места и оплатите через Stripe, чтобы продолжить работу с CyberGuard.';
 
   @override
-  String get go_to_plans => 'View plans';
+  String get go_to_plans => 'Открыть подписку';
 
   @override
   String get exit_app => 'Sign out';
