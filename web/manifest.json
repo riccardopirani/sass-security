@@ -1,7 +1,9 @@
 {
     "name": "CyberGuard - SMB Cybersecurity Platform",
     "short_name": "CyberGuard",
-    "start_url": ".",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#030712",
     "theme_color": "#00E5A8",

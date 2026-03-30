@@ -51,7 +51,5 @@
 	<string>CyberGuard may save exported images to your library when you choose to.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>CyberGuard uses the camera when you take a new photo for your profile.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>CyberGuard may use the microphone if you record a video attachment.</string>
 </dict>
 </plist>
