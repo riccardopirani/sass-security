@@ -71,3 +71,6 @@ verify_jwt = false
 
 [functions.iap-verify-and-sync]
 verify_jwt = false
+
+[functions.ensure-user-profile]
+verify_jwt = false

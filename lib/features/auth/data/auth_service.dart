@@ -53,13 +53,26 @@ class AuthService {
       throw const AuthException('No active user session.');
     }
 
-    final result = await _client
+    // Attempt to fetch the profile; if absent, trigger idempotent repair.
+    Map<String, dynamic>? result = await _client
         .from('security_cg_profiles')
         .select(
           'id,company_id,name,email,role,risk_score,companies:security_cg_companies!company_id(name,code)',
         )
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
+
+    if (result == null) {
+      // Profile missing – call the repair edge function and retry once.
+      await _client.functions.invoke('ensure-user-profile');
+      result = await _client
+          .from('security_cg_profiles')
+          .select(
+            'id,company_id,name,email,role,risk_score,companies:security_cg_companies!company_id(name,code)',
+          )
+          .eq('id', user.id)
+          .single();
+    }
 
     final empAvatar = await _client
         .from('security_cg_employees')
