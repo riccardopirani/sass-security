@@ -1,10 +1,13 @@
-/** Shared transactional email: branded HTML layout (Marconi Software S.R.L.) + Resend. */
+/** Shared transactional email: branded HTML layout + HTTP relay sender. */
 
 import { adminClient } from './supabase.ts';
 
 export type MailLocale = 'en' | 'it' | 'de' | 'fr' | 'zh' | 'ru';
 
-const resendApiKey = () => Deno.env.get('RESEND_API_KEY') ?? '';
+const transactionalMailEndpoint = () =>
+  Deno.env.get('TRANSACTIONAL_MAIL_ENDPOINT') ??
+  'http://cloud.centoimpianti.com:8282/send';
+const transactionalMailSecret = () => Deno.env.get('TRANSACTIONAL_MAIL_SECRET') ?? '';
 export const transactionalFromEmail = () =>
   Deno.env.get('TRANSACTIONAL_FROM_EMAIL') ??
   Deno.env.get('ALERTS_FROM_EMAIL') ??
@@ -165,28 +168,28 @@ export type SendTransactionalParams = {
 export const sendTransactionalEmail = async (
   params: SendTransactionalParams,
 ): Promise<{ ok: boolean; error?: string }> => {
-  const key = resendApiKey();
-  if (!key) {
-    return { ok: false, error: 'RESEND_API_KEY is not configured' };
-  }
   const recipients = params.to.map((e) => e.trim().toLowerCase()).filter(Boolean);
   if (recipients.length === 0) {
     return { ok: false, error: 'No recipients' };
   }
 
   const html = wrapBrandedEmail(params.innerHtml, params.locale);
-  const response = await fetch('https://api.resend.com/emails', {
+  const endpoint = transactionalMailEndpoint();
+  const secret = transactionalMailSecret();
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${key}`,
       'Content-Type': 'application/json',
+      ...(secret ? { 'x-internal-email-secret': secret } : {}),
     },
     body: JSON.stringify({
       from: params.from ?? transactionalFromEmail(),
       to: recipients,
       subject: params.subject,
       text: params.text,
+      innerHtml: params.innerHtml,
       html,
+      locale: params.locale,
     }),
   });
 
